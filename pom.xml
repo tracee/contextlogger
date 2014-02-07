@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>tracee-error-logger</artifactId>
+    <packaging>bundle</packaging>
+
+    <parent>
+        <groupId>de.holisticon.util.tracee</groupId>
+        <artifactId>tracee-parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <name>tracee-error-logger</name>
+    <description>Please refer to https://github.com/holisticon/tracee.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.holisticon.util.tracee</groupId>
+            <artifactId>tracee-api</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
