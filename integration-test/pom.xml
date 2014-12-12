@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tracee-context-logger-integration-test</artifactId>
+    <artifactId>contextlogger-integration-test</artifactId>
     <packaging>bundle</packaging>
 
     <parent>
         <groupId>io.tracee.contextlogger</groupId>
-        <artifactId>tracee-context-logger-parent</artifactId>
-        <version>0.6.0-SNAPSHOT</version>
+        <artifactId>contextlogger-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <name>tracee-context-logger-integration-test</name>
-    <description>Please refer to https://github.com/tracee/tracee.</description>
+    <name>contextlogger-integration-test</name>
+    <description>Please refer to https://github.com/tracee/contextlogger.</description>
 
 	<build>
 		<plugins>
@@ -28,12 +28,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.tracee.contextlogger</groupId>
-			<artifactId>tracee-context-logger-provider-api</artifactId>
+			<artifactId>contextlogger-provider-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
         <dependency>
             <groupId>io.tracee.contextlogger</groupId>
-            <artifactId>tracee-context-logger-impl</artifactId>
+            <artifactId>contextlogger-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -41,8 +41,6 @@
         <dependency>
             <groupId>io.tracee.backend</groupId>
             <artifactId>tracee-slf4j</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -54,7 +52,6 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
         </dependency>
 
 	</dependencies>
