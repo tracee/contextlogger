@@ -34,7 +34,7 @@ You need to add the following Dependencies to your projects pom.xml:
     
     <!-- Optional - used for context data propagation -->
     <dependency>
-        <groupId>io.tracee</groupId>
+        <groupId>io.tracee.binding</groupId>
         <artifactId>tracee-jaxws</artifactId>
         <version>${tracee.version}</version>
     </dependency>
