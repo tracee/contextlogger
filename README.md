@@ -2,7 +2,8 @@
 
 # context-logger
 
-[![Build Status](https://secure.travis-ci.org/tracee/contextlogger.png)](https://travis-ci.org/tracee/contextlogger)
+[![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
+[![Coverage Status](https://img.shields.io/coveralls/tracee/contextlogger.svg)](https://coveralls.io/r/tracee/contextlogger)
 
 > The TracEE context logger subproject helps you to analyze errors in your application by collecting contextual invocation data and writing it to your log files.
 
