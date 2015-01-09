@@ -25,7 +25,8 @@ import io.tracee.jaxws.container.TraceeServerHandler;
  */
 public abstract class AbstractTraceeErrorLoggingHandler extends AbstractTraceeHandler {
 
-    private final TraceeLogger logger = this.getTraceeBackend().getLoggerFactory().getLogger(TraceeServerHandler.class);
+    private final TraceeLogger logger = traceeBackend.getLoggerFactory().getLogger(
+            TraceeServerHandler.class);
 
     protected static final ThreadLocal<String> THREAD_LOCAL_SOAP_MESSAGE_STR = new ThreadLocal<String>();
 

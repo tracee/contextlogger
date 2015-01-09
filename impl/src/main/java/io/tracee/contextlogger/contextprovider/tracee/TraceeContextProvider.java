@@ -10,8 +10,8 @@ import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Common context data provider.
@@ -41,17 +41,10 @@ public final class TraceeContextProvider implements ImplicitContextData {
 
         final List<NameStringValuePair> list = new ArrayList<NameStringValuePair>();
 
-        final Collection<String> keys = traceeBackend.keySet();
-        if (keys != null) {
-            for (String key : keys) {
-
-                final String value = traceeBackend.get(key);
-                list.add(new NameStringValuePair(key, value));
-
-            }
-        }
-        return list.size() > 0 ? list : null;
-
+        final Map<String, String> keys = traceeBackend.copyToMap();
+		for (Map.Entry<String, String> entry : keys.entrySet()) {
+			list.add(new NameStringValuePair(entry.getKey(), entry.getValue()));
+		}
+        return !list.isEmpty() ? list : null;
     }
-
 }
