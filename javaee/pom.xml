@@ -35,7 +35,6 @@
             <artifactId>jms-api</artifactId>
         </dependency>
 
-
 		<!-- unit test dependencies-->
 		<dependency>
 			<groupId>io.tracee</groupId>

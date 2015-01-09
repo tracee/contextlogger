@@ -1,8 +1,8 @@
-> This document contains documentation for the tracee context-logger-watchdog module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the tracee contextlogger-watchdog module. Click [here](/README.md) to get an overview that TracEE is about.
 
-# context-logger-watchdog
+# contextlogger-watchdog
 
-> The TracEE context-logger-watchdog project offers an AspectJ / spring-AOP aspect that will output method invocation related data if an exception is thrown during the method invocation. 
+> The TracEE contextlogger-watchdog project offers an AspectJ / spring-AOP aspect that will output method invocation related data if an exception is thrown during the method invocation. 
 
 The watchdog aspect execution is triggered by the Watchdog annotation. Therefore the Watchdog annotation can be added to a method of a class or to a class to enable the watchdog aspect execution for all public methods of the class.
 
@@ -63,7 +63,7 @@ You have to add the following Maven dependencies to your project:
 
     <dependency>
         <groupId>io.tracee.contextlogger</groupId>
-        <artifactId>tracee-context-logger-watchdog</artifactId>
+        <artifactId>contextlogger-watchdog</artifactId>
         <version>${tracee.version}</version>
     </dependency>
     

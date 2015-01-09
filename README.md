@@ -1,6 +1,6 @@
-> This document contains documentation for the tracee context-logger modules. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the tracee contextlogger modules. Click [here](/README.md) to get an overview that TracEE is about.
 
-# context-logger
+# contextlogger
 
 [![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
 [![Coverage Status](https://img.shields.io/coveralls/tracee/contextlogger.svg)](https://coveralls.io/r/tracee/contextlogger)
@@ -56,11 +56,11 @@ The steps to get TracEE contextual logging up and running pretty much depend on 
 ## Modules
 
 TracEE context logger is built highly modular. The modules you need depend on your application and the underlying frameworks and containers.
-The following table describes all available TracEE-context-logger modules and their usage scenarios.
+The following table describes all available TracEE-contextlogger modules and their usage scenarios.
 
 | Module                                | Usage |
 |--------------------------------------:|:-----:|
-| [contextlogger-connectors](context-logger-connectors)              | Provides support for writing contextual data to other target as log files (f.e. send error via Http) |
+| [contextlogger-connectors](connectors)              | Provides support for writing contextual data to other target as log files (f.e. send error via Http) |
 | [contextlogger-impl](impl)                          | The implementation of the context logger |
 | [contextlogger-integration-test](integration-test)  | Does some integration test for custom data providers |
 | [contextlogger-javaee](javaee)                      | Provides support for EJB / CDI /JMS by offering interceptors |

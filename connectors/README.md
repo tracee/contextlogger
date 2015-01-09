@@ -1,6 +1,6 @@
-> This document contains documentation for the context-logger-connectors module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the contextlogger-connectors module. Click [here](/README.md) to get an overview that TracEE is about.
 
-# context-logger-connectors
+# contextlogger-connectors
 
 The tracEE context logger supports writing to the log files per default. 
 But its also possible to write the context log information to other kind of targets.
@@ -10,8 +10,8 @@ This can be done via connectors provided by the submodules of this module or by 
 
 | Module                                                 | Usage |
 |-------------------------------------------------------:|:-----:|
-| [context-logger-connector-api](connector-api/)         | Provides an api for developing custom connectors |
-| [tracee-context-logger-http-connector](http-connector/)| Provides a connector that sends contextual log information via HTTP to another system|
+| [connector-api](connector-api/)        	| Provides an api for developing custom connectors |
+| [http-connector](http-connector/)			| Provides a connector that sends contextual log information via HTTP to another system|
 
 
 ## Configuring connectors

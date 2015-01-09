@@ -19,7 +19,6 @@
 		<module>javaee</module>
 		<module>watchdog</module>
 		<module>integration-test</module>
-        <!--<module>context-logger-deserializer</module>-->
 	</modules>
 
     <parent>
