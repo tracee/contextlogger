@@ -1,11 +1,12 @@
 package io.tracee.contextlogger.jaxws.container;
 
-import static io.tracee.contextlogger.jaxws.container.TraceeServerErrorLoggingHandler.THREAD_LOCAL_SOAP_MESSAGE_STR;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+
+import static io.tracee.contextlogger.jaxws.container.TraceeServerErrorLoggingHandler.THREAD_LOCAL_SOAP_MESSAGE_STR;
 
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -27,8 +28,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import io.tracee.NoopTraceeLoggerFactory;
 import io.tracee.Tracee;
 import io.tracee.TraceeBackend;
+import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.internal.MessageLogLevel;
 import io.tracee.contextlogger.contextprovider.jaxws.JaxWsWrapper;
 
 /**
@@ -36,8 +39,10 @@ import io.tracee.contextlogger.contextprovider.jaxws.JaxWsWrapper;
  * {@link io.tracee.contextlogger.jaxws.container.TraceeServerErrorLoggingHandler}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ TraceeContextLogger.class, Tracee.class })
+@PrepareForTest({ TraceeContextLogger.class, Tracee.class, MessagePrefixProvider.class })
 public class TraceeServerErrorLoggingHandlerTest {
+
+    private final static String LOG_MESSAGE_PREFIX = "XX";
 
     private final TraceeBackend mockedBackend = mock(TraceeBackend.class);
 
@@ -56,6 +61,11 @@ public class TraceeServerErrorLoggingHandlerTest {
         mockStatic(TraceeContextLogger.class);
         contextLogger = mock(TraceeContextLogger.class);
         when(TraceeContextLogger.createDefault()).thenReturn(contextLogger);
+
+        // mock log message prefix creation
+        mockStatic(MessagePrefixProvider.class);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(String.class))).thenReturn(LOG_MESSAGE_PREFIX);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(Class.class))).thenReturn(LOG_MESSAGE_PREFIX);
     }
 
     @Test
@@ -143,7 +153,7 @@ public class TraceeServerErrorLoggingHandlerTest {
         final SOAPMessageContext messageContext = mock(SOAPMessageContext.class);
         when(messageContext.getMessage()).thenReturn(buildSpiedTestMessage("vA"));
         unit.handleFault(messageContext);
-        verify(contextLogger).logJsonWithPrefixedMessage(eq("TRACEE JAXWS ERROR CONTEXT LISTENER"), eq(ImplicitContext.COMMON), eq(ImplicitContext.TRACEE),
+        verify(contextLogger).logJsonWithPrefixedMessage(eq(LOG_MESSAGE_PREFIX), eq(ImplicitContext.COMMON), eq(ImplicitContext.TRACEE),
                 Mockito.any(JaxWsWrapper.class));
     }
 

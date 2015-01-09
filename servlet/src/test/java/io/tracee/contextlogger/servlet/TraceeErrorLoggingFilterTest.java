@@ -16,16 +16,21 @@ import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import io.tracee.TraceeException;
+import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.internal.MessageLogLevel;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(TraceeContextLogger.class)
+@PrepareForTest({ TraceeContextLogger.class, MessagePrefixProvider.class })
 public class TraceeErrorLoggingFilterTest {
+
+    private final static String LOG_MESSAGE_PREFIX = "XX";
 
     private final TraceeErrorLoggingFilter unit = new TraceeErrorLoggingFilter();
     private final HttpServletRequest request = mock(HttpServletRequest.class);
@@ -36,6 +41,11 @@ public class TraceeErrorLoggingFilterTest {
 
     @Before
     public void setUpMocks() {
+        // mock log message prefix creation
+        mockStatic(MessagePrefixProvider.class);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(String.class))).thenReturn(LOG_MESSAGE_PREFIX);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(Class.class))).thenReturn(LOG_MESSAGE_PREFIX);
+
         mockStatic(TraceeContextLogger.class);
         when(TraceeContextLogger.createDefault()).thenReturn(traceeContextLogger);
         when(request.getSession(false)).thenReturn(session);
@@ -55,8 +65,8 @@ public class TraceeErrorLoggingFilterTest {
             unit.doFilter(request, response, filterChain);
         }
         catch (Exception e) {
-            verify(traceeContextLogger).logJsonWithPrefixedMessage(TraceeErrorLoggingFilter.LOGGING_PREFIX_MESSAGE, ImplicitContext.COMMON,
-                    ImplicitContext.TRACEE, request, response, session, expectedException);
+            verify(traceeContextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, request, response,
+                    session, expectedException);
             throw e;
         }
     }

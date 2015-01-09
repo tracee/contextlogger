@@ -3,9 +3,11 @@ package io.tracee.contextlogger.javaee;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
+import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
 import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.internal.MessageLogLevel;
 import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
 
 /**
@@ -14,8 +16,6 @@ import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
  * Created by Tobias Gindler, holisticon AG on 13.03.14.
  */
 public class TraceeErrorContextLoggingInterceptor {
-
-    static final String JSON_PREFIXED_MESSAGE = "TRACEE EJB INTERCEPTOR CONTEXT LOGGING LISTENER : ";
 
     @SuppressWarnings("unused")
     public TraceeErrorContextLoggingInterceptor() {
@@ -33,12 +33,14 @@ public class TraceeErrorContextLoggingInterceptor {
 
             // now log context informations
             if (errorMessage == null) {
-                TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx,
-                        e);
+                TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
+                        MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
+                        ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
             else {
-                TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(JSON_PREFIXED_MESSAGE, TraceeMessage.wrap(errorMessage.value()),
-                        ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
+                TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
+                        MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
+                        TraceeMessage.wrap(errorMessage.value()), ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
             throw e;
         }
