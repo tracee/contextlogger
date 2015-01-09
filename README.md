@@ -1,12 +1,9 @@
-> This document contains documentation for the tracee contextlogger modules. Click [here](/README.md) to get an overview that TracEE is about.
-
-# contextlogger
+# TracEE Context-Logger addon
 
 [![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
 [![Coverage Status](https://img.shields.io/coveralls/tracee/contextlogger.svg)](https://coveralls.io/r/tracee/contextlogger)
 
 > The TracEE context logger subproject helps you to analyze errors in your application by collecting contextual invocation data and writing it to your log files.
-
 
 The *TracEE* main project helps you to aggregate all your log files. This will technically enable you to track user requests or session throughout the log but does not have an influence on what will be written to the logs.
 In case if an error occurs in your application, the context logger subproject collects contextual log information and writes it to your log files.
