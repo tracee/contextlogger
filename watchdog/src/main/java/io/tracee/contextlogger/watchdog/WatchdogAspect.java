@@ -1,17 +1,20 @@
 package io.tracee.contextlogger.watchdog;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
-import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ErrorMessage;
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.contextprovider.aspectj.WatchdogDataWrapper;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
-import io.tracee.contextlogger.watchdog.util.WatchdogUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+
+import io.tracee.Tracee;
+import io.tracee.TraceeBackend;
+import io.tracee.contextlogger.MessagePrefixProvider;
+import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ErrorMessage;
+import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.internal.MessageLogLevel;
+import io.tracee.contextlogger.contextprovider.aspectj.WatchdogDataWrapper;
+import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
+import io.tracee.contextlogger.watchdog.util.WatchdogUtils;
 
 /**
  * Watchdog Assert class.
@@ -56,7 +59,8 @@ public class WatchdogAspect {
 
         try {
             return proceedingJoinPoint.proceed();
-        } catch (final Throwable e) {
+        }
+        catch (final Throwable e) {
 
             // check if watchdog processing is flagged as active
             if (active) {
@@ -78,7 +82,8 @@ public class WatchdogAspect {
 
                     }
 
-                } catch (Throwable error) {
+                }
+                catch (Throwable error) {
                     // will be ignored
                     traceeBackend.getLoggerFactory().getLogger(WatchdogAspect.class).error("error", error);
                 }
@@ -92,9 +97,9 @@ public class WatchdogAspect {
     /**
      * Sends the error reports to all connectors.
      *
-     * @param traceeBackend       the tracee backend
+     * @param traceeBackend the tracee backend
      * @param proceedingJoinPoint the aspectj calling context
-     * @param annotatedId         the id defined in the watchdog annotation
+     * @param annotatedId the id defined in the watchdog annotation
      */
     void sendErrorReportToConnectors(TraceeBackend traceeBackend, ProceedingJoinPoint proceedingJoinPoint, String annotatedId, Throwable e) {
 
@@ -102,12 +107,14 @@ public class WatchdogAspect {
         ErrorMessage errorMessage = WatchdogUtils.getErrorMessageAnnotation(proceedingJoinPoint);
 
         if (errorMessage == null) {
-            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage("TRACEE WATCHDOG ERROR CONTEXT LISTENER :", ImplicitContext.COMMON,
-                    ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
-        } else {
-            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage("TRACEE WATCHDOG ERROR CONTEXT LISTENER :",
-                    TraceeMessage.wrap(errorMessage.value()), ImplicitContext.COMMON, ImplicitContext.TRACEE,
+            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
+                    MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), ImplicitContext.COMMON, ImplicitContext.TRACEE,
                     WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
+        }
+        else {
+            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
+                    MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), TraceeMessage.wrap(errorMessage.value()),
+                    ImplicitContext.COMMON, ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
         }
     }
 

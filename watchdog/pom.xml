@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tracee.contextlogger</groupId>
         <artifactId>contextlogger-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <name>contextlogger-watchdog</name>
@@ -50,20 +50,19 @@
         <dependency>
             <groupId>io.tracee.contextlogger</groupId>
             <artifactId>contextlogger-impl</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.7.4</version>
+            <version>${aspectj.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.7.4</version>
+            <version>${aspectj.version}</version>
         </dependency>
 
 
@@ -87,15 +86,11 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

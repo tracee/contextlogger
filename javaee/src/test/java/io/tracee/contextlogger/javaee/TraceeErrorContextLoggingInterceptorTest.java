@@ -1,15 +1,10 @@
 package io.tracee.contextlogger.javaee;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import javax.interceptor.InvocationContext;
@@ -21,10 +16,12 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
 import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.internal.MessageLogLevel;
 import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
 
 /**
@@ -32,8 +29,10 @@ import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
  * Created by Tobias Gindler on 19.06.14.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ TraceeContextLogger.class, TraceeMessage.class })
+@PrepareForTest({ TraceeContextLogger.class, TraceeMessage.class, MessagePrefixProvider.class })
 public class TraceeErrorContextLoggingInterceptorTest {
+
+    private final static String LOG_MESSAGE_PREFIX = "XX";
 
     public static final String ERROR_MESSAGE = "ABC";
 
@@ -54,6 +53,11 @@ public class TraceeErrorContextLoggingInterceptorTest {
         when(TraceeContextLogger.createDefault()).thenReturn(contextLogger);
         mockStatic(TraceeMessage.class);
         when(TraceeMessage.wrap(ERROR_MESSAGE)).thenReturn(traceeMessage);
+
+        // mock log message prefix creation
+        mockStatic(MessagePrefixProvider.class);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(String.class))).thenReturn(LOG_MESSAGE_PREFIX);
+        when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(Class.class))).thenReturn(LOG_MESSAGE_PREFIX);
     }
 
     @Test
@@ -83,8 +87,8 @@ public class TraceeErrorContextLoggingInterceptorTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logJsonWithPrefixedMessage(TraceeErrorContextLoggingInterceptor.JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON,
-                    ImplicitContext.TRACEE, invocationContext, exception);
+            verify(contextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext,
+                    exception);
             throw e;
         }
     }
@@ -103,8 +107,8 @@ public class TraceeErrorContextLoggingInterceptorTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logJsonWithPrefixedMessage(TraceeErrorContextLoggingInterceptor.JSON_PREFIXED_MESSAGE, traceeMessage,
-                    ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext, exception);
+            verify(contextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, traceeMessage, ImplicitContext.COMMON, ImplicitContext.TRACEE,
+                    invocationContext, exception);
             throw e;
         }
     }

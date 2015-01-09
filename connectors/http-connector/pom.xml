@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tracee.contextlogger</groupId>
 		<artifactId>connector-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <name>http-connector</name>
@@ -54,8 +54,7 @@
 
         <dependency>
             <groupId>io.tracee.contextlogger</groupId>
-            <artifactId>tracee-context-logger-connector-api</artifactId>
-            <version>${project.version}</version>
+            <artifactId>contextlogger-connector-api</artifactId>
         </dependency>
 
 		<dependency>
