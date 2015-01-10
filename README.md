@@ -1,5 +1,6 @@
 # TracEE Context-Logger addon
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.tracee.contextlogger/contextlogger-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.tracee.contextlogger/contextlogger-parent)
 [![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
 [![Coverage Status](https://img.shields.io/coveralls/tracee/contextlogger.svg)](https://coveralls.io/r/tracee/contextlogger)
 
