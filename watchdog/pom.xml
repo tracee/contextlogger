@@ -92,5 +92,11 @@
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
         </dependency>
+
+		<dependency>
+			<groupId>io.tracee.contextlogger</groupId>
+			<artifactId>testhelper</artifactId>
+		</dependency>
+
     </dependencies>
 </project>

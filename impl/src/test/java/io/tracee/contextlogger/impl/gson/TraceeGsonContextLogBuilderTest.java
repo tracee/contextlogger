@@ -1,15 +1,16 @@
 package io.tracee.contextlogger.impl.gson;
 
-import io.tracee.contextlogger.RegexMatcher;
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.Test;
+
+import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
+import io.tracee.contextlogger.util.test.RegexMatcher;
 
 /**
  * Test class for {@link TraceeGsonContextStringRepresentationBuilder}.
@@ -17,32 +18,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TraceeGsonContextLogBuilderTest {
 
-	@Test
-	public void should_create_context_log() {
-		final TraceeGsonContextStringRepresentationBuilder logBuilder = new TraceeGsonContextStringRepresentationBuilder();
-		logBuilder.setWrapperClasses(new HashSet<Class>(Arrays.<Class>asList(JavaThrowableContextProvider.class)));
+    @Test
+    public void should_create_context_log() {
+        final TraceeGsonContextStringRepresentationBuilder logBuilder = new TraceeGsonContextStringRepresentationBuilder();
+        logBuilder.setWrapperClasses(new HashSet<Class>(Arrays.<Class> asList(JavaThrowableContextProvider.class)));
 
-		String json = logBuilder.createStringRepresentation(new JavaThrowableContextProvider(new NullPointerException()));
+        String json = logBuilder.createStringRepresentation(new JavaThrowableContextProvider(new NullPointerException()));
 
-		assertThat(json, RegexMatcher.matches("\\[\\{\\\"stacktrace\\\":\\\"java.lang.Null.*\\}\\]"));
-	}
+        assertThat(json, RegexMatcher.matches("\\[\\{\\\"stacktrace\\\":\\\"java.lang.Null.*\\}\\]"));
+    }
 
-	@Test
-	public void should_create_mixed_context_log() {
-		TraceeGsonContextStringRepresentationBuilder logBuilder = new TraceeGsonContextStringRepresentationBuilder();
-		Set<Class> classes = new HashSet<Class>();
-		classes.add(PassedDataContextProvider.class);
-		classes.add(JavaThrowableContextProvider.class);
+    @Test
+    public void should_create_mixed_context_log() {
+        TraceeGsonContextStringRepresentationBuilder logBuilder = new TraceeGsonContextStringRepresentationBuilder();
+        Set<Class> classes = new HashSet<Class>();
+        classes.add(PassedDataContextProvider.class);
+        classes.add(JavaThrowableContextProvider.class);
 
-		logBuilder.setWrapperClasses(classes);
+        logBuilder.setWrapperClasses(classes);
 
-		Object[] oarray = new Object[2];
-		oarray[0] = new JavaThrowableContextProvider(new NullPointerException());
-		oarray[1] = "TATA";
-		PassedDataContextProvider cp = new PassedDataContextProvider(oarray);
+        Object[] oarray = new Object[2];
+        oarray[0] = new JavaThrowableContextProvider(new NullPointerException());
+        oarray[1] = "TATA";
+        PassedDataContextProvider cp = new PassedDataContextProvider(oarray);
 
-		String json = logBuilder.createStringRepresentation(cp);
+        String json = logBuilder.createStringRepresentation(cp);
 
-		assertThat(json, RegexMatcher.matches("\\[\\{\\\"throwable\\\":\\{\\\"stacktrace\\\":\\\"java.lang.NullPointerException.*java.lang.String\\\":\\\"TATA\\\"\\}\\]"));
-	}
+        assertThat(
+                json,
+                RegexMatcher
+                        .matches("\\[\\{\\\"throwable\\\":\\{\\\"stacktrace\\\":\\\"java.lang.NullPointerException.*java.lang.String\\\":\\\"TATA\\\"\\}\\]"));
+    }
 }

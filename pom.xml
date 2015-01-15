@@ -19,6 +19,7 @@
 		<module>javaee</module>
 		<module>watchdog</module>
 		<module>integration-test</module>
+		<module>testhelper</module>
 	</modules>
 
     <parent>
@@ -321,6 +322,13 @@
 				<groupId>io.tracee.contextlogger</groupId>
 				<artifactId>contextlogger-connector-api</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger</groupId>
+				<artifactId>testhelper</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
 			</dependency>
 
 
