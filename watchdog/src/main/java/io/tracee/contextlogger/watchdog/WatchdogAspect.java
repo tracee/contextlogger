@@ -12,7 +12,7 @@ import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
-import io.tracee.contextlogger.contextprovider.aspectj.WatchdogDataWrapper;
+import io.tracee.contextlogger.watchdog.contextprovider.WatchdogDataWrapper;
 import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
 import io.tracee.contextlogger.watchdog.util.WatchdogUtils;
 

@@ -3,10 +3,10 @@ package io.tracee.contextlogger.contextprovider.tracee;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 
+import io.tracee.contextlogger.util.test.RegexMatcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.RegexMatcher;
 import io.tracee.contextlogger.TraceeContextLogger;
 
 /**

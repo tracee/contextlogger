@@ -32,7 +32,7 @@ import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
-import io.tracee.contextlogger.contextprovider.jaxws.JaxWsWrapper;
+import io.tracee.contextlogger.jaxws.contextprovider.JaxWsWrapper;
 
 /**
  * Test class for {@link io.tracee.contextlogger.jaxws.container.AbstractTraceeErrorLoggingHandler} and

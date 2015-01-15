@@ -1,27 +1,27 @@
 package io.tracee.contextlogger.impl.gson;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.tracee.contextlogger.RegexMatcher;
-import io.tracee.contextlogger.TraceeContextLoggerConstants;
-import io.tracee.contextlogger.contextprovider.tracee.CommonDataContextProvider;
-import io.tracee.contextlogger.profile.Profile;
-import io.tracee.contextlogger.profile.ProfileSettings;
-import io.tracee.contextlogger.testdata.AnnotationTestClass;
+import io.tracee.contextlogger.util.test.RegexMatcher;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import org.hamcrest.MatcherAssert;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import io.tracee.contextlogger.TraceeContextLoggerConstants;
+import io.tracee.contextlogger.contextprovider.tracee.CommonDataContextProvider;
+import io.tracee.contextlogger.profile.Profile;
+import io.tracee.contextlogger.profile.ProfileSettings;
+import io.tracee.contextlogger.testdata.AnnotationTestClass;
 
 /**
  * Test class for {@link TraceeGenericGsonSerializer}.
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 public class TraceeGenericGsonSerializerTest {
-
 
     @Before
     public void init() {
@@ -32,14 +32,15 @@ public class TraceeGenericGsonSerializerTest {
         System.getProperties().remove(TraceeContextLoggerConstants.SYSTEM_PROPERTY_NAME_SYSTEM);
     }
 
-	/**
-	 * FIXME: This test depends on shared mutable state (System.getProperties()) and cannot be run in parallel. FIX IT!
-	 */
+    /**
+     * FIXME: This test depends on shared mutable state (System.getProperties()) and cannot be run in parallel. FIX IT!
+     */
     @Test
     @Ignore
-    public void should_return_json_representation () {
+    public void should_return_json_representation() {
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(AnnotationTestClass.class, new TraceeGenericGsonSerializer(new ProfileSettings(Profile.getCurrentProfile(),null))).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(AnnotationTestClass.class,
+                new TraceeGenericGsonSerializer(new ProfileSettings(Profile.getCurrentProfile(), null))).create();
         String json = gson.toJson(new AnnotationTestClass());
 
         MatcherAssert.assertThat(json, Matchers.notNullValue());
@@ -47,25 +48,27 @@ public class TraceeGenericGsonSerializerTest {
 
     }
 
-	/**
-	 * FIXME: This test depends on shared mutable state (System.getProperties()) and cannot be run in parallel. FIX IT!
-	 */
+    /**
+     * FIXME: This test depends on shared mutable state (System.getProperties()) and cannot be run in parallel. FIX IT!
+     */
     @Test
-	@Ignore
-    public void should_return_json_representation_of_common_data_provider () {
+    @Ignore
+    public void should_return_json_representation_of_common_data_provider() {
 
         System.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_NAME_STAGE, "DEBUG");
         System.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_NAME_SYSTEM, "SYSTEM_1");
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(CommonDataContextProvider.class, new TraceeGenericGsonSerializer(new ProfileSettings(Profile.getCurrentProfile(),null))).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(CommonDataContextProvider.class,
+                new TraceeGenericGsonSerializer(new ProfileSettings(Profile.getCurrentProfile(), null))).create();
         String json = gson.toJson(new CommonDataContextProvider());
 
         MatcherAssert.assertThat(json, Matchers.notNullValue());
-        MatcherAssert.assertThat(json, RegexMatcher.matches("\\{\\\"timestamp\\\":\\\".*?\\\",\\\"stage\\\":\\\"DEBUG\\\",\\\"system-name\\\":\\\"SYSTEM_1\\\",\\\"thread-name\\\":\\\"main\\\",\\\"thread-id\\\":1\\}"));
+        MatcherAssert
+                .assertThat(
+						json,
+						RegexMatcher
+								.matches("\\{\\\"timestamp\\\":\\\".*?\\\",\\\"stage\\\":\\\"DEBUG\\\",\\\"system-name\\\":\\\"SYSTEM_1\\\",\\\"thread-name\\\":\\\"main\\\",\\\"thread-id\\\":1\\}"));
 
     }
-
-
-
 
 }
