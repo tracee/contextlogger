@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import io.tracee.Tracee;
@@ -17,25 +18,44 @@ import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
 import io.tracee.contextlogger.jaxws.contextprovider.JaxWsWrapper;
-import io.tracee.jaxws.AbstractTraceeHandler;
-import io.tracee.jaxws.container.TraceeServerHandler;
 
 /**
  * Abstract base class for detecting JAX-WS related uncaught exceptions and outputting of contextual information.
  */
-public abstract class AbstractTraceeErrorLoggingHandler extends AbstractTraceeHandler {
+public abstract class AbstractTraceeErrorLoggingHandler implements SOAPHandler<SOAPMessageContext> {
 
-    private final TraceeLogger logger = traceeBackend.getLoggerFactory().getLogger(
-            TraceeServerHandler.class);
+    protected final TraceeBackend traceeBackend;
+
+    private final TraceeLogger logger;
 
     protected static final ThreadLocal<String> THREAD_LOCAL_SOAP_MESSAGE_STR = new ThreadLocal<String>();
 
+    /**
+     * The constructor.
+     *
+     * @param traceeBackend the tracee backend to use
+     */
     AbstractTraceeErrorLoggingHandler(TraceeBackend traceeBackend) {
-        super(traceeBackend);
+        this.traceeBackend = traceeBackend;
+        logger = traceeBackend.getLoggerFactory().getLogger(AbstractTraceeErrorLoggingHandler.class);
     }
 
+    /**
+     * No-Arg Constructor
+     */
     public AbstractTraceeErrorLoggingHandler() {
         this(Tracee.getBackend());
+    }
+
+    @Override
+    public final boolean handleMessage(final SOAPMessageContext context) {
+        if (this.isOutgoing(context)) {
+            this.handleOutgoing(context);
+        }
+        else {
+            this.handleIncoming(context);
+        }
+        return true;
     }
 
     @Override
@@ -49,6 +69,17 @@ public abstract class AbstractTraceeErrorLoggingHandler extends AbstractTraceeHa
                 JaxWsWrapper.wrap(THREAD_LOCAL_SOAP_MESSAGE_STR.get(), convertSoapMessageAsString(soapMessage)));
 
         return true;
+    }
+
+    @Override
+    public void close(MessageContext context) {
+        // cleanup thread local request soap message
+        THREAD_LOCAL_SOAP_MESSAGE_STR.remove();
+    }
+
+    @Override
+    public final Set<QName> getHeaders() {
+        return null;
     }
 
     /**
@@ -92,16 +123,19 @@ public abstract class AbstractTraceeErrorLoggingHandler extends AbstractTraceeHa
         }
     }
 
-    @Override
-    public void close(MessageContext context) {
-        super.close(context);
-        // cleanup thread local request soap message
-        THREAD_LOCAL_SOAP_MESSAGE_STR.remove();
-    }
+    protected abstract void handleIncoming(SOAPMessageContext context);
 
-    @Override
-    public final Set<QName> getHeaders() {
-        return null;
+    protected abstract void handleOutgoing(SOAPMessageContext context);
+
+    /**
+     * Checks whether is is an incoming or outgoing call.
+     *
+     * @param messageContext the message context
+     * @return true if is outgoing call, otherwise false
+     */
+    private boolean isOutgoing(MessageContext messageContext) {
+        Object outboundBoolean = messageContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        return outboundBoolean != null && (Boolean)outboundBoolean;
     }
 
 }
