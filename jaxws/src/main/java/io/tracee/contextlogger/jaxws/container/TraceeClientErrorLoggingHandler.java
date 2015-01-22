@@ -2,8 +2,6 @@ package io.tracee.contextlogger.jaxws.container;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeBackend;
-import io.tracee.TraceeLogger;
-import io.tracee.jaxws.container.TraceeServerHandler;
 
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
