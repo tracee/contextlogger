@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.integrationtest;
 
-import io.tracee.contextlogger.api.TraceeContextProvider;
-import io.tracee.contextlogger.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.api.WrappedContextData;
+import io.tracee.contextlogger.provider.api.TraceeContextProvider;
+import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.provider.api.WrappedContextData;
 
 /**
  * Test wrapper class that wraps type {@link io.tracee.contextlogger.integrationtest.WrappedTestContextData}.

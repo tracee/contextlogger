@@ -1,0 +1,23 @@
+# aspectj
+io.tracee.contextlogger.provider.aspectj.contextprovider.AspectjProceedingJoinPointContextProvider
+io.tracee.contextlogger.provider.aspectj.contextprovider.WatchdogContextProvider
+
+# javaee
+io.tracee.contextlogger.provider.javaee.contextprovider.InvocationContextContextProvider
+
+#jaxws
+io.tracee.contextlogger.provider.jaxws.contextprovider.JaxWsContextProvider
+
+#servlet
+io.tracee.contextlogger.provider.servlet.contextprovider.ServletCookieContextProvider
+io.tracee.contextlogger.provider.servlet.contextprovider.ServletRequestContextProvider
+io.tracee.contextlogger.provider.servlet.contextprovider.ServletResponseContextProvider
+io.tracee.contextlogger.provider.servlet.contextprovider.ServletSessionContextProvider
+
+# java language or tracee related
+io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider
+io.tracee.contextlogger.contextprovider.tracee.TraceeMessageContextProvider
+io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider
+io.tracee.contextlogger.contextprovider.utility.NameValuePair
+
+

@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.integrationtest;
 
-import io.tracee.contextlogger.api.CustomImplicitContextData;
-import io.tracee.contextlogger.api.TraceeContextProvider;
-import io.tracee.contextlogger.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.provider.api.CustomImplicitContextData;
+import io.tracee.contextlogger.provider.api.TraceeContextProvider;
+import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
 
 /**
  * Test provider that provides implicit context information but which has no args constructor.
