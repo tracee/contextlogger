@@ -1,8 +1,8 @@
-> This document contains documentation for the contextlogger-http-connector module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the connector-http module. Click [here](/README.md) to get an overview that TracEE is about.
 
-# contextlogger-http-connector
+# connector-http
 
-The TracEE contextlogger-http-connector supports writing contextual data to remote systems via HTTP(async). 
+The TracEE connector-http supports writing contextual data to remote systems via HTTP(async). 
 
 ## Maven artifacts
 You need to add the following Dependencies to your projects pom.xml:
@@ -10,8 +10,8 @@ You need to add the following Dependencies to your projects pom.xml:
 ```xml
 <!-- Add this to enable the HTTP connector -->
 <dependency>
-    <groupId>io.tracee.contextlogger</groupId>
-    <artifactId>http-connector</artifactId>
+    <groupId>io.tracee.contextlogger.connector</groupId>
+    <artifactId>connector-http</artifactId>
     <version>RELEASE</version>
 </dependency>
 ```
