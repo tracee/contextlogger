@@ -11,15 +11,16 @@
     <url>https://github.com/tracee/contextlogger</url>
 
 	<modules>
+
+		<!-- modules -->
 		<module>connectors</module>
-		<module>provider-api</module>
-		<module>impl</module>
-		<module>servlet</module>
-		<module>jaxws</module>
-		<module>javaee</module>
-		<module>watchdog</module>
+		<module>contextprovider</module>
+		<module>core</module>
+
+		<!-- tests and test related -->
 		<module>integration-test</module>
 		<module>testhelper</module>
+
 	</modules>
 
     <parent>
@@ -143,8 +144,9 @@
 										<include>*:*:*:*:test:*</include>
 										<include>*:*:*:*:provided:*</include>
 										<include>io.tracee:*</include>
-										<include>io.tracee.binding:*</include>
 										<include>io.tracee.contextlogger:*</include>
+										<include>io.tracee.contextlogger.contextprovider:*</include>
+										<include>io.tracee.contextlogger.connector:*</include>
 									</includes>
 								</bannedDependencies>
 							</rules>
@@ -308,19 +310,19 @@
 			<!-- internal -->
 			<dependency>
 				<groupId>io.tracee.contextlogger</groupId>
-				<artifactId>contextlogger-impl</artifactId>
+				<artifactId>contextlogger-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>io.tracee.contextlogger</groupId>
-				<artifactId>contextlogger-provider-api</artifactId>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>io.tracee.contextlogger</groupId>
-				<artifactId>contextlogger-connector-api</artifactId>
+				<groupId>io.tracee.contextlogger.connector</groupId>
+				<artifactId>connector-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -336,11 +338,6 @@
 			<dependency>
 				<groupId>io.tracee</groupId>
 				<artifactId>tracee-api</artifactId>
-				<version>${tracee.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.tracee.binding</groupId>
-				<artifactId>tracee-jaxws</artifactId>
 				<version>${tracee.version}</version>
 			</dependency>
 			<dependency>

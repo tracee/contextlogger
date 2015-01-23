@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>http-connector</artifactId>
+    <artifactId>connector-http</artifactId>
     <packaging>bundle</packaging>
 
     <parent>
-        <groupId>io.tracee.contextlogger</groupId>
+        <groupId>io.tracee.contextlogger.connector</groupId>
 		<artifactId>connector-parent</artifactId>
         <version>0.7.0-SNAPSHOT</version>
     </parent>
 
-    <name>http-connector</name>
+    <name>connector-http</name>
     <description>Please refer to https://github.com/tracee/contextlogger.</description>
 
     <build>
@@ -33,6 +33,7 @@
                                         <include>*:*:*:*:provided:*</include>
                                         <include>io.tracee:*</include>
                                         <include>io.tracee.contextlogger:*</include>
+										<include>io.tracee.contextlogger.connector:*</include>
                                         <include>com.ning:async-http-client</include>
                                     </includes>
                                 </bannedDependencies>
@@ -53,8 +54,8 @@
         </dependency>
 
         <dependency>
-            <groupId>io.tracee.contextlogger</groupId>
-            <artifactId>contextlogger-connector-api</artifactId>
+            <groupId>io.tracee.contextlogger.connector</groupId>
+            <artifactId>connector-api</artifactId>
         </dependency>
 
 		<dependency>

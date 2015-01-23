@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.integrationtest;
 
-import io.tracee.contextlogger.api.TraceeContextProvider;
-import io.tracee.contextlogger.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
  * Broken context data wrapper that throws a NullPointerException at deserialization.

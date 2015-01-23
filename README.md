@@ -43,13 +43,13 @@ The steps to get TracEE contextual logging up and running pretty much depend on 
 
 | Framework    | Adapter |
 | ----------:  |:------:|
-| Servlet      | Use [contextlogger-servlet](servlet) as a servlet filter. |
-| EJB3/CDI/JMS | Use [contextlogger-javaee](javaee) as an interceptor |
-| JAX-RS       | Use [contextlogger-servlet](servlet) as a servlet filter. |
+| Servlet      | Use [contextprovider-servlet](contextprovider/servlet) as a servlet filter. |
+| EJB3/CDI/JMS | Use [contextprovider-javaee](contextprovider/javaee) as an interceptor |
+| JAX-RS       | Use [contextprovider-servlet](contextprovider/servlet) as a servlet filter. |
 | JAX-RS2      | TODO |
-| JAX-WS       | Use [contextlogger-jaxws](jaxws) as a message listener. |
-| SPRING-AOP   | Use [contextlogger-watchdog] (watchdog) by offering an aspect triggered by a simple java annotation|
-| ASPECTJ      | Use [contextlogger-watchdog] (watchdog) by offering an aspect triggered by a simple java annotation|
+| JAX-WS       | Use [contextprovider-jaxws](contextprovider/jaxws) as a message listener. |
+| SPRING-AOP   | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
+| ASPECTJ      | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
 
 ## Modules
 
@@ -59,13 +59,13 @@ The following table describes all available TracEE-contextlogger modules and the
 | Module                                | Usage |
 |--------------------------------------:|:-----:|
 | [contextlogger-connectors](connectors)              | Provides support for writing contextual data to other target as log files (f.e. send error via Http) |
-| [contextlogger-impl](impl)                          | The implementation of the context logger |
+| [contextlogger-core](core)                          | The core of the context logger |
 | [contextlogger-integration-test](integration-test)  | Does some integration test for custom data providers |
-| [contextlogger-javaee](javaee)                      | Provides support for EJB / CDI /JMS by offering interceptors |
-| [contextlogger-jaxws](jaxws)                        | Provides support for JAXWS via Message handlers. |
-| [contextlogger-provider-api](provider-api)          | Provides support for Servlets via ServletFilter |
-| [contextlogger-servlet](servlet)                    | Provides support for Servlets via ServletFilter |
-| [contextlogger-watchdog](watchdog)                  | AspectJ / Spring-AOP powered contextual logging |
+| [contextlprovider-javaee](contextprovider/javaee)                      | Provides support for EJB / CDI /JMS by offering interceptors |
+| [contextprovider-jaxws](contextprovider/jaxws)                        | Provides support for JAXWS via Message handlers. |
+| [contextprovider-provider-api](contextprovider/api)          | Provides support for Servlets via ServletFilter |
+| [contextprovider-servlet](contextprovider/servlet)                    | Provides support for Servlets via ServletFilter |
+| [contextprovider-aspectj](contextprovider/aspectj)                  | AspectJ / Spring-AOP powered contextual logging |
 
 ## Configuration
 
