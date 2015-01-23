@@ -1,4 +1,4 @@
-> This document contains documentation for the tracee contextlogger-aspectj module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the tracee contextprovider-aspectj module. Click [here](/README.md) to get an overview that TracEE is about.
 
 # contextprovider-aspectj
 
