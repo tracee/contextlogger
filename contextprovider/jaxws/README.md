@@ -1,10 +1,10 @@
-> This document contains documentation for the tracee contextlogger-jaxws module. Click [here](/README.md) to get an overview that TracEE jaxws context logger is about.
+> This document contains documentation for the tracee contextprovider-jaxws module. Click [here](../../README.md) to get an overview that TracEE jaxws context logger is about.
 
-# context-logger-jaxws
+# contextprovider-jaxws
 
-> The TracEE contextlogger-jaxws project offers client and server side webservice handlers that will output webservice invocation related data if an exception is thrown during the invocation of the webservice. 
+> The TracEE contextprovider-jaxws project offers client and server side webservice handlers that will output webservice invocation related data if an exception is thrown during the invocation of the webservice. 
 
-Therefore the contextlogger-jaxws module provides SOAPHandlers that detect exceptions and log contextual infomation to your log system.
+Therefore the contextprovider-jaxws module provides SOAPHandlers that detect exceptions and log contextual infomation to your log system.
 
 
 ## Example output
@@ -39,8 +39,8 @@ You need to add the following Dependencies to your projects pom.xml:
         
     <!-- Binds context logging -->
     <dependency>
-        <groupId>io.tracee.contextlogger</groupId>
-        <artifactId>contextlogger-jaxws</artifactId>
+        <groupId>io.tracee.contextlogger.contextprovider</groupId>
+        <artifactId>contextprovider-jaxws</artifactId>
         <version>RELEASE</version>
     </dependency>
 ```
