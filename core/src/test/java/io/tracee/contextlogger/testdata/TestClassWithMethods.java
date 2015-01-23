@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.testdata;
 
-import io.tracee.contextlogger.provider.api.Flatten;
+import io.tracee.contextlogger.contextprovider.api.Flatten;
 
 /**
  * Created by Tobias Gindler, holisticon AG on 14.03.14.

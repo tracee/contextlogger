@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.testdata;
 
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 
 import java.util.ArrayList;
 import java.util.List;

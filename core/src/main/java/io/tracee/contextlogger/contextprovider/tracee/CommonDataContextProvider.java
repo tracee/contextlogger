@@ -1,21 +1,22 @@
 package io.tracee.contextlogger.contextprovider.tracee;
 
-import io.tracee.contextlogger.TraceeContextLoggerConstants;
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.api.ImplicitContextData;
-import io.tracee.contextlogger.provider.api.*;
-import io.tracee.contextlogger.contextprovider.Order;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.tracee.contextlogger.TraceeContextLoggerConstants;
+import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.ImplicitContextData;
+import io.tracee.contextlogger.contextprovider.Order;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+
 /**
  * Common context data provider.
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
-@io.tracee.contextlogger.provider.api.TraceeContextProvider(displayName = "common", order = Order.COMMON)
+@TraceeContextProvider(displayName = "common", order = Order.COMMON)
 public class CommonDataContextProvider implements ImplicitContextData {
 
     @Override
@@ -44,7 +45,8 @@ public class CommonDataContextProvider implements ImplicitContextData {
         if (systemName == null) {
             try {
                 systemName = InetAddress.getLocalHost().getHostName();
-            } catch (UnknownHostException e) {
+            }
+            catch (UnknownHostException e) {
                 // ignore
             }
         }

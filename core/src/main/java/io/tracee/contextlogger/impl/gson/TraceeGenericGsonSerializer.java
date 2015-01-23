@@ -14,7 +14,7 @@ import com.google.gson.JsonSerializer;
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.TraceeContextLoggerConstants;
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.profile.ProfileSettings;

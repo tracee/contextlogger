@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.utility;
 
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 import io.tracee.contextlogger.testdata.AnnotationTestClass;
 import io.tracee.contextlogger.testdata.TestClassWithMethods;

@@ -2,9 +2,9 @@ package io.tracee.contextlogger.contextprovider;
 
 import io.tracee.Tracee;
 import io.tracee.contextlogger.TraceeContextLoggerConstants;
-import io.tracee.contextlogger.provider.api.CustomImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
 import io.tracee.contextlogger.api.ImplicitContextData;
-import io.tracee.contextlogger.provider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,7 +106,7 @@ public final class TypeToWrapper {
      *
      * @param type        the type of implicit context data provider to look for
      * @param resourceUrl the resource file url process
-     * @param <T>         The generic type of implicit data provider either {@link io.tracee.contextlogger.provider.api.CustomImplicitContextData} or
+     * @param <T>         The generic type of implicit data provider either {@link io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData} or
      *                    {@link io.tracee.contextlogger.api.ImplicitContextData}
      * @return a set that contains all context provider type the were found
      */

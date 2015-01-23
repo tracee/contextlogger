@@ -1,8 +1,9 @@
 package io.tracee.contextlogger.contextprovider.tracee;
 
-import io.tracee.contextlogger.provider.api.Flatten;
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.provider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.Flatten;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.utility.PassedContextDataElementWrapper;
 import io.tracee.contextlogger.utility.PassedContextDataElementWrapperComparator;
@@ -12,11 +13,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ContextDataProvider for all instances passed to {@link TraceeContextProvider}
+ * ContextDataProvider for all instances passed to {@link TraceeMdcContextProvider}
  * Created by Tobias Gindler, holisticon AG on 20.03.14.
  */
 
-@io.tracee.contextlogger.provider.api.TraceeContextProvider(displayName = "contexts")
+@TraceeContextProvider(displayName = "contexts")
 public class PassedDataContextProvider implements WrappedContextData<Object[]> {
 
     private Object[] instances;

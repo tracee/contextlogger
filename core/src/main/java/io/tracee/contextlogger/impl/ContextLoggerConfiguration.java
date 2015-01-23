@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.impl;
 
-import io.tracee.contextlogger.provider.api.CustomImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;

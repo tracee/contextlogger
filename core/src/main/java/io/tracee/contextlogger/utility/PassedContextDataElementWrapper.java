@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.utility;
 
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 
 /**

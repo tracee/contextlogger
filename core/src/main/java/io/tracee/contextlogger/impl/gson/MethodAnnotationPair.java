@@ -1,13 +1,13 @@
 package io.tracee.contextlogger.impl.gson;
 
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.profile.ProfileSettings;
 import io.tracee.contextlogger.utility.GetterUtilities;
 
 import java.lang.reflect.Method;
 
 /**
- * Wrapper class for methods and their {@link io.tracee.contextlogger.provider.api.TraceeContextProviderMethod} annotations.
+ * Wrapper class for methods and their {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod} annotations.
  * Used for sorting (by {@link MethodAnnotationPairComparator}) and other tasks.
  * <p/>
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
@@ -26,7 +26,7 @@ public class MethodAnnotationPair {
 
     /**
      * Determines if a method should be processed. This will either be if no
-     * {@link io.tracee.contextlogger.provider.api.TraceeContextProviderMethod} annotation
+     * {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod} annotation
      * is present or if an empty property name is defined in the annotation or if passed profileSettings are null
      * or if the property name is disabled in the {@link io.tracee.contextlogger.profile.ProfileSettings}.
      *

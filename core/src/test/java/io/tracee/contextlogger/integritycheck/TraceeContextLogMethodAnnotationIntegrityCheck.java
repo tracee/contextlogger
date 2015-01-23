@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.integritycheck;
 
-import io.tracee.contextlogger.provider.api.Flatten;
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.Flatten;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.testdata.AnnotationTestClass;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Does a integrity check for all (@link Flatten), {@link io.tracee.contextlogger.provider.api.TraceeContextProvider}
- * and {@link io.tracee.contextlogger.provider.api.TraceeContextProviderMethod} annotated  classes and methods.
+ * Does a integrity check for all (@link Flatten), {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProvider}
+ * and {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod} annotated  classes and methods.
  * Created by Tobias Gindler, holisticon AG on 18.03.14.
  */
 public class TraceeContextLogMethodAnnotationIntegrityCheck {

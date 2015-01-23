@@ -6,8 +6,8 @@ import io.tracee.contextlogger.contextprovider.TypeToWrapper;
 import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
 import io.tracee.contextlogger.impl.ContextLoggerBuilderImpl;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
-import io.tracee.contextlogger.provider.api.CustomImplicitContextData;
-import io.tracee.contextlogger.provider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
  * The main context logger class.

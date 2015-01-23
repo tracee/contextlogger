@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.utility;
 
-import io.tracee.contextlogger.provider.api.Flatten;
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.Flatten;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 
 import java.lang.reflect.Method;
@@ -22,10 +22,10 @@ public final class TraceeContextLogAnnotationUtilities {
     }
 
     /**
-     * gets the {@link io.tracee.contextlogger.provider.api.TraceeContextProvider} annotation of passed instance.
+     * gets the {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProvider} annotation of passed instance.
      *
      * @param instance the instance to get the annotation from
-     * @return the {@link io.tracee.contextlogger.provider.api.TraceeContextProvider} annotation if present, otherwise null
+     * @return the {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProvider} annotation if present, otherwise null
      */
     public static TraceeContextProvider getAnnotationFromType(final Object instance) {
         if (instance == null) {
@@ -36,7 +36,7 @@ public final class TraceeContextLogAnnotationUtilities {
 
 
     /**
-     * Extracts all {@link io.tracee.contextlogger.provider.api.TraceeContextProviderMethod} annotated methods of the passed instance.
+     * Extracts all {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod} annotated methods of the passed instance.
      *
      * @param instance the instance to check for
      * @return a list containing all annotated methods of an instance
