@@ -1,5 +1,5 @@
-> This document contains documentation for the contextlogger-impl module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the contextlogger-core module. Click [here](/README.md) to get an overview that TracEE contextlogger is about.
 
-# TracEE contextlogger-impl
+# TracEE contextlogger-core
 
-This project provides the implementation of the context logger. This includes loading of configuration / profiles, providing some basic context providers and data wrappers.
+This project provides the core implementation of the context logger. This includes loading of configuration / profiles, providing some basic context providers and data wrappers.
