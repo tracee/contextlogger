@@ -1,10 +1,10 @@
-> This document contains documentation for the contextlogger-jaxws module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the contextprovider-javaee module. Click [here](/README.md) to get an overview that TracEE is about.
 
-# contextlogger-jaxws
+# contextprovider-javaee
 
-> The TracEE contextlogger-javaee project offers support for acquiring contextual information in JMS and for EJB calls, if an exception is thrown during the invocation of the webservice. 
+> The TracEE contextprovider-javaee project offers support for acquiring contextual information in JMS and for EJB / CDI calls, if an exception is thrown during the execution of the invoked bean. 
 
-Therefore the contextlogger-javaee module provides an Interceptors / message listeners for gathering contextual information of ejb calls and a jms message processing.
+Therefore the contextprovider-javaee module provides an Interceptors / message listeners for gathering contextual information of ejb/cdi calls and a jms message processing.
 
 ## Example output
 Depending on the selected context logger profile the output of the ejb interceptor consists of method invocation parameters, exception data and jms message related data in case of JMS.
@@ -31,8 +31,8 @@ You need to add the following Dependencies to your projects pom.xml:
     
 <!-- Binds context logging -->
 <dependency>
-    <groupId>io.tracee.contextlogger</groupId>
-    <artifactId>contextlogger-javaee</artifactId>
+    <groupId>io.tracee.contextlogger.contextprovider</groupId>
+    <artifactId>contextprovider-javaee</artifactId>
     <version>RELEASE</version>
 </dependency>
 ```
