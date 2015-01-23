@@ -9,9 +9,9 @@
 ```java
 package io.tracee.contextlogger.contextprovider.servlet;
 
-import io.tracee.contextlogger.provider.api.TraceeContextProvider;
-import io.tracee.contextlogger.provider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.provider.api.WrappedContextData;
+import TraceeContextProvider;
+import TraceeContextProviderMethod;
+import WrappedContextData;
 import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.profile.ProfilePropertyNames;
 

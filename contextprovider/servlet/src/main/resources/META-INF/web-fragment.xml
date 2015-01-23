@@ -9,7 +9,7 @@ http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
 
 	<filter>
 		<filter-name>traceeErrorLoggingFilter</filter-name>
-		<filter-class>io.tracee.contextlogger.provider.servlet.TraceeErrorLoggingFilter</filter-class>
+		<filter-class>io.tracee.contextlogger.contextprovider.servlet.TraceeErrorLoggingFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
