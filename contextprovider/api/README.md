@@ -1,21 +1,20 @@
 > This document contains documentation for the contextlogger-provider-api module. Click [here](/README.md) to get an overview that TracEE is about.
 
-# contextlogger-provider-api
+# contextprovider-api
 
-> The TracEE contextlogger-servlet project offers all interfaces and annotations needed to define custom context data provider.
+> The TracEE contextprovider-api project offers all interfaces and annotations needed to define custom context data provider.
 
 ## Example: Cookie context data provider 
 
 ```java
-package io.tracee.contextlogger.contextprovider.servlet;
-
-import TraceeContextProvider;
-import TraceeContextProviderMethod;
-import WrappedContextData;
-import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.profile.ProfilePropertyNames;
+package io.tracee.contextlogger.contextprovider.servlet.contextprovider
 
 import javax.servlet.http.Cookie;
+
+import io.tracee.contextlogger.contextprovider.Order;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
  * Context provider for ServletCookieContextProvider.
