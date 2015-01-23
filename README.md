@@ -43,13 +43,13 @@ The steps to get TracEE contextual logging up and running pretty much depend on 
 
 | Framework    | Adapter |
 | ----------:  |:------:|
-| Servlet      | Use [contextlogger-servlet](contextprovider/servlet) as a servlet filter. |
-| EJB3/CDI/JMS | Use [contextlogger-javaee](contextprovider/javaee) as an interceptor |
-| JAX-RS       | Use [contextlogger-servlet](contextprovider/servlet) as a servlet filter. |
+| Servlet      | Use [contextprovider-servlet](contextprovider/servlet) as a servlet filter. |
+| EJB3/CDI/JMS | Use [contextprovider-javaee](contextprovider/javaee) as an interceptor |
+| JAX-RS       | Use [contextprovider-servlet](contextprovider/servlet) as a servlet filter. |
 | JAX-RS2      | TODO |
-| JAX-WS       | Use [contextlogger-jaxws](contextprovider/jaxws) as a message listener. |
-| SPRING-AOP   | Use [contextlogger-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
-| ASPECTJ      | Use [contextlogger-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
+| JAX-WS       | Use [contextprovider-jaxws](contextprovider/jaxws) as a message listener. |
+| SPRING-AOP   | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
+| ASPECTJ      | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
 
 ## Modules
 
