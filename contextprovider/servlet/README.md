@@ -1,8 +1,8 @@
-> This document contains documentation for the tracee contextlogger-servlet module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the tracee contextprovider-servlet module. Click [here](../../README.md) to get an overview that TracEE is about.
 
-# contextlogger-servlet
+# contextprovider-servlet
 
-> The TracEE contextlogger-servlet project offers a Servlet Filter that outputs contextual data of a servlet request if an uncaught exception is detected by the filter. 
+> The TracEE contextprovider-servlet project offers a Servlet Filter that outputs contextual data of a servlet request if an uncaught exception is detected by the filter. 
 
 ## Example output
 Depending on the selected context logger profile the output consists of servlet request related data like request parameters, url, thrown exception, up to cookies and session attributes.
@@ -181,8 +181,8 @@ You have to add the following Maven dependencies to your project:
     <version>RELEASE</version>
 </dependency>
 <dependency>
-    <groupId>io.tracee.contextlogger</groupId>
-    <artifactId>contextlogger-servlet</artifactId>
+    <groupId>io.tracee.contextlogger.contextprovider</groupId>
+    <artifactId>contextprovider-servlet</artifactId>
     <version>RELEASE</version>
 </dependency>
 ```
@@ -193,7 +193,7 @@ If you use older servlet environment prior to version 3.0 then you will have to 
 ```xml
 <filter>
 	<filter-name>traceeErrorLoggingFilter</filter-name>
-	<filter-class>TraceeErrorLoggingFilter</filter-class>
+	<filter-class>io.tracee.contextlogger.contextprovider.servlet.TraceeErrorLoggingFilter</filter-class>
 </filter>
 
 <filter-mapping>
