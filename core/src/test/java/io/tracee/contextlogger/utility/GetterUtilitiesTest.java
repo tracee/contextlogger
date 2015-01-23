@@ -1,10 +1,10 @@
 package io.tracee.contextlogger.utility;
 
+import java.lang.reflect.Method;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
-import java.lang.reflect.Method;
 
 /**
  * Unit test class for {@link io.tracee.contextlogger.utility.GetterUtilities}.
@@ -45,7 +45,6 @@ public class GetterUtilitiesTest {
         boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(true));
 
-
     }
 
     @Test
@@ -55,7 +54,6 @@ public class GetterUtilitiesTest {
 
         final boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(true));
-
 
     }
 
@@ -67,9 +65,7 @@ public class GetterUtilitiesTest {
         final boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(true));
 
-
     }
-
 
     @Test
     public void isGetterMethod_should_return_true_for_non_getter_method_with_passed_method() throws NoSuchMethodException {
@@ -78,7 +74,6 @@ public class GetterUtilitiesTest {
 
         final boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(false));
-
 
     }
 
@@ -90,16 +85,13 @@ public class GetterUtilitiesTest {
         final boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(false));
 
-
     }
 
     @Test
     public void isGetterMethod_should_return_true_for_get_getter_methodname() throws NoSuchMethodException {
 
-
         final boolean result = GetterUtilities.isGetterMethod("getField1");
         MatcherAssert.assertThat(result, Matchers.is(true));
-
 
     }
 
@@ -109,26 +101,21 @@ public class GetterUtilitiesTest {
         final boolean result = GetterUtilities.isGetterMethod("hasField3");
         MatcherAssert.assertThat(result, Matchers.is(true));
 
-
     }
 
     @Test
     public void isGetterMethod_should_return_true_for_is_getter_methodname() {
 
-
         final boolean result = GetterUtilities.isGetterMethod("isField2");
         MatcherAssert.assertThat(result, Matchers.is(true));
 
-
     }
-
 
     @Test
     public void isGetterMethod_should_return_true_for_non_getter_methodname() throws NoSuchMethodException {
 
         boolean result = GetterUtilities.isGetterMethod("nonGetterField");
         MatcherAssert.assertThat(result, Matchers.is(false));
-
 
     }
 
@@ -140,9 +127,7 @@ public class GetterUtilitiesTest {
         final boolean result = GetterUtilities.isGetterMethod(method);
         MatcherAssert.assertThat(result, Matchers.is(false));
 
-
     }
-
 
     @Test
     public void getFieldName_should_return_true_for_get_getter_method_with_passed_method() throws NoSuchMethodException {
@@ -151,7 +136,6 @@ public class GetterUtilitiesTest {
 
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.is("field1"));
-
 
     }
 
@@ -163,7 +147,6 @@ public class GetterUtilitiesTest {
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.is("field3"));
 
-
     }
 
     @Test
@@ -174,9 +157,7 @@ public class GetterUtilitiesTest {
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.is("field2"));
 
-
     }
-
 
     @Test
     public void getFieldName_should_return_true_for_non_getter_method_with_passed_method() throws NoSuchMethodException {
@@ -185,7 +166,6 @@ public class GetterUtilitiesTest {
 
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.nullValue());
-
 
     }
 
@@ -197,16 +177,13 @@ public class GetterUtilitiesTest {
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.nullValue());
 
-
     }
 
     @Test
     public void getFieldName_should_return_true_for_get_getter_methodname() throws NoSuchMethodException {
 
-
         final String result = GetterUtilities.getFieldName("getField1");
         MatcherAssert.assertThat(result, Matchers.is("field1"));
-
 
     }
 
@@ -216,26 +193,21 @@ public class GetterUtilitiesTest {
         final String result = GetterUtilities.getFieldName("hasField3");
         MatcherAssert.assertThat(result, Matchers.is("field3"));
 
-
     }
 
     @Test
     public void getFieldName_should_return_true_for_is_getter_methodname() {
 
-
         final String result = GetterUtilities.getFieldName("isField2");
         MatcherAssert.assertThat(result, Matchers.is("field2"));
 
-
     }
-
 
     @Test
     public void getFieldName_should_return_true_for_non_getter_methodname() throws NoSuchMethodException {
 
         final String result = GetterUtilities.getFieldName("nonGetterField");
         MatcherAssert.assertThat(result, Matchers.nullValue());
-
 
     }
 
@@ -246,7 +218,6 @@ public class GetterUtilitiesTest {
 
         final String result = GetterUtilities.getFieldName(method);
         MatcherAssert.assertThat(result, Matchers.nullValue());
-
 
     }
 
@@ -289,9 +260,14 @@ public class GetterUtilitiesTest {
 
         MatcherAssert.assertThat(result, Matchers.is(expectedResult));
 
-
     }
 
+    @Test
+    public void getFullQualifiedFieldName_return_null_for_null_valued_method() {
+        String result = GetterUtilities.getFullQualifiedFieldName(TestClass.class, null);
+
+        MatcherAssert.assertThat(result, Matchers.nullValue());
+    }
 
     @Test
     public void capitalizeFirstChar_with_null_valued_input() {
@@ -341,5 +317,10 @@ public class GetterUtilitiesTest {
         MatcherAssert.assertThat(result, Matchers.is("abc"));
     }
 
+    @Test
+    public void stripGetterPrefix_for_null_valued_input() {
+        String result = GetterUtilities.stripGetterPrefix(null);
+        MatcherAssert.assertThat(result, Matchers.nullValue());
+    }
 
 }

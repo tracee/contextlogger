@@ -16,19 +16,20 @@ public class JavaThrowableContextProviderTest {
     private Throwable exceptionWithMessage;
     private Throwable exceptionWithoutMessage;
 
-
     @Before
     public void init() {
 
         try {
             throw new NullPointerException(MESSAGE);
-        } catch (Throwable throwable) {
+        }
+        catch (Throwable throwable) {
             this.exceptionWithMessage = throwable;
         }
 
         try {
             throw new NullPointerException();
-        } catch (Throwable throwable) {
+        }
+        catch (Throwable throwable) {
             this.exceptionWithoutMessage = throwable;
         }
 
@@ -75,6 +76,17 @@ public class JavaThrowableContextProviderTest {
         String result = givenJavaThrowableContextProvider.getStacktrace();
         MatcherAssert.assertThat(result, Matchers.notNullValue());
         MatcherAssert.assertThat(result, Matchers.startsWith("java.lang.NullPointerException: MESSAGE"));
+
+    }
+
+    @Test
+    public void should_return_null_for_null_valued_contextdata() {
+
+        JavaThrowableContextProvider givenJavaThrowableContextProvider = new JavaThrowableContextProvider();
+        givenJavaThrowableContextProvider.setContextData(null);
+
+        MatcherAssert.assertThat(givenJavaThrowableContextProvider.getMessage(), Matchers.nullValue());
+        MatcherAssert.assertThat(givenJavaThrowableContextProvider.getStacktrace(), Matchers.nullValue());
 
     }
 

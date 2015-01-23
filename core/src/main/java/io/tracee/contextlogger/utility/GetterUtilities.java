@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 public class GetterUtilities {
 
     // possible prefixes for getter methods
-    public static final String[] GETTER_PREFIXES = {"get", "is", "has"};
+    public static final String[] GETTER_PREFIXES = { "get", "is", "has" };
 
     /**
      * Checks whether the method name starts with a getter prefix.
@@ -19,7 +19,8 @@ public class GetterUtilities {
     public static boolean isGetterMethod(final Method method) {
         if (method != null) {
             return isGetterMethod(method.getName());
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -69,7 +70,8 @@ public class GetterUtilities {
     public static String getFieldName(final Method method) {
         if (method != null) {
             return getFieldName(method.getName());
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -89,7 +91,8 @@ public class GetterUtilities {
             final String typeName;
             if (type != null) {
                 typeName = type.getCanonicalName();
-            } else {
+            }
+            else {
                 typeName = method.getDeclaringClass().getCanonicalName();
             }
 
@@ -97,12 +100,14 @@ public class GetterUtilities {
             final String fieldName;
             if (isGetterMethod(method.getName())) {
                 fieldName = getFieldName(method.getName());
-            } else {
+            }
+            else {
                 fieldName = method.getName();
             }
 
             return typeName + "." + fieldName;
-        } else {
+        }
+        else {
             return null;
         }
 
@@ -117,9 +122,11 @@ public class GetterUtilities {
     static String capitalizeFirstCharOfString(final String input) {
         if (input == null || input.length() == 0) {
             return "";
-        } else if (input.length() == 1) {
+        }
+        else if (input.length() == 1) {
             return input.toUpperCase();
-        } else {
+        }
+        else {
             return input.substring(0, 1).toUpperCase() + input.substring(1);
         }
     }
@@ -133,9 +140,11 @@ public class GetterUtilities {
     static String decapitalizeFirstCharOfString(final String input) {
         if (input == null || input.length() == 0) {
             return "";
-        } else if (input.length() == 1) {
+        }
+        else if (input.length() == 1) {
             return input.toLowerCase();
-        } else {
+        }
+        else {
             return input.substring(0, 1).toLowerCase() + input.substring(1);
         }
     }
@@ -148,9 +157,11 @@ public class GetterUtilities {
      */
     static String stripGetterPrefix(final String input) {
 
-        for (String prefix : GETTER_PREFIXES) {
-            if (input.startsWith(prefix)) {
-                return input.substring(prefix.length());
+        if (input != null) {
+            for (String prefix : GETTER_PREFIXES) {
+                if (input.startsWith(prefix)) {
+                    return input.substring(prefix.length());
+                }
             }
         }
 

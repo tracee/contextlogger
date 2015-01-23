@@ -1,17 +1,20 @@
 package io.tracee.contextlogger;
 
-import io.tracee.contextlogger.connector.Connector;
-import io.tracee.contextlogger.connector.LogConnector;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import io.tracee.contextlogger.connector.Connector;
+import io.tracee.contextlogger.connector.LogConnector;
+import io.tracee.contextlogger.utility.DummyConnector;
 
 /**
  * Test for {@link io.tracee.contextlogger.ConnectorFactory}.
@@ -37,8 +40,8 @@ public class ConnectorFactoryTest {
         properties.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX + name3 + "."
                 + TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONTEXT_LOGGER_CONNECTOR_TYPE, "class3");
 
-
         final Set<String> names = new ConnectorFactory() {
+
             @Override
             protected Properties getSystemProperties() {
                 return properties;
@@ -69,6 +72,7 @@ public class ConnectorFactoryTest {
         properties.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX + name1 + "." + prop1Key2, prop1Value2);
 
         final Connector connector = new ConnectorFactory() {
+
             @Override
             protected Properties getSystemProperties() {
                 return properties;
@@ -100,6 +104,7 @@ public class ConnectorFactoryTest {
         properties.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX + name1 + "." + prop1Key2, prop1Value2);
 
         final Connector connector = new ConnectorFactory() {
+
             @Override
             protected Properties getSystemProperties() {
                 return properties;
@@ -110,7 +115,6 @@ public class ConnectorFactoryTest {
         assertThat(connector, instanceOf(LogConnector.class));
 
     }
-
 
     /**
      * Check extraction of properties for named connectors.
@@ -137,6 +141,7 @@ public class ConnectorFactoryTest {
         properties.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX + name2 + "." + prop2Key2, prop2Value2);
 
         final Map<String, String> properties1 = new ConnectorFactory() {
+
             @Override
             protected Properties getSystemProperties() {
                 return properties;
@@ -150,4 +155,28 @@ public class ConnectorFactoryTest {
 
     }
 
+    @Test
+    public void testSendErrorReportToConnectors() {
+
+        LogConnector logConnector = Mockito.mock(LogConnector.class);
+        Connector otherConnector = Mockito.mock(Connector.class);
+
+        final Properties properties = new Properties();
+        properties.setProperty(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX + "dummy."
+                + TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONTEXT_LOGGER_CONNECTOR_TYPE, DummyConnector.class.getCanonicalName());
+
+        ConnectorFactory connectorFactory = new ConnectorFactory() {
+
+            @Override
+            protected Properties getSystemProperties() {
+                return properties;
+            }
+
+        };
+
+        connectorFactory.sendErrorReportToConnectors("AAA", "BBB");
+
+        MatcherAssert.assertThat(DummyConnector.isWasInvoked(), Matchers.equalTo(true));
+
+    }
 }

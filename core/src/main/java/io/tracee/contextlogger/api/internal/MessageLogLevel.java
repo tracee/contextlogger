@@ -58,7 +58,7 @@ public enum MessageLogLevel {
      */
     public void writeLogMessage(final Class clazz, final String logMessage) {
         TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(clazz);
-
+        this.log(logger, logMessage);
     }
 
     /**
