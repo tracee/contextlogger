@@ -1,14 +1,15 @@
 package io.tracee.contextlogger;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.connector.Connector;
-import io.tracee.contextlogger.connector.LogConnector;
-import io.tracee.contextlogger.connector.WellKnownConnectorClassNames;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import io.tracee.Tracee;
+import io.tracee.TraceeLogger;
+import io.tracee.contextlogger.connector.Connector;
+import io.tracee.contextlogger.connector.ConnectorOutputProvider;
+import io.tracee.contextlogger.connector.LogConnector;
+import io.tracee.contextlogger.connector.WellKnownConnectorClassNames;
 
 /**
  * Class to pipe messages to all configured connectors.
@@ -18,8 +19,8 @@ class ConnectorFactory {
 
     // Connector settings
     private static final Pattern KEY_MATCHER_PATTERN = Pattern.compile(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONTEXT_LOGGER_CONNECTOR_KEY_PATTERN);
-    private static final String CONNECTOR_PROPERTY_GRABBER_PATTERN =
-            TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX.replaceAll("\\.", "\\.") + "%s\\.(.*)";
+    private static final String CONNECTOR_PROPERTY_GRABBER_PATTERN = TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX.replaceAll("\\.", "\\.")
+            + "%s\\.(.*)";
     private static final TraceeLogger LOGGER = Tracee.getBackend().getLoggerFactory().getLogger(TraceeContextLogger.class);
     private static final Map<String, String> WELL_KNOW_CONNECTOR_MAPPINGS = new HashMap<String, String>();
 
@@ -28,7 +29,7 @@ class ConnectorFactory {
         WELL_KNOW_CONNECTOR_MAPPINGS.put(LogConnector.class.getName(), LogConnector.class.getCanonicalName());
     }
 
-    //Connector
+    // Connector
     private final Map<String, Connector> connectorMap = new HashMap<String, Connector>();
 
     ConnectorFactory() {
@@ -63,23 +64,17 @@ class ConnectorFactory {
 
     }
 
-
     /**
      * Send error report to all initialized connector instances.
      *
-     * @param prefix the prefix to prepend only via the createStringRepresentation connector output
-     * @param json   the context data to output
+     * @param connectorOutputProvider the context data provider used for output
      */
-    final void sendErrorReportToConnectors(String prefix, String json) {
+    final void sendErrorReportToConnectors(ConnectorOutputProvider connectorOutputProvider) {
 
         for (Connector connector : this.connectorMap.values()) {
 
-            // prevent
-            if (LogConnector.class.isInstance(connector)) {
-                connector.sendErrorReport(prefix != null ? prefix + json : json);
-            } else {
-                connector.sendErrorReport(json);
-            }
+            connector.sendErrorReport(connectorOutputProvider);
+
         }
     }
 
@@ -145,7 +140,6 @@ class ConnectorFactory {
 
     }
 
-
     /**
      * Tries to create a Connector for a given connector configuration name.
      *
@@ -165,14 +159,15 @@ class ConnectorFactory {
         try {
 
             // try to create connector instance
-            Connector connector = (Connector) Class.forName(type).newInstance();
+            Connector connector = (Connector)Class.forName(type).newInstance();
 
             // now try to call init method
             connector.init(propertyMap);
 
             return connector;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("An error occurred while creating connector with name '" + connectorConfigurationName + "' of type '" + type + "'", e);
         }
 

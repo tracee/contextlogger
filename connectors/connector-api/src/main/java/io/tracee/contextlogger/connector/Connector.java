@@ -10,6 +10,6 @@ public interface Connector {
 
     void init(Map<String, String> properties);
 
-    void sendErrorReport(String json);
+    void sendErrorReport(ConnectorOutputProvider connectorOutputProvider);
 
 }
