@@ -5,13 +5,13 @@ package io.tracee.contextlogger.output.internal;
  */
 public class ContextDeserializer {
 
-    private static final ContextDeserializer instance = new ContextDeserializer();
+   private final SingleInstanceContextDeserializer singleInstanceContextDeserializer;
 
     /**
      * Hidden constructor.
      */
     protected ContextDeserializer() {
-
+        singleInstanceContextDeserializer = new SingleInstanceContextDeserializer();
     }
 
     protected OutputElement deserializeContextsMain(Object... instances) {
@@ -23,7 +23,7 @@ public class ContextDeserializer {
         }
         else if (instances.length == 1) {
 
-            return SingleInstanceContextDeserializer.convertInstance(instances[0]);
+            return singleInstanceContextDeserializer.convertInstanceRecursively(instances[0]);
 
         }
         else {
@@ -32,7 +32,7 @@ public class ContextDeserializer {
             CollectionOutputElement complexOutputElement = new CollectionOutputElement(Object[].class);
 
             for (Object instance : instances) {
-                complexOutputElement.addElement(SingleInstanceContextDeserializer.convertInstance(instance));
+                complexOutputElement.addElement(singleInstanceContextDeserializer.convertInstanceRecursively(instance));
             }
 
             return complexOutputElement;
@@ -41,7 +41,7 @@ public class ContextDeserializer {
     }
 
     public static OutputElement deserializeContexts(Object... objects) {
-        return instance.deserializeContextsMain(objects);
+        return new ContextDeserializer().deserializeContextsMain(objects);
     }
 
 }

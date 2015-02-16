@@ -16,9 +16,13 @@ import io.tracee.contextlogger.output.internal.predicates.IsTraceeContextProvide
  */
 public class SingleInstanceContextDeserializer implements RecursiveContextDeserializer {
 
-    private static final SingleInstanceContextDeserializer instance = new SingleInstanceContextDeserializer();
-
     private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(SingleInstanceContextDeserializer.class);
+
+    private final DeserializationState deserializationState;
+
+    public SingleInstanceContextDeserializer() {
+        this.deserializationState = new DeserializationState();
+    }
 
     public OutputElement convertInstanceRecursively(final Object instanceToDeserialize) {
 
@@ -29,30 +33,55 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
         else if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
             // handle arrays and collections
 
-            if (instanceToDeserialize.getClass().isArray()) {
-                return ArrayToOutputElementTransformerFunction.getInstance().apply(this, (Object[])instanceToDeserialize);
+            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
+                deserializationState.add(instanceToDeserialize);
+                if (instanceToDeserialize.getClass().isArray()) {
+                    return ArrayToOutputElementTransformerFunction.getInstance().apply(this, (Object[])instanceToDeserialize);
+                }
+                else {
+                    return CollectionToOutputElementTransformerFunction.getInstance().apply(this, (Collection)instanceToDeserialize);
+                }
             }
             else {
-                return CollectionToOutputElementTransformerFunction.getInstance().apply(this, (Collection)instanceToDeserialize);
+                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
             }
 
         }
         else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
-            // handle Map
-            return MapToOutputElementTransformerFunction.getInstance().apply(this, (Map)instanceToDeserialize);
+            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
+                // handle Map
+                deserializationState.add(instanceToDeserialize);
+                return MapToOutputElementTransformerFunction.getInstance().apply(this, (Map)instanceToDeserialize);
+            }
+            else {
+                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
+            }
 
         }
         else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
 
-            // handle tracee context provider
-            return TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
+                // handle tracee context provider
+                deserializationState.add(instanceToDeserialize);
+                return TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            }
+            else {
+                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
+            }
 
         }
         else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
-            // handle bean instance
-            return BeanToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
+
+                // handle bean instance
+                deserializationState.add(instanceToDeserialize);
+                return BeanToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            }
+            else {
+                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
+            }
 
         }
         else {
@@ -61,9 +90,4 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
         }
 
     }
-
-    public static OutputElement convertInstance(Object instanceToDeserialize) {
-        return instance.convertInstanceRecursively(instanceToDeserialize);
-    }
-
 }

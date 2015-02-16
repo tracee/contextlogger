@@ -5,9 +5,12 @@ import org.junit.Test;
 
 import io.tracee.contextlogger.output.internal.ContextDeserializer;
 import io.tracee.contextlogger.output.internal.OutputElement;
+import io.tracee.contextlogger.output.internal.testclasses.CircularTestClass1;
 import io.tracee.contextlogger.output.internal.testclasses.TestClassA;
 import io.tracee.contextlogger.output.internal.writer.atomic.AtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.atomic.TypedWithInstanceIdToStringAtomicOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.circular.CircularReferenceOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.circular.SimpleCircularReferenceOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.CollectionOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.SimpleCollectionOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.complex.ComplexOutputElementWriter;
@@ -27,6 +30,7 @@ public class OutputWriterToOutputTansformerTest {
     private AtomicOutputElementWriter atomicOutputElementWriter;
     private ComplexOutputElementWriter complexOutputElementWriter;
     private CollectionOutputElementWriter collectionOutputElementWriter;
+    private CircularReferenceOutputElementWriter circularReferenceOutputElementWriter;
 
     @Before
     public void init() {
@@ -36,13 +40,14 @@ public class OutputWriterToOutputTansformerTest {
         atomicOutputElementWriter = new TypedWithInstanceIdToStringAtomicOutputElementWriter();
         collectionOutputElementWriter = new SimpleCollectionOutputElementWriter();
         complexOutputElementWriter = new SimpleComplexOutputElementWriter();
+        circularReferenceOutputElementWriter = new SimpleCircularReferenceOutputElementWriter();
     }
 
     @Test
     public void should_build_intended_json_string_representation_correctly() {
 
         String result = OutputWriterToOutputTransformer.produceOutput(intendedJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
-                atomicOutputElementWriter, outputElement);
+                atomicOutputElementWriter, circularReferenceOutputElementWriter, outputElement);
 
         System.out.println(result);
 
@@ -52,7 +57,19 @@ public class OutputWriterToOutputTansformerTest {
     public void should_build_simple_json_string_representation_correctly() {
 
         String result = OutputWriterToOutputTransformer.produceOutput(simpleJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
-                atomicOutputElementWriter, outputElement);
+                atomicOutputElementWriter, circularReferenceOutputElementWriter, outputElement);
+
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void should_build_recursive_json_string_representation_correctly() {
+
+        OutputElement tmp = ContextDeserializer.deserializeContexts(CircularTestClass1.builder());
+
+        String result = OutputWriterToOutputTransformer.produceOutput(simpleJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
+                atomicOutputElementWriter, circularReferenceOutputElementWriter, tmp);
 
         System.out.println(result);
 
