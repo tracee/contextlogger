@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.output.internal.writer.atomic;
 
-import io.tracee.contextlogger.output.internal.AtomicOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
 
 /**
  * Produces String representation for atomic value.
@@ -8,20 +8,20 @@ import io.tracee.contextlogger.output.internal.AtomicOutputElement;
  */
 public class TypedWithInstanceIdToStringAtomicOutputElementWriter extends ToStringAtomicOutputElementWriter {
 
-	@Override
-	public String produceOutput(final AtomicOutputElement atomicOutputElement) {
+    @Override
+    public String produceOutput(final AtomicOutputElement atomicOutputElement) {
 
-		if (atomicOutputElement != null && atomicOutputElement.getOutputElementsBaseType() != null) {
-			String type = atomicOutputElement.getOutputElementsBaseType().getSimpleName();
-			String instanceId = "";
+        if (atomicOutputElement != null && atomicOutputElement.getOutputElementsBaseType() != null) {
+            String type = atomicOutputElement.getOutputElementsBaseType().getSimpleName();
+            String instanceId = "";
 
-			if (atomicOutputElement.getValue() != null) {
-				instanceId = "@" + System.identityHashCode(atomicOutputElement.getValue());
-			}
+            if (atomicOutputElement.getEncapsulatedInstance() != null) {
+                instanceId = "@" + System.identityHashCode(atomicOutputElement.getEncapsulatedInstance());
+            }
 
-			return type + instanceId + "['" + super.produceOutput(atomicOutputElement) + "']";
-		}
+            return type + instanceId + "['" + super.produceOutput(atomicOutputElement) + "']";
+        }
 
-		return super.produceOutput(atomicOutputElement);
-	}
+        return super.produceOutput(atomicOutputElement);
+    }
 }

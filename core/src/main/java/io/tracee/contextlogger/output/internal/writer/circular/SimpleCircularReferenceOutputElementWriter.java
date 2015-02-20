@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.output.internal.writer.circular;
 
-import io.tracee.contextlogger.output.internal.CircularReferenceOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
  * Simple implementation to output a circular dependency.
@@ -8,13 +8,13 @@ import io.tracee.contextlogger.output.internal.CircularReferenceOutputElement;
 public class SimpleCircularReferenceOutputElementWriter implements CircularReferenceOutputElementWriter {
 
     @Override
-    public String produceOutput(final CircularReferenceOutputElement circularReferenceOutputElement) {
-        if (circularReferenceOutputElement != null && circularReferenceOutputElement.getOutputElementsBaseType() != null) {
-            String type = circularReferenceOutputElement.getOutputElementsBaseType().getSimpleName();
+    public String produceOutput(final OutputElement outputElement) {
+        if (outputElement != null && outputElement.getOutputElementsBaseType() != null) {
+            String type = outputElement.getOutputElementsBaseType().getSimpleName();
             String instanceId = "";
 
-            if (circularReferenceOutputElement.getInstance() != null) {
-                instanceId = "@" + System.identityHashCode(circularReferenceOutputElement.getInstance());
+            if (outputElement.getEncapsulatedInstance() != null) {
+                instanceId = "@" + System.identityHashCode(outputElement.getEncapsulatedInstance());
             }
 
             return "see " + type + instanceId;

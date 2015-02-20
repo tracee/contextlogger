@@ -4,14 +4,14 @@ import java.util.Collection;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.CollectionOutputElement;
-import io.tracee.contextlogger.output.internal.OutputElement;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
- * Transformer function that transforms the passed collection to an {@link io.tracee.contextlogger.output.internal.CollectionOutputElement}.
+ * Transformer function that transforms the passed collection to an {@link io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement}.
  */
-public class CollectionToOutputElementTransformerFunction implements ToOutputElementTransformerFunction<CollectionOutputElement, Collection> {
+public class CollectionToOutputElementTransformerFunction implements ToOutputElementTransformerFunction<Collection> {
 
     private static final CollectionToOutputElementTransformerFunction instance = new CollectionToOutputElementTransformerFunction();
 
@@ -22,13 +22,19 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
     }
 
     @Override
-    public CollectionOutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Collection collection) {
+    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Collection collection) {
 
         if (collection == null) {
             return null;
         }
+        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(collection)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(collection);
+        }
 
-        CollectionOutputElement outputElement = new CollectionOutputElement(collection.getClass());
+        CollectionOutputElement outputElement = new CollectionOutputElement(collection.getClass(), collection);
+
+        // must register output element before processing children to prevent problems with circular references
+        recursiveContextDeserializer.registerOutputElement(outputElement);
 
         for (Object element : collection) {
             OutputElement childOutputElement = recursiveContextDeserializer.convertInstanceRecursively(element);

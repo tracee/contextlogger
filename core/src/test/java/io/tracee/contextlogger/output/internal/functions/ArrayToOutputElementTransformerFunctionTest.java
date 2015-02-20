@@ -4,7 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.output.internal.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.output.internal.functions.ArrayToOutputElementTransformerFunction}

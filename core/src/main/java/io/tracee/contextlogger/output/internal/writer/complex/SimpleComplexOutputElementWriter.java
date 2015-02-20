@@ -2,8 +2,8 @@ package io.tracee.contextlogger.output.internal.writer.complex;
 
 import java.util.Map;
 
-import io.tracee.contextlogger.output.internal.ComplexOutputElement;
-import io.tracee.contextlogger.output.internal.OutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.writer.OutputWriter;
 import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
 

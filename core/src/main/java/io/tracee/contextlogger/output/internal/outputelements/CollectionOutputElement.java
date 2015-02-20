@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.output.internal;
+package io.tracee.contextlogger.output.internal.outputelements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class CollectionOutputElement extends AbstractOutputElement {
     /**
      * Constructor.
      */
-    public CollectionOutputElement(Class type) {
-        super(type);
+    public CollectionOutputElement(Class type, Object instance) {
+        super(type, instance);
     }
 
     @Override

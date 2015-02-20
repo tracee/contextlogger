@@ -1,8 +1,9 @@
 package io.tracee.contextlogger.output.internal.writer;
 
-import io.tracee.contextlogger.output.internal.*;
+import io.tracee.contextlogger.output.internal.outputelements.*;
 import io.tracee.contextlogger.output.internal.writer.atomic.AtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.circular.CircularReferenceOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.circular.SimpleCircularReferenceOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.CollectionOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.complex.ComplexOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
@@ -15,7 +16,8 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
     private ComplexOutputElementWriter complexOutputElementWriter;
     private CollectionOutputElementWriter collectionOutputElementWriter;
     private AtomicOutputElementWriter atomicOutputElementWriter;
-    private CircularReferenceOutputElementWriter circularReferenceOutputElementWriter;
+    private CircularReferenceOutputElementWriter circularReferenceOutputElementWriter = new SimpleCircularReferenceOutputElementWriter();
+    private OutputElementPool outputElementPool = new OutputElementPool();
 
     /**
      * Hidden constructor.
@@ -26,27 +28,26 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
 
     @Override
     public void init(final ComplexOutputElementWriter complexOutputElementWriter, final CollectionOutputElementWriter collectionOutputElementWriter,
-            final AtomicOutputElementWriter atomicOutputElementWriter, final CircularReferenceOutputElementWriter circularReferenceOutputElementWriter) {
+            final AtomicOutputElementWriter atomicOutputElementWriter) {
         this.complexOutputElementWriter = complexOutputElementWriter;
         this.collectionOutputElementWriter = collectionOutputElementWriter;
         this.atomicOutputElementWriter = atomicOutputElementWriter;
-        this.circularReferenceOutputElementWriter = circularReferenceOutputElementWriter;
     }
 
     @Override
     public void produceOutputRecursively(final StringBuilder stringBuilder, final OutputStyle outputStyle, OutputElement outputElement) {
 
+        if (!OutputElementType.ATOMIC.equals(outputElement.getOutputElementType()) && outputElementPool.isInstanceInPool(outputElement)) {
+            stringBuilder.append(outputStyle.openingAtomicType());
+            stringBuilder.append(outputStyle.escapeString(circularReferenceOutputElementWriter.produceOutput(outputElement)));
+            stringBuilder.append(outputStyle.closingAtomicType());
+            return;
+        }
+
+        outputElementPool.add(outputElement);
+
         switch (outputElement.getOutputElementType()) {
-            case CIRCULAR_REFERENCE: {
 
-                CircularReferenceOutputElement circularReferenceOutputElement = (CircularReferenceOutputElement)outputElement;
-
-                stringBuilder.append(outputStyle.openingAtomicType());
-                stringBuilder.append(outputStyle.escapeString(circularReferenceOutputElementWriter.produceOutput(circularReferenceOutputElement)));
-                stringBuilder.append(outputStyle.closingAtomicType());
-
-                break;
-            }
             case COMPLEX: {
 
                 ComplexOutputElement complexOutputElement = (ComplexOutputElement)outputElement;
@@ -78,12 +79,11 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
 
     public static String produceOutput(final OutputStyle outputStyle, final ComplexOutputElementWriter complexOutputElementWriter,
             final CollectionOutputElementWriter collectionOutputElementWriter, final AtomicOutputElementWriter atomicOutputElementWriter,
-            final CircularReferenceOutputElementWriter circularReferenceOutputElementWriter, final OutputElement outputElement) {
+            final OutputElement outputElement) {
 
         StringBuilder stringBuilder = new StringBuilder();
         OutputWriterToOutputTransformer outputWriterToOutputTransformer = new OutputWriterToOutputTransformer();
-        outputWriterToOutputTransformer.init(complexOutputElementWriter, collectionOutputElementWriter, atomicOutputElementWriter,
-                circularReferenceOutputElementWriter);
+        outputWriterToOutputTransformer.init(complexOutputElementWriter, collectionOutputElementWriter, atomicOutputElementWriter);
         outputWriterToOutputTransformer.produceOutputRecursively(stringBuilder, outputStyle, outputElement);
         return stringBuilder.toString();
     }

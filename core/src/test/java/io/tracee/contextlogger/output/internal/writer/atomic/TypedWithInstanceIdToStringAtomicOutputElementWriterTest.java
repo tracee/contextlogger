@@ -4,7 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.output.internal.AtomicOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.output.internal.writer.atomic.TypedWithInstanceIdToStringAtomicOutputElementWriter}.

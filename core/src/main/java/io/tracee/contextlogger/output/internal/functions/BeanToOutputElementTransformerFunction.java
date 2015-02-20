@@ -5,8 +5,9 @@ import java.lang.reflect.Method;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.utility.BeanUtility;
 import io.tracee.contextlogger.utility.GetterUtilities;
 
@@ -24,9 +25,19 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
     }
 
     @Override
-    public ComplexOutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
+    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
 
-        ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass());
+        if (instance == null) {
+            return null;
+        }
+        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(instance)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(instance);
+        }
+
+        ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
+
+        // must register output element before processing children to prevent problems with circular references
+        recursiveContextDeserializer.registerOutputElement(complexOutputElement);
 
         // get internal fields with matching getter
         for (Method method : BeanUtility.getGetterMethodsRecursively(instance.getClass())) {

@@ -7,7 +7,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.output.internal.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.output.internal.functions.MapToOutputElementTransformerFunction}.

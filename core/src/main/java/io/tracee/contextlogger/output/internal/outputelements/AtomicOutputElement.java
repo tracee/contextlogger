@@ -1,21 +1,18 @@
-package io.tracee.contextlogger.output.internal;
+package io.tracee.contextlogger.output.internal.outputelements;
 
 /**
  * Class for processing atomic element types that are defined by a single value.
  */
 public class AtomicOutputElement extends AbstractOutputElement {
 
-    private final Object value;
-
     /**
      * Constructor.
      *
-     * @param value
+     * @param encapsulatedInstanc
      */
-    public AtomicOutputElement(Class type, Object value) {
+    public AtomicOutputElement(Class type, Object encapsulatedInstanc) {
 
-        super(type);
-        this.value = value;
+        super(type, encapsulatedInstanc);
     }
 
     @Override
@@ -26,10 +23,6 @@ public class AtomicOutputElement extends AbstractOutputElement {
     @Override
     public OutputElementType getOutputElementType() {
         return OutputElementType.ATOMIC;
-    }
-
-    public Object getValue() {
-        return this.value;
     }
 
 }

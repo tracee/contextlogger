@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.output.internal.writer.collection;
 
-import io.tracee.contextlogger.output.internal.CollectionOutputElement;
-import io.tracee.contextlogger.output.internal.OutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.writer.OutputWriter;
 import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
 

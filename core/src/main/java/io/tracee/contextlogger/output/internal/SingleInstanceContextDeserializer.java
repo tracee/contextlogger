@@ -6,6 +6,7 @@ import java.util.Map;
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.functions.*;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.predicates.IsBeanTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsCollectionTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsMapTypePredicate;
@@ -18,76 +19,76 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
 
     private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(SingleInstanceContextDeserializer.class);
 
-    private final DeserializationState deserializationState;
+    private final InstanceToOutputElementPool instanceToOutputElementPool;
 
     public SingleInstanceContextDeserializer() {
-        this.deserializationState = new DeserializationState();
+        this.instanceToOutputElementPool = new InstanceToOutputElementPool();
     }
 
     public OutputElement convertInstanceRecursively(final Object instanceToDeserialize) {
 
+        OutputElement outputElement = null;
+
         if (instanceToDeserialize == null) {
+
             // handle null value
-            return AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
-        }
-        else if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
-            // handle arrays and collections
-
-            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
-                deserializationState.add(instanceToDeserialize);
-                if (instanceToDeserialize.getClass().isArray()) {
-                    return ArrayToOutputElementTransformerFunction.getInstance().apply(this, (Object[])instanceToDeserialize);
-                }
-                else {
-                    return CollectionToOutputElementTransformerFunction.getInstance().apply(this, (Collection)instanceToDeserialize);
-                }
-            }
-            else {
-                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
-            }
-
-        }
-        else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
-
-            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
-                // handle Map
-                deserializationState.add(instanceToDeserialize);
-                return MapToOutputElementTransformerFunction.getInstance().apply(this, (Map)instanceToDeserialize);
-            }
-            else {
-                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
-            }
-
-        }
-        else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
-
-            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
-                // handle tracee context provider
-                deserializationState.add(instanceToDeserialize);
-                return TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
-            }
-            else {
-                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
-            }
-
-        }
-        else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
-
-            if (!deserializationState.instanceAlreadyExists(instanceToDeserialize)) {
-
-                // handle bean instance
-                deserializationState.add(instanceToDeserialize);
-                return BeanToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
-            }
-            else {
-                return new CircularReferenceOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize);
-            }
+            outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
 
         }
         else {
-            // fallback deserialize instance as atomic value
-            return AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
-        }
 
+            if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
+                // handle arrays and collections
+
+                if (instanceToDeserialize.getClass().isArray()) {
+                    outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, (Object[])instanceToDeserialize);
+                }
+                else {
+                    outputElement = CollectionToOutputElementTransformerFunction.getInstance().apply(this, (Collection)instanceToDeserialize);
+                }
+
+            }
+            else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
+
+                outputElement = MapToOutputElementTransformerFunction.getInstance().apply(this, (Map)instanceToDeserialize);
+
+            }
+            else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
+
+                outputElement = TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+
+            }
+            else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
+
+                outputElement = BeanToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+
+            }
+            else {
+                // fallback deserialize instance as atomic value
+                outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            }
+
+        }
+        return outputElement;
+    }
+
+    @Override
+    public void registerOutputElement(final OutputElement outputElement) {
+
+        if (outputElement != null && outputElement.getEncapsulatedInstance() != null) {
+            this.instanceToOutputElementPool.add(outputElement.getEncapsulatedInstance(), outputElement);
+        }
+    }
+
+    @Override
+    public boolean checkIfInstanceIsAlreadyRegistered(final Object instance) {
+
+        return instance != null && this.instanceToOutputElementPool.isInstanceMarkedAsProcessed(instance);
+
+    }
+
+    @Override
+    public OutputElement getRegisteredOutputElement(final Object instance) {
+        return this.instanceToOutputElementPool.getOutputElement(instance);
     }
 }

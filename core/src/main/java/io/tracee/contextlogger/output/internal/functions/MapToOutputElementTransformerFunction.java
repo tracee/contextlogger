@@ -4,11 +4,12 @@ import java.util.Map;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
- * Transforms the passed map instance to a {@link io.tracee.contextlogger.output.internal.ComplexOutputElement}.
+ * Transforms the passed map instance to a {@link io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement}.
  */
 public class MapToOutputElementTransformerFunction extends ToComplexOutputElementTransformerFunction<Map> {
 
@@ -21,13 +22,19 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
     }
 
     @Override
-    public ComplexOutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Map map) {
+    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Map map) {
 
         if (map == null) {
             return null;
         }
+        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(map)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(map);
+        }
 
-        ComplexOutputElement complexOutputElement = new ComplexOutputElement(map.getClass());
+        ComplexOutputElement complexOutputElement = new ComplexOutputElement(map.getClass(), map);
+
+        // must register output element before processing children to prevent problems with circular references
+        recursiveContextDeserializer.registerOutputElement(complexOutputElement);
 
         for (Object entryObj : map.entrySet()) {
 

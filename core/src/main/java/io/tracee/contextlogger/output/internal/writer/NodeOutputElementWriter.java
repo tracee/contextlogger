@@ -3,7 +3,7 @@ package io.tracee.contextlogger.output.internal.writer;
 import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
 
 /**
- * Public interface for all writers of {@link io.tracee.contextlogger.output.internal.ComplexOutputElement}s.
+ * Public interface for all writers of {@link io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement}s.
  */
 public interface NodeOutputElementWriter<T> {
 

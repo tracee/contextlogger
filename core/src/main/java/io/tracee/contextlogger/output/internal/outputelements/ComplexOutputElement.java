@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.output.internal;
+package io.tracee.contextlogger.output.internal.outputelements;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,8 @@ public class ComplexOutputElement extends AbstractOutputElement {
     /**
      * Constructor.
      */
-    public ComplexOutputElement(Class type) {
-        super(type);
+    public ComplexOutputElement(Class type, Object instance) {
+        super(type, instance);
     }
 
     @Override

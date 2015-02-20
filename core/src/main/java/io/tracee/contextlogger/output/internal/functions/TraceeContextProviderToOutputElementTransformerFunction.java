@@ -13,14 +13,14 @@ import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPairComparator;
-import io.tracee.contextlogger.output.internal.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.utility.ListUtilities;
 import io.tracee.contextlogger.utility.RecursiveReflectionToStringStyle;
 import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
 
 /**
- * Transforms a tracee context provider instance to a {@link io.tracee.contextlogger.output.internal.CollectionOutputElement}.
+ * Transforms a tracee context provider instance to a {@link io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement}.
  */
 public class TraceeContextProviderToOutputElementTransformerFunction extends ToComplexOutputElementTransformerFunction<Object> {
 
@@ -35,7 +35,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
     @Override
     public ComplexOutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
-        ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass());
+        ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
 
         TraceeContextProvider annotation = TraceeContextLogAnnotationUtilities.getAnnotationFromType(instance);
         if (annotation == null) {
