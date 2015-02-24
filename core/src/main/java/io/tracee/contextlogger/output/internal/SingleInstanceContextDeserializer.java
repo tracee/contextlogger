@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
+import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 import io.tracee.contextlogger.output.internal.functions.*;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -21,22 +22,28 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
     private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(SingleInstanceContextDeserializer.class);
 
     private final InstanceToOutputElementPool instanceToOutputElementPool;
+    private final ContextLoggerConfiguration contextLoggerConfiguration;
 
     public SingleInstanceContextDeserializer() {
         this.instanceToOutputElementPool = new InstanceToOutputElementPool();
+        this.contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
     }
 
-    public OutputElement convertInstanceRecursively(final Object instanceToDeserialize) {
+    public OutputElement convertInstanceRecursively(final Object passedInstanceToDeserialize) {
 
         OutputElement outputElement = null;
 
-        if (instanceToDeserialize == null) {
+        if (passedInstanceToDeserialize == null) {
 
             // handle null value
             outputElement = NullValueOutputElement.INSTANCE;
 
         }
         else {
+
+            // wraps passed instance in tracee context provider if possible or otherwise returns the passed instance
+            Object instanceToDeserialize = TraceeContextProviderWrapperFunction.getInstance()
+                    .apply(contextLoggerConfiguration, passedInstanceToDeserialize);
 
             if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
                 // handle arrays and collections
