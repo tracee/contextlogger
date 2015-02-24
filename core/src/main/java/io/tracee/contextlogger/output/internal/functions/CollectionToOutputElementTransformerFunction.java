@@ -6,6 +6,7 @@ import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
@@ -25,7 +26,7 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Collection collection) {
 
         if (collection == null) {
-            return null;
+            return new NullValueOutputElement();
         }
         else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(collection)) {
             return recursiveContextDeserializer.getRegisteredOutputElement(collection);

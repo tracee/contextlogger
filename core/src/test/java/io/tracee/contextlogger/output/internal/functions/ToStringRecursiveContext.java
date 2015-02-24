@@ -19,18 +19,18 @@ public class ToStringRecursiveContext implements RecursiveContextDeserializer {
         return new AtomicOutputElement(instanceToDeserialize.getClass(), instanceToDeserialize.toString());
     }
 
-	@Override
-	public void registerOutputElement(final OutputElement outputElement) {
+    @Override
+    public void registerOutputElement(final OutputElement outputElement) {
 
-	}
+    }
 
-	@Override
-	public boolean checkIfInstanceIsAlreadyRegistered(final Object instance) {
+    @Override
+    public boolean checkIfInstanceIsAlreadyRegistered(final Object instance) {
         return false;
-	}
+    }
 
-	@Override
-	public OutputElement getRegisteredOutputElement(final Object instance) {
-		return null;
-	}
+    @Override
+    public OutputElement getRegisteredOutputElement(final Object instance) {
+        return null;
+    }
 }

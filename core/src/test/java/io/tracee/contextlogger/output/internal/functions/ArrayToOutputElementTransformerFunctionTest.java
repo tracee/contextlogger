@@ -5,6 +5,8 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElementType;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.output.internal.functions.ArrayToOutputElementTransformerFunction}
@@ -25,14 +27,14 @@ public class ArrayToOutputElementTransformerFunctionTest {
     }
 
     @Test
-    public void should_return_null_for_null_valued_instance() {
+    public void should_return_NullValueOutputElement_for_null_valued_instance() {
 
         Object[] array = null;
 
-        CollectionOutputElement collectionOutputElement = (CollectionOutputElement)ArrayToOutputElementTransformerFunction.getInstance().apply(
-                new ToStringRecursiveContext(), array);
+        OutputElement outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(), array);
 
-        MatcherAssert.assertThat(collectionOutputElement, Matchers.nullValue());
+        MatcherAssert.assertThat(outputElement, Matchers.notNullValue());
+        MatcherAssert.assertThat(outputElement.getOutputElementType(), Matchers.is(OutputElementType.NULL));
 
     }
 }

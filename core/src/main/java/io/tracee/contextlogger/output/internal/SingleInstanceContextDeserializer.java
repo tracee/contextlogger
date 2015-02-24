@@ -6,6 +6,7 @@ import java.util.Map;
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.functions.*;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.predicates.IsBeanTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsCollectionTypePredicate;
@@ -32,7 +33,7 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
         if (instanceToDeserialize == null) {
 
             // handle null value
-            outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+            outputElement = new NullValueOutputElement();
 
         }
         else {

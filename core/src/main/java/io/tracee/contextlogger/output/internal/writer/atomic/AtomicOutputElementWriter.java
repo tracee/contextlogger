@@ -1,18 +1,11 @@
 package io.tracee.contextlogger.output.internal.writer.atomic;
 
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.output.internal.writer.LeafOutputElementWriter;
 
 /**
  * Public interface for all writers of {@link io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement}s.
  */
-public interface AtomicOutputElementWriter {
-
-    /**
-     * Produces output for the passed AtomicOutputElement
-     *
-     * @param atomicOutputElement the AtomicOutputElement to be processed
-     * @return the String representation of the atomic output element
-     */
-    String produceOutput(AtomicOutputElement atomicOutputElement);
+public interface AtomicOutputElementWriter extends LeafOutputElementWriter<AtomicOutputElement> {
 
 }

@@ -23,7 +23,7 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
 
         if (instance == null) {
-            return new AtomicOutputElement(Void.class, null);
+            return new AtomicOutputElement(Object.class, null);
         }
         else {
 

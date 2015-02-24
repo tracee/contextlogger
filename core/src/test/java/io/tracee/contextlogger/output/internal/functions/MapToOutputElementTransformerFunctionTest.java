@@ -8,6 +8,8 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.OutputElementType;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.output.internal.functions.MapToOutputElementTransformerFunction}.
@@ -35,11 +37,10 @@ public class MapToOutputElementTransformerFunctionTest {
 
         Map<String, String> map = null;
 
-        ComplexOutputElement collectionOutputElement = (ComplexOutputElement)MapToOutputElementTransformerFunction.getInstance().apply(
-                new ToStringRecursiveContext(), map);
+        OutputElement outputElement = MapToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(), map);
 
-        MatcherAssert.assertThat(collectionOutputElement, Matchers.nullValue());
+        MatcherAssert.assertThat(outputElement, Matchers.notNullValue());
+        MatcherAssert.assertThat(outputElement.getOutputElementType(), Matchers.is(OutputElementType.NULL));
 
     }
-
 }

@@ -6,6 +6,7 @@ import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
@@ -25,7 +26,7 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Map map) {
 
         if (map == null) {
-            return null;
+            return new NullValueOutputElement();
         }
         else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(map)) {
             return recursiveContextDeserializer.getRegisteredOutputElement(map);

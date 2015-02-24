@@ -4,6 +4,7 @@ import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
@@ -23,7 +24,8 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object[] array) {
 
         if (array == null) {
-            return null;
+            // this shouldn't occur but should be caught
+            return new NullValueOutputElement();
         }
         else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(array)) {
             return recursiveContextDeserializer.getRegisteredOutputElement(instance);
@@ -42,5 +44,15 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
         }
 
         return outputElement;
+    }
+
+    /**
+     * Gets component type of an array.
+     *
+     * @param array the array to get the component type for
+     * @return the component type of the array.
+     */
+    Class getTypeOfArray(final Object[] array) {
+        return array.getClass().getComponentType();
     }
 }

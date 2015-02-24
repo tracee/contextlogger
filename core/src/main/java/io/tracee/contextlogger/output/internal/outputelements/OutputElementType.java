@@ -7,6 +7,7 @@ public enum OutputElementType {
 
     ATOMIC,
     COMPLEX,
-    COLLECTION;
+    COLLECTION,
+    NULL;
 
 }

@@ -11,6 +11,7 @@ public interface ToOutputElementTransformerFunction<C> {
     /**
      * Transforms passed instance to Output Element
      *
+     * @param recursiveContextDeserializer the recursiveContextDeserializer instance to be called.
      * @param instance the instance to be processed
      * @return the output element or null if instance cannot bbe processed correctly
      */

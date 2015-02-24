@@ -6,6 +6,8 @@ import io.tracee.contextlogger.output.internal.writer.circular.CircularReference
 import io.tracee.contextlogger.output.internal.writer.circular.SimpleCircularReferenceOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.CollectionOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.complex.ComplexOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.nullvalue.NullValueOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.nullvalue.SimpleNullValueOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
 
 /**
@@ -17,6 +19,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
     private CollectionOutputElementWriter collectionOutputElementWriter;
     private AtomicOutputElementWriter atomicOutputElementWriter;
     private CircularReferenceOutputElementWriter circularReferenceOutputElementWriter = new SimpleCircularReferenceOutputElementWriter();
+    private NullValueOutputElementWriter nullValueOutputElementWriter = new SimpleNullValueOutputElementWriter();
     private OutputElementPool outputElementPool = new OutputElementPool();
 
     /**
@@ -37,7 +40,8 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
     @Override
     public void produceOutputRecursively(final StringBuilder stringBuilder, final OutputStyle outputStyle, OutputElement outputElement) {
 
-        if (!OutputElementType.ATOMIC.equals(outputElement.getOutputElementType()) && outputElementPool.isInstanceInPool(outputElement)) {
+        if ((!OutputElementType.ATOMIC.equals(outputElement.getOutputElementType()) && !OutputElementType.NULL.equals(outputElement.getOutputElementType()))
+                && outputElementPool.isInstanceInPool(outputElement)) {
             stringBuilder.append(outputStyle.openingAtomicType());
             stringBuilder.append(outputStyle.escapeString(circularReferenceOutputElementWriter.produceOutput(outputElement)));
             stringBuilder.append(outputStyle.closingAtomicType());
@@ -64,14 +68,25 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
 
                 break;
             }
-            case ATOMIC:
-            default: {
+            case NULL: {
+
+                NullValueOutputElement nullValueOutputElement = (NullValueOutputElement)outputElement;
+
+                stringBuilder.append(nullValueOutputElementWriter.produceOutput(nullValueOutputElement));
+
+                break;
+            }
+
+            case ATOMIC: {
                 AtomicOutputElement atomicOutputElement = (AtomicOutputElement)outputElement;
 
                 stringBuilder.append(outputStyle.openingAtomicType());
                 stringBuilder.append(outputStyle.escapeString(atomicOutputElementWriter.produceOutput(atomicOutputElement)));
                 stringBuilder.append(outputStyle.closingAtomicType());
-
+                break;
+            }
+            default: {
+                // nothing to do
             }
         }
 

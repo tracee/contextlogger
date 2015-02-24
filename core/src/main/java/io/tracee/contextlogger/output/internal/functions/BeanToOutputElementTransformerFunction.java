@@ -7,6 +7,7 @@ import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.utility.BeanUtility;
 import io.tracee.contextlogger.utility.GetterUtilities;
@@ -28,7 +29,7 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
 
         if (instance == null) {
-            return null;
+            return new NullValueOutputElement();
         }
         else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(instance)) {
             return recursiveContextDeserializer.getRegisteredOutputElement(instance);
