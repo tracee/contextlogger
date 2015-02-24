@@ -5,7 +5,12 @@ package io.tracee.contextlogger.output.internal.outputelements;
  */
 public class NullValueOutputElement implements OutputElement {
 
-    public NullValueOutputElement() {
+    public final static NullValueOutputElement INSTANCE = new NullValueOutputElement();
+
+	/**
+	 * Hidden constructor.
+	 */
+    private NullValueOutputElement() {
 
     }
 
@@ -33,4 +38,5 @@ public class NullValueOutputElement implements OutputElement {
     public Object getEncapsulatedInstance() {
         return null;
     }
+
 }

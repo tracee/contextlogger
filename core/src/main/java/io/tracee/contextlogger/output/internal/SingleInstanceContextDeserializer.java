@@ -33,7 +33,7 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
         if (instanceToDeserialize == null) {
 
             // handle null value
-            outputElement = new NullValueOutputElement();
+            outputElement = NullValueOutputElement.INSTANCE;
 
         }
         else {
@@ -77,19 +77,19 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
     public void registerOutputElement(final OutputElement outputElement) {
 
         if (outputElement != null && outputElement.getEncapsulatedInstance() != null) {
-            this.instanceToOutputElementPool.add(outputElement.getEncapsulatedInstance(), outputElement);
+            this.instanceToOutputElementPool.add(outputElement);
         }
     }
 
     @Override
-    public boolean checkIfInstanceIsAlreadyRegistered(final Object instance) {
+    public boolean checkIfInstanceIsAlreadyRegistered(final OutputElement outputElement) {
 
-        return instance != null && this.instanceToOutputElementPool.isInstanceMarkedAsProcessed(instance);
+        return outputElement != null && this.instanceToOutputElementPool.isInstanceMarkedAsProcessed(outputElement);
 
     }
 
     @Override
-    public OutputElement getRegisteredOutputElement(final Object instance) {
-        return this.instanceToOutputElementPool.getOutputElement(instance);
+    public OutputElement getRegisteredOutputElement(final OutputElement outputElement) {
+        return this.instanceToOutputElementPool.getOutputElement(outputElement);
     }
 }

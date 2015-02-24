@@ -14,7 +14,7 @@ public class SimpleNullValueOutputElementWriterTest {
     @Test
     public void should_generate_output_for_fully_defined_null_valued_output_element_correctly() {
 
-        NullValueOutputElement nullValueOutputElement = new NullValueOutputElement();
+        NullValueOutputElement nullValueOutputElement = NullValueOutputElement.INSTANCE;
 
         String output = new SimpleNullValueOutputElementWriter().produceOutput(nullValueOutputElement);
 
@@ -36,8 +36,7 @@ public class SimpleNullValueOutputElementWriterTest {
     @Test
     public void should_generate_output_for_encapsulted_null_valued_type_correctly() {
 
-        NullValueOutputElement nullValueOutputElement = new NullValueOutputElement();
-        ;
+        NullValueOutputElement nullValueOutputElement = NullValueOutputElement.INSTANCE;
 
         String output = new SimpleNullValueOutputElementWriter().produceOutput(nullValueOutputElement);
 

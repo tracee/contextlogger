@@ -25,13 +25,14 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
 
         if (array == null) {
             // this shouldn't occur but should be caught
-            return new NullValueOutputElement();
-        }
-        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(array)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(instance);
+            return NullValueOutputElement.INSTANCE;
         }
 
         CollectionOutputElement outputElement = new CollectionOutputElement(array.getClass(), array);
+
+        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(outputElement);
+        }
 
         // must register output element before processing children to prevent problems with circular references
         recursiveContextDeserializer.registerOutputElement(outputElement);

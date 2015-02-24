@@ -26,13 +26,14 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Map map) {
 
         if (map == null) {
-            return new NullValueOutputElement();
-        }
-        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(map)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(map);
+            return NullValueOutputElement.INSTANCE;
         }
 
         ComplexOutputElement complexOutputElement = new ComplexOutputElement(map.getClass(), map);
+
+        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(complexOutputElement);
+        }
 
         // must register output element before processing children to prevent problems with circular references
         recursiveContextDeserializer.registerOutputElement(complexOutputElement);

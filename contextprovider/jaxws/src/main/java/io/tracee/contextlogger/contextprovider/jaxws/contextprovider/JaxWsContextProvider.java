@@ -23,6 +23,11 @@ public class JaxWsContextProvider implements WrappedContextData<JaxWsWrapper> {
         return JaxWsWrapper.class;
     }
 
+    @Override
+    public JaxWsWrapper getContextData() {
+        return this.jaxWsWrapper;
+    }
+
     @SuppressWarnings("unused")
     @TraceeContextProviderMethod(displayName = "soapRequest", order = 40)
     public final String getSoapRequest() {

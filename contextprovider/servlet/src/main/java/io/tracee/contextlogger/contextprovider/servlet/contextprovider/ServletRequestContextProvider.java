@@ -8,11 +8,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
+import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 
 /**
  * Context provider for HttpServletRequest.
@@ -35,6 +35,11 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
     @Override
     public void setContextData(Object instance) throws ClassCastException {
         this.request = (HttpServletRequest)instance;
+    }
+
+    @Override
+    public HttpServletRequest getContextData() {
+        return this.request;
     }
 
     @Override

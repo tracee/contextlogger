@@ -4,6 +4,7 @@ import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
@@ -23,14 +24,16 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
 
         if (instance == null) {
-            return new AtomicOutputElement(Object.class, null);
+            return NullValueOutputElement.INSTANCE;
         }
         else {
 
-            if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(instance)) {
-                return recursiveContextDeserializer.getRegisteredOutputElement(instance);
-            }
             OutputElement outputElement = new AtomicOutputElement(instance.getClass(), instance);
+
+            if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+                return recursiveContextDeserializer.getRegisteredOutputElement(outputElement);
+            }
+
             recursiveContextDeserializer.registerOutputElement(outputElement);
             return outputElement;
         }

@@ -30,8 +30,14 @@ public class AspectjProceedingJoinPointContextProvider implements WrappedContext
         this.proceedingJoinPoint = proceedingJoinPoint;
     }
 
+    @Override
     public final void setContextData(Object instance) throws ClassCastException {
         this.proceedingJoinPoint = (ProceedingJoinPoint)instance;
+    }
+
+    @Override
+    public ProceedingJoinPoint getContextData() {
+        return this.proceedingJoinPoint;
     }
 
     public final Class<ProceedingJoinPoint> getWrappedType() {

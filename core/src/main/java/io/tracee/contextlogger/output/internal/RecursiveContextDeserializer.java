@@ -25,14 +25,14 @@ public interface RecursiveContextDeserializer {
     /**
      * Checks if instance is already registered.
      *
-     * @param instance The instance to be checked
+     * @param outputElement The output element to be checked
      */
-    boolean checkIfInstanceIsAlreadyRegistered(final Object instance);
+    boolean checkIfInstanceIsAlreadyRegistered(final OutputElement outputElement);
 
     /**
      * Checks if instance is already registered
      *
-     * @param instance the instance to get the output element for
+     * @param outputElement the outputElement instance to get the existing output element for
      */
-    OutputElement getRegisteredOutputElement(final Object instance);
+    OutputElement getRegisteredOutputElement(final OutputElement outputElement);
 }

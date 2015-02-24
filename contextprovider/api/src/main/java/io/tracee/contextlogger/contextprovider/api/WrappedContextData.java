@@ -1,11 +1,11 @@
 package io.tracee.contextlogger.contextprovider.api;
 
-
 /**
  * Interface that marks a class and provides a method to set the context information.
  * Created by Tobias Gindler on 20.03.14.
  */
 public interface WrappedContextData<T> {
+
     /**
      * Used to set context data via reflection.
      *
@@ -13,6 +13,13 @@ public interface WrappedContextData<T> {
      * @throws ClassCastException if passed instance type is incompatible with wrapper type.
      */
     void setContextData(Object instance) throws ClassCastException;
+
+    /**
+     * Used to get wrapped context data.
+     *
+     * @return
+     */
+    T getContextData();
 
     /**
      * Used to determine the wrapped type of the class.

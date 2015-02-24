@@ -10,6 +10,6 @@ public class ToStringAtomicOutputElementWriter implements AtomicOutputElementWri
     @Override
     public String produceOutput(final AtomicOutputElement atomicOutputElement) {
         return atomicOutputElement != null && atomicOutputElement.getEncapsulatedInstance() != null ? atomicOutputElement.getEncapsulatedInstance()
-                .toString() : "<null>";
+                .toString() : "<NULL>";
     }
 }

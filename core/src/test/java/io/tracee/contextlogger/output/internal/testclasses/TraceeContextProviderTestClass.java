@@ -28,6 +28,11 @@ public class TraceeContextProviderTestClass implements WrappedContextData<String
         this.dummyString = (String)instance;
     }
 
+    @Override
+    public String getContextData() {
+        return this.dummyString;
+    }
+
     public Class<String> getWrappedType() {
         return String.class;
     }

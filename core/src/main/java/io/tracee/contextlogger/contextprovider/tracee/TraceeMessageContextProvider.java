@@ -1,9 +1,9 @@
 package io.tracee.contextlogger.contextprovider.tracee;
 
+import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.Order;
 
 /**
  * Message Context Provider. Used to add message to tracee log output.
@@ -33,7 +33,12 @@ public class TraceeMessageContextProvider implements WrappedContextData<TraceeMe
 
     @Override
     public void setContextData(Object instance) throws ClassCastException {
-        message = (TraceeMessage) instance;
+        message = (TraceeMessage)instance;
+    }
+
+    @Override
+    public TraceeMessage getContextData() {
+        return this.message;
     }
 
     @Override

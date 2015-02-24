@@ -1,6 +1,5 @@
 package io.tracee.contextlogger.output.internal.writer;
 
-import io.tracee.contextlogger.output.internal.writer.atomic.AtomicOutputElementWriter;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,7 @@ import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.testclasses.CircularTestClass1;
 import io.tracee.contextlogger.output.internal.testclasses.NullValuedReferencesTestClass;
 import io.tracee.contextlogger.output.internal.testclasses.TestClassA;
+import io.tracee.contextlogger.output.internal.writer.atomic.AtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.atomic.TypedWithInstanceIdToStringAtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.CollectionOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.SimpleCollectionOutputElementWriter;
@@ -84,7 +84,7 @@ public class OutputWriterToOutputTansformerTest {
         String result = OutputWriterToOutputTransformer.produceOutput(simpleJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
                 atomicOutputElementWriter, tmp);
 
-        MatcherAssert.assertThat(result, new RegexMatcher("\\{\"other\":\\{\"other\":\"see CircularTestClass1@\\d+\"}}"));
+        MatcherAssert.assertThat(result, new RegexMatcher("\\{\"other\":\\{\"other\":\"==> CircularTestClass1@\\d+\"}}"));
 
     }
 

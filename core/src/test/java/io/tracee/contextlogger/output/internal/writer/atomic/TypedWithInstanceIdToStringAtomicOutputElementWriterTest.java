@@ -33,7 +33,7 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriterTest {
 
         String result = new TypedWithInstanceIdToStringAtomicOutputElementWriter().produceOutput(atomicOutputElement);
 
-        MatcherAssert.assertThat(result, Matchers.is("String['<null>']"));
+        MatcherAssert.assertThat(result, Matchers.is("String['<NULL>']"));
 
     }
 
@@ -46,7 +46,7 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriterTest {
 
         String result = new TypedWithInstanceIdToStringAtomicOutputElementWriter().produceOutput(atomicOutputElement);
 
-        MatcherAssert.assertThat(result, Matchers.is("<null>"));
+        MatcherAssert.assertThat(result, Matchers.is("<NULL>"));
 
     }
 

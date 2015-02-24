@@ -7,11 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.api.Flatten;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 
 /**
  * Context provider for HttpSession.
@@ -32,6 +32,11 @@ public final class ServletSessionContextProvider implements WrappedContextData<H
     @Override
     public void setContextData(Object instance) throws ClassCastException {
         this.session = (HttpSession)instance;
+    }
+
+    @Override
+    public HttpSession getContextData() {
+        return this.session;
     }
 
     @Override

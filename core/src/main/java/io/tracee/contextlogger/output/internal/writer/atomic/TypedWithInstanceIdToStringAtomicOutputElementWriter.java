@@ -16,7 +16,7 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriter extends ToStri
             String instanceId = "";
 
             if (atomicOutputElement.getEncapsulatedInstance() != null) {
-                instanceId = "@" + System.identityHashCode(atomicOutputElement.getEncapsulatedInstance());
+                instanceId = "@" + atomicOutputElement.getIdentityHashCode();
             }
 
             return type + instanceId + "['" + super.produceOutput(atomicOutputElement) + "']";

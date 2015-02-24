@@ -7,10 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 
 /**
  * Context provider for HttpServletResponse.
@@ -31,6 +31,11 @@ public final class ServletResponseContextProvider implements WrappedContextData<
     @Override
     public void setContextData(Object instance) throws ClassCastException {
         this.response = (HttpServletResponse)instance;
+    }
+
+    @Override
+    public HttpServletResponse getContextData() {
+        return this.response;
     }
 
     @Override

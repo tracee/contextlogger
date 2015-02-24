@@ -9,10 +9,10 @@ import javax.interceptor.InvocationContext;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.utility.RecursiveReflectionToStringStyle;
 
 /**
@@ -31,10 +31,17 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
         this.invocationContext = invocationContext;
     }
 
+    @Override
     public final void setContextData(Object instance) throws ClassCastException {
         this.invocationContext = (InvocationContext)instance;
     }
 
+    @Override
+    public InvocationContext getContextData() {
+        return this.invocationContext;
+    }
+
+    @Override
     public final Class<InvocationContext> getWrappedType() {
         return InvocationContext.class;
     }
@@ -82,8 +89,8 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
         return result;
     }
 
-    @TraceeContextProviderMethod(displayName = "deserialized.contextData", order = 40)
-    public final List<NameStringValuePair> getContextData() {
+    @TraceeContextProviderMethod(displayName = "deserialized.invocationContextData", order = 40)
+    public final List<NameStringValuePair> getInvocationContextData() {
 
         List<NameStringValuePair> result = new ArrayList<NameStringValuePair>();
 

@@ -14,7 +14,7 @@ public class SimpleCircularReferenceOutputElementWriter implements CircularRefer
             String instanceId = "";
 
             if (outputElement.getEncapsulatedInstance() != null) {
-                instanceId = "@" + System.identityHashCode(outputElement.getEncapsulatedInstance());
+                instanceId = "@" + outputElement.getIdentityHashCode();
             }
 
             return "==> " + type + instanceId;

@@ -29,13 +29,13 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
 
         if (instance == null) {
-            return new NullValueOutputElement();
+            return NullValueOutputElement.INSTANCE;
         }
-        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(instance)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(instance);
-        }
-
         ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
+
+        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(complexOutputElement);
+        }
 
         // must register output element before processing children to prevent problems with circular references
         recursiveContextDeserializer.registerOutputElement(complexOutputElement);

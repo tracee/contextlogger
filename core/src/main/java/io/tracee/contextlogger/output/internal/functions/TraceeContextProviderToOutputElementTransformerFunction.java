@@ -14,9 +14,9 @@ import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPairComparator;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
-import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.output.internal.outputelements.TraceeContextProviderOutputElement;
 import io.tracee.contextlogger.utility.ListUtilities;
 import io.tracee.contextlogger.utility.RecursiveReflectionToStringStyle;
 import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
@@ -37,14 +37,14 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
     @Override
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
-        ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
+        TraceeContextProviderOutputElement complexOutputElement = new TraceeContextProviderOutputElement(instance.getClass(), instance);
 
         TraceeContextProvider annotation = TraceeContextLogAnnotationUtilities.getAnnotationFromType(instance);
         if (annotation == null) {
 
             // should not happen - but will be ignored
             logger.debug("TRACEE-CONTEXTLOGGER-DESERIALIZER - Got non annotated class");
-            return new NullValueOutputElement();
+            return NullValueOutputElement.INSTANCE;
 
         }
         else {

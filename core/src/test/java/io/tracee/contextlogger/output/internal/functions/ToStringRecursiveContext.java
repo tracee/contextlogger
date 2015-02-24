@@ -25,12 +25,12 @@ public class ToStringRecursiveContext implements RecursiveContextDeserializer {
     }
 
     @Override
-    public boolean checkIfInstanceIsAlreadyRegistered(final Object instance) {
+    public boolean checkIfInstanceIsAlreadyRegistered(final OutputElement outputElement) {
         return false;
     }
 
     @Override
-    public OutputElement getRegisteredOutputElement(final Object instance) {
+    public OutputElement getRegisteredOutputElement(final OutputElement outputElement) {
         return null;
     }
 }

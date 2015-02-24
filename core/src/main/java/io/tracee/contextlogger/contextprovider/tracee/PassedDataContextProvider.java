@@ -1,20 +1,19 @@
 package io.tracee.contextlogger.contextprovider.tracee;
 
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import io.tracee.contextlogger.contextprovider.api.Flatten;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.utility.PassedContextDataElementWrapper;
 import io.tracee.contextlogger.utility.PassedContextDataElementWrapperComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * ContextDataProvider for all instances passed to {@link TraceeMdcContextProvider}
- * Created by Tobias Gindler, holisticon AG on 20.03.14.
+ * ContextDataProvider for all instances passed to {@link TraceeMdcContextProvider} Created by Tobias Gindler, holisticon AG on 20.03.14.
  */
 
 @TraceeContextProvider(displayName = "contexts")
@@ -37,10 +36,14 @@ public class PassedDataContextProvider implements WrappedContextData<Object[]> {
         this(instances, false);
     }
 
-
     @Override
     public final void setContextData(Object instance) throws ClassCastException {
-        this.instances = (Object[]) instance;
+        this.instances = (Object[])instance;
+    }
+
+    @Override
+    public Object[] getContextData() {
+        return this.instances;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class PassedDataContextProvider implements WrappedContextData<Object[]> {
 
     @Flatten
     @TraceeContextProviderMethod(displayName = "instances", enabledPerDefault = true)
-    public List<NameObjectValuePair> getContextData() {
+    public List<NameObjectValuePair> getPassedContextData() {
 
         if (instances == null) {
             return null;

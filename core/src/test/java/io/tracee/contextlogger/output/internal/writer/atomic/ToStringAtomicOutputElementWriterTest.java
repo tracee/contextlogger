@@ -33,7 +33,7 @@ public class ToStringAtomicOutputElementWriterTest {
 
         String result = new ToStringAtomicOutputElementWriter().produceOutput(atomicOutputElement);
 
-        MatcherAssert.assertThat(result, Matchers.is("<null>"));
+        MatcherAssert.assertThat(result, Matchers.is("<NULL>"));
 
     }
 

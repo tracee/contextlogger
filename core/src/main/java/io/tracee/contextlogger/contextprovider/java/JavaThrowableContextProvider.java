@@ -1,12 +1,12 @@
 package io.tracee.contextlogger.contextprovider.java;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.Order;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * Provides context information about thrown exceptions.
@@ -15,7 +15,6 @@ import java.io.StringWriter;
 @SuppressWarnings("unused")
 @TraceeContextProvider(displayName = "throwable", order = Order.EXCEPTION)
 public final class JavaThrowableContextProvider implements WrappedContextData<Throwable> {
-
 
     private Throwable throwable;
 
@@ -30,7 +29,12 @@ public final class JavaThrowableContextProvider implements WrappedContextData<Th
 
     @Override
     public void setContextData(Object instance) throws ClassCastException {
-        this.throwable = (Throwable) instance;
+        this.throwable = (Throwable)instance;
+    }
+
+    @Override
+    public Throwable getContextData() {
+        return this.throwable;
     }
 
     public Class<Throwable> getWrappedType() {
@@ -38,23 +42,20 @@ public final class JavaThrowableContextProvider implements WrappedContextData<Th
     }
 
     @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(
-            displayName = "message",
-            order = 10)
+    @TraceeContextProviderMethod(displayName = "message", order = 10)
     public String getMessage() {
         return throwable != null ? throwable.getMessage() : null;
     }
 
     @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(
-            displayName = "stacktrace",
-            order = 20)
+    @TraceeContextProviderMethod(displayName = "stacktrace", order = 20)
     public String getStacktrace() {
         if (this.throwable != null) {
             StringWriter sw = new StringWriter();
             throwable.printStackTrace(new PrintWriter(sw));
             return sw.toString();
-        } else {
+        }
+        else {
             return null;
         }
     }

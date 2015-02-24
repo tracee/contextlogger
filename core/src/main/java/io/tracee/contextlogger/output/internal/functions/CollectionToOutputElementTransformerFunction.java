@@ -26,13 +26,14 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
     public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Collection collection) {
 
         if (collection == null) {
-            return new NullValueOutputElement();
-        }
-        else if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(collection)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(collection);
+            return NullValueOutputElement.INSTANCE;
         }
 
         CollectionOutputElement outputElement = new CollectionOutputElement(collection.getClass(), collection);
+
+        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+            return recursiveContextDeserializer.getRegisteredOutputElement(outputElement);
+        }
 
         // must register output element before processing children to prevent problems with circular references
         recursiveContextDeserializer.registerOutputElement(outputElement);
