@@ -2,7 +2,6 @@ package io.tracee.contextlogger.utility;
 
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

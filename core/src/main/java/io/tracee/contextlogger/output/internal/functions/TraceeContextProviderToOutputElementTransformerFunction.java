@@ -3,14 +3,12 @@ package io.tracee.contextlogger.output.internal.functions;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.TraceeContextLoggerConstants;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
 import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPairComparator;
 import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
@@ -18,7 +16,6 @@ import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputEle
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.TraceeContextProviderOutputElement;
 import io.tracee.contextlogger.utility.ListUtilities;
-import io.tracee.contextlogger.utility.RecursiveReflectionToStringStyle;
 import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
 
 /**
@@ -65,46 +62,25 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
                     Object returnValue = singleEntry.getMethod().invoke(instance, null);
 
-                    if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod()) && (isNameStringValuePair(returnValue))) {
+                    if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod())
+                            && (isNameStringValuePair(returnValue) || isNameObjectValuePair(returnValue))) {
 
                         // returnValue is single NameStringValuePair
-                        final NameStringValuePair nameStringValuePair = (NameStringValuePair)returnValue;
-                        addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameStringValuePair.getName(),
-                                nameStringValuePair.getValue());
-
-                    }
-                    if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod()) && (isNameObjectValuePair(returnValue))) {
-
-                        // returnValue is single NameObjectValuePair
-                        final NameObjectValuePair nameObjectValuePair = (NameObjectValuePair)returnValue;
-
-                        // ObjectValuePairs will be deserialized by ReflectionToStringBuilder
-                        final Object value = getValueOfNameObjectValuePair(nameObjectValuePair);
-                        addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameObjectValuePair.getName(), value);
+                        final NameValuePair nameValuePair = (NameStringValuePair)returnValue;
+                        addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameValuePair.getName(),
+                                nameValuePair.getValue());
 
                     }
                     else if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod())
-                            && ListUtilities.isListOfType(returnValue, NameStringValuePair.class)) {
+                            && (ListUtilities.isListOfType(returnValue, NameStringValuePair.class) || ListUtilities.isListOfType(returnValue,
+                                    NameObjectValuePair.class))) {
 
                         // returnValue is List of NameValuePairs
-                        final List<NameStringValuePair> list = (List<NameStringValuePair>)returnValue;
+                        final List<NameValuePair> list = (List<NameValuePair>)returnValue;
 
-                        for (NameStringValuePair nameStringValuePair : list) {
-                            addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameStringValuePair.getName(),
-                                    nameStringValuePair.getValue());
-                        }
-
-                    }
-                    else if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod())
-                            && ListUtilities.isListOfType(returnValue, NameObjectValuePair.class)) {
-
-                        // returnValue is List of NameValuePairs
-                        List<NameObjectValuePair> list = (List<NameObjectValuePair>)returnValue;
-
-                        for (NameObjectValuePair nameObjectValuePair : list) {
-                            // ObjectValuePairs will be deserialized by ReflectionToStringBuilder
-                            final Object value = getValueOfNameObjectValuePair(nameObjectValuePair);
-                            addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameObjectValuePair.getName(), value);
+                        for (NameValuePair nameValuePair : list) {
+                            addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameValuePair.getName(),
+                                    nameValuePair.getValue());
                         }
 
                     }
@@ -152,42 +128,6 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
         return instance != null && NameObjectValuePair.class.isInstance(instance);
 
-    }
-
-    /**
-     * Checks whether the passed instance has to be ignore at the deserialization.
-     *
-     * @param instance the instance to check
-     * @return true if passed instance is null or type of passed instance is in IGNORED_AT_DESERIALIZATION set.
-     */
-    static boolean shouldBeIgnoreAtDeSerialization(final Object instance) {
-        return instance == null || TraceeContextLoggerConstants.IGNORED_AT_DESERIALIZATION.contains(instance.getClass());
-    }
-
-    /**
-     * selects the best macthing serialization depending on value type.
-     *
-     * @param nameObjectValuePair
-     * @return
-     */
-    private Object getValueOfNameObjectValuePair(final NameObjectValuePair nameObjectValuePair) {
-        if (nameObjectValuePair != null && nameObjectValuePair.getValue() != null) {
-
-            if (TraceeContextLogAnnotationUtilities.getAnnotationFromType(nameObjectValuePair.getValue()) != null) {
-                return nameObjectValuePair.getValue();
-            }
-            else if (!shouldBeIgnoreAtDeSerialization(nameObjectValuePair.getValue())) {
-                return ReflectionToStringBuilder.reflectionToString(nameObjectValuePair.getValue(), new RecursiveReflectionToStringStyle());
-            }
-            else {
-                // not null value - but type is in IGNORED_AT_DESERIALIZATION set
-                return nameObjectValuePair.getValue().toString();
-            }
-
-        }
-        else {
-            return null;
-        }
     }
 
 }

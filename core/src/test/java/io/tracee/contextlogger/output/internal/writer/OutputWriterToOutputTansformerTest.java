@@ -9,6 +9,7 @@ import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.testclasses.CircularTestClass1;
 import io.tracee.contextlogger.output.internal.testclasses.NullValuedReferencesTestClass;
 import io.tracee.contextlogger.output.internal.testclasses.TestClassA;
+import io.tracee.contextlogger.output.internal.testclasses.WrappedInstanceInTraceeContextProviderTestClass;
 import io.tracee.contextlogger.output.internal.writer.atomic.AtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.atomic.TypedWithInstanceIdToStringAtomicOutputElementWriter;
 import io.tracee.contextlogger.output.internal.writer.collection.CollectionOutputElementWriter;
@@ -94,6 +95,19 @@ public class OutputWriterToOutputTansformerTest {
         OutputElement tmp = ContextDeserializer.deserializeContexts(new NullValuedReferencesTestClass());
 
         String result = OutputWriterToOutputTransformer.produceOutput(simpleJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
+                atomicOutputElementWriter, tmp);
+
+        System.out.println(result);
+        // MatcherAssert.assertThat(result, new RegexMatcher("\\{\"other\":\\{\"other\":\"see CircularTestClass1@\\d+\"}}"));
+
+    }
+
+    @Test
+    public void should_build_wrapped_context_provider_in_representation_correctly() {
+
+        OutputElement tmp = ContextDeserializer.deserializeContexts(new WrappedInstanceInTraceeContextProviderTestClass());
+
+        String result = OutputWriterToOutputTransformer.produceOutput(intendedJsonOutputStyle, complexOutputElementWriter, collectionOutputElementWriter,
                 atomicOutputElementWriter, tmp);
 
         System.out.println(result);
