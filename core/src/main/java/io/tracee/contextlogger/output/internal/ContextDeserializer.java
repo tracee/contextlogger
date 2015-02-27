@@ -10,13 +10,13 @@ import io.tracee.contextlogger.profile.ProfileSettings;
  */
 public class ContextDeserializer {
 
-    private final SingleInstanceContextDeserializer singleInstanceContextDeserializer;
+    private final RecursiveOutputElementTreeBuilderImpl recursiveOutputElementTreeBuilderImpl;
 
     /**
      * Hidden constructor.
      */
     protected ContextDeserializer(final ProfileSettings profileSettings) {
-        singleInstanceContextDeserializer = new SingleInstanceContextDeserializer(profileSettings);
+        recursiveOutputElementTreeBuilderImpl = new RecursiveOutputElementTreeBuilderImpl(profileSettings);
     }
 
     protected OutputElement deserializeContextsMain(Object... instances) {
@@ -28,7 +28,7 @@ public class ContextDeserializer {
         }
         else if (instances.length == 1) {
 
-            return singleInstanceContextDeserializer.convertInstanceRecursively(instances[0]);
+            return recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(instances[0]);
 
         }
         else {
@@ -37,7 +37,7 @@ public class ContextDeserializer {
             CollectionOutputElement complexOutputElement = new CollectionOutputElement(Object[].class, instances);
 
             for (Object instance : instances) {
-                complexOutputElement.addElement(singleInstanceContextDeserializer.convertInstanceRecursively(instance));
+                complexOutputElement.addElement(recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(instance));
             }
 
             return complexOutputElement;

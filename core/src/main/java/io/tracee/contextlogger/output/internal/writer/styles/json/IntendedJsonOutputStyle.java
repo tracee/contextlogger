@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.output.internal.writer.styles.json;
 
-import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
+import io.tracee.contextlogger.output.internal.writer.api.OutputStyle;
 
 /**
  * Json output writer that supports indents.

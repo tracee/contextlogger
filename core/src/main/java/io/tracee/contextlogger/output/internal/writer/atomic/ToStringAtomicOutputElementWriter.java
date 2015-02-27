@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.output.internal.writer.atomic;
 
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.output.internal.writer.api.AtomicOutputElementWriter;
 
 /**
  * Atomic output element writer that calls toString on encapsulated value instance.

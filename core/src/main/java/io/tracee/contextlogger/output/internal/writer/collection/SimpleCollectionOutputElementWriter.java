@@ -2,8 +2,9 @@ package io.tracee.contextlogger.output.internal.writer.collection;
 
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
-import io.tracee.contextlogger.output.internal.writer.OutputWriter;
-import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
+import io.tracee.contextlogger.output.internal.writer.api.OutputWriter;
+import io.tracee.contextlogger.output.internal.writer.api.CollectionOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.api.OutputStyle;
 
 /**
  * Simple collection output element writer implementation.

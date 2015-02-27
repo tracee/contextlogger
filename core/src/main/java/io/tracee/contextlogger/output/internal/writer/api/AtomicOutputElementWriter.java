@@ -1,7 +1,6 @@
-package io.tracee.contextlogger.output.internal.writer.atomic;
+package io.tracee.contextlogger.output.internal.writer.api;
 
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
-import io.tracee.contextlogger.output.internal.writer.LeafOutputElementWriter;
 
 /**
  * Public interface for all writers of {@link io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement}s.

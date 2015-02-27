@@ -4,8 +4,9 @@ import java.util.Map;
 
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
-import io.tracee.contextlogger.output.internal.writer.OutputWriter;
-import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
+import io.tracee.contextlogger.output.internal.writer.api.OutputWriter;
+import io.tracee.contextlogger.output.internal.writer.api.ComplexOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.api.OutputStyle;
 
 /**
  * Simple complex output element writer implementation.

@@ -10,7 +10,7 @@ import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Context provider for HttpServletResponse.
@@ -54,15 +54,15 @@ public final class ServletResponseContextProvider implements WrappedContextData<
 
     @SuppressWarnings("unused")
     @TraceeContextProviderMethod(displayName = "http-header", order = 20)
-    public List<NameStringValuePair> getHttpResponseHeaders() {
-        final List<NameStringValuePair> list = new ArrayList<NameStringValuePair>();
+    public List<NameValuePair<String>> getHttpResponseHeaders() {
+        final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
         if (this.response != null && this.response.getHeaderNames() != null) {
             final Collection<String> httpHeaderNames = this.response.getHeaderNames();
             for (final String httpHeaderName : httpHeaderNames) {
 
                 final String value = this.response.getHeader(httpHeaderName);
-                list.add(new NameStringValuePair(httpHeaderName, value));
+                list.add(new NameValuePair<String>(httpHeaderName, value));
 
             }
         }

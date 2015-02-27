@@ -6,14 +6,11 @@ import java.util.Map;
 
 import javax.interceptor.InvocationContext;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
-import io.tracee.contextlogger.utility.RecursiveReflectionToStringStyle;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Context provider for ProceedingJoinPoint.
@@ -73,26 +70,21 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
         return result.size() > 0 ? result : null;
     }
 
-    @TraceeContextProviderMethod(displayName = "serialized-target-instance", order = 30)
-    public final String getSerializedTargetInstance() {
+    @TraceeContextProviderMethod(displayName = "target-instance", order = 30)
+    public final Object getTargetInstance() {
         String result = null;
         if (this.invocationContext != null) {
-            Object targetInstance = this.invocationContext.getTarget();
-            if (targetInstance != null) {
-                result = ReflectionToStringBuilder.reflectionToString(targetInstance, new RecursiveReflectionToStringStyle());
-            }
-            else {
-                result = null;
-            }
+            return this.invocationContext.getTarget();
+
         }
 
         return result;
     }
 
-    @TraceeContextProviderMethod(displayName = "deserialized.invocationContextData", order = 40)
-    public final List<NameStringValuePair> getInvocationContextData() {
+    @TraceeContextProviderMethod(displayName = "invocationContextData", order = 40)
+    public final List<NameValuePair<Object>> getInvocationContextData() {
 
-        List<NameStringValuePair> result = new ArrayList<NameStringValuePair>();
+        List<NameValuePair<Object>> result = new ArrayList<NameValuePair<Object>>();
 
         if (this.invocationContext != null) {
 
@@ -101,15 +93,7 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
                 String key = entry.getKey();
                 Object value = entry.getValue();
 
-                final String deSerializedValue;
-                if (value != null) {
-                    deSerializedValue = ReflectionToStringBuilder.reflectionToString(value, new RecursiveReflectionToStringStyle());
-                }
-                else {
-                    deSerializedValue = null;
-                }
-
-                result.add(new NameStringValuePair(key, deSerializedValue));
+                result.add(new NameValuePair<Object>(key, value));
 
             }
 
@@ -118,5 +102,4 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
         return result.size() > 0 ? result : null;
 
     }
-
 }

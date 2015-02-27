@@ -11,8 +11,7 @@ import io.tracee.contextlogger.contextprovider.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Context provider for HttpServletRequest.
@@ -67,9 +66,9 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
     @SuppressWarnings("unused")
     @TraceeContextProviderMethod(displayName = "http-parameters", order = 30)
-    public List<NameStringValuePair> getHttpParameters() {
+    public List<NameValuePair<String>> getHttpParameters() {
 
-        final List<NameStringValuePair> list = new ArrayList<NameStringValuePair>();
+        final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
         if (this.request != null) {
             final Enumeration<String> httpHeaderNamesEnum = this.request.getParameterNames();
@@ -80,7 +79,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
                 final String[] values = this.request.getParameterValues(httpHeaderName);
                 if (values != null) {
                     for (final String value : values) {
-                        list.add(new NameStringValuePair(httpHeaderName, value));
+                        list.add(new NameValuePair<String>(httpHeaderName, value));
                     }
                 }
 
@@ -93,9 +92,9 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
     @SuppressWarnings("unused")
     @TraceeContextProviderMethod(displayName = "http-request-headers", order = 40)
-    public List<NameStringValuePair> getHttpRequestHeaders() {
+    public List<NameValuePair<String>> getHttpRequestHeaders() {
 
-        final List<NameStringValuePair> list = new ArrayList<NameStringValuePair>();
+        final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
         if (this.request != null) {
             final Enumeration<String> httpHeaderNamesEnum = this.request.getHeaderNames();
@@ -103,7 +102,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
                 final String httpHeaderName = httpHeaderNamesEnum.nextElement();
                 final String value = this.request.getHeader(httpHeaderName);
-                list.add(new NameStringValuePair(httpHeaderName, value));
+                list.add(new NameValuePair<String>(httpHeaderName, value));
 
             }
         }
@@ -113,9 +112,9 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
     @SuppressWarnings("unused")
     @TraceeContextProviderMethod(displayName = "http-request-attributes", order = 45)
-    public List<NameObjectValuePair> getHttpRequestAttributes() {
+    public List<NameValuePair<Object>> getHttpRequestAttributes() {
 
-        final List<NameObjectValuePair> list = new ArrayList<NameObjectValuePair>();
+        final List<NameValuePair<Object>> list = new ArrayList<NameValuePair<Object>>();
 
         if (this.request != null) {
             final Enumeration<String> attributeNames = this.request.getAttributeNames();
@@ -123,7 +122,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
                 final String attributeName = attributeNames.nextElement();
                 final Object value = this.request.getAttribute(attributeName);
-                list.add(new NameObjectValuePair(attributeName, value));
+                list.add(new NameValuePair<Object>(attributeName, value));
 
             }
         }

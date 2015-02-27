@@ -11,7 +11,7 @@ import io.tracee.contextlogger.contextprovider.api.Flatten;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Context provider for HttpSession.
@@ -47,13 +47,13 @@ public final class ServletSessionContextProvider implements WrappedContextData<H
     @SuppressWarnings("unused")
     @Flatten
     @TraceeContextProviderMethod(displayName = "DYNAMIC")
-    public List<NameStringValuePair> getSessionAttributes() {
+    public List<NameValuePair<Object>> getSessionAttributes() {
 
         if (session == null) {
             return null;
         }
 
-        final List<NameStringValuePair> sessionAttributes = new ArrayList<NameStringValuePair>();
+        final List<NameValuePair<Object>> sessionAttributes = new ArrayList<NameValuePair<Object>>();
 
         if (session != null) {
             final Enumeration<String> attributeNames = session.getAttributeNames();
@@ -62,7 +62,7 @@ public final class ServletSessionContextProvider implements WrappedContextData<H
                 final String key = attributeNames.nextElement();
                 final Object value = session.getAttribute(key);
 
-                sessionAttributes.add(new NameStringValuePair(key, value != null ? value.toString() : null));
+                sessionAttributes.add(new NameValuePair<Object>(key, value));
 
             }
         }

@@ -1,11 +1,12 @@
-package io.tracee.contextlogger.output.internal.writer.circular;
+package io.tracee.contextlogger.output.internal.writer.alreadyprocessed;
 
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.output.internal.writer.api.AlreadyProcessedReferenceOutputElementWriter;
 
 /**
- * Simple implementation to output a circular dependency.
+ * Simple implementation to output a alreadyprocessed dependency.
  */
-public class SimpleCircularReferenceOutputElementWriter implements CircularReferenceOutputElementWriter {
+public class SimpleAlreadyProcessedReferenceOutputElementWriter implements AlreadyProcessedReferenceOutputElementWriter {
 
     @Override
     public String produceOutput(final OutputElement outputElement) {

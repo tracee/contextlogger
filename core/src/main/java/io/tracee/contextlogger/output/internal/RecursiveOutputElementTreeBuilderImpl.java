@@ -16,17 +16,17 @@ import io.tracee.contextlogger.output.internal.predicates.IsTraceeContextProvide
 import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
- * Create deserialization tree for a single instance recursively. Acts as scheduler for ToOutputTransformerFunctions invocations.
+ * Creates output element tree for the passed instance recursively. Acts as scheduler for ToOutputTransformerFunctions invocations.
  */
-public class SingleInstanceContextDeserializer implements RecursiveContextDeserializer {
+public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputElementTreeBuilder {
 
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(SingleInstanceContextDeserializer.class);
+    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(RecursiveOutputElementTreeBuilderImpl.class);
 
     private final InstanceToOutputElementPool instanceToOutputElementPool;
     private final ContextLoggerConfiguration contextLoggerConfiguration;
     private final ProfileSettings profileSettings;
 
-    public SingleInstanceContextDeserializer(final ProfileSettings profileSettings) {
+    public RecursiveOutputElementTreeBuilderImpl(final ProfileSettings profileSettings) {
         this.profileSettings = profileSettings;
         this.instanceToOutputElementPool = new InstanceToOutputElementPool();
         this.contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();

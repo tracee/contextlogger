@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.output.internal.writer;
+package io.tracee.contextlogger.output.internal.writer.api;
 
 /**
  * Base interface for all leaf based output element writers

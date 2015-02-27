@@ -1,11 +1,11 @@
-package io.tracee.contextlogger.output.internal.writer.circular;
+package io.tracee.contextlogger.output.internal.writer.api;
 
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 
 /**
  * Public interface for all writers of already plotted output elements.
  */
-public interface CircularReferenceOutputElementWriter {
+public interface AlreadyProcessedReferenceOutputElementWriter {
 
     /**
      * Produces output for the passed CircularReferenceOutputElement

@@ -6,7 +6,7 @@ import io.tracee.contextlogger.profile.ProfileSettings;
 /**
  * Interface for recursively building the deserialization tree.
  */
-public interface RecursiveContextDeserializer {
+public interface RecursiveOutputElementTreeBuilder {
 
     /**
      * Method that is called recursively to create the deserialization tree

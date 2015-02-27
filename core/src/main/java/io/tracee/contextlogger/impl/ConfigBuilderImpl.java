@@ -1,12 +1,13 @@
 package io.tracee.contextlogger.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Implementation class to create a configuration by using the fluent api.
@@ -21,6 +22,7 @@ public class ConfigBuilderImpl implements Configuration {
 
     private Map<String, Boolean> manualContextOverrides = new HashMap<String, Boolean>();
 
+    private OutputWriterConfiguration outputWriterConfiguration = OutputWriterConfiguration.JSON_INTENDED;
 
     public ConfigBuilderImpl(ContextLoggerBuilder owningBuilder) {
         this.owningBuilder = owningBuilder;
@@ -51,6 +53,12 @@ public class ConfigBuilderImpl implements Configuration {
     }
 
     @Override
+    public ConfigBuilder enforceOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
+        this.outputWriterConfiguration = outputWriterConfiguration;
+        return this;
+    }
+
+    @Override
     public ContextLoggerBuilder apply() {
         return owningBuilder;
     }
@@ -67,12 +75,16 @@ public class ConfigBuilderImpl implements Configuration {
         return keepOrder;
     }
 
+    @Override
+    public OutputWriterConfiguration getOutputWriterConfiguration() {
+        return this.outputWriterConfiguration;
+    }
 
     /**
      * Adds passed contexts value pairs to manualContextOverrides.
      *
      * @param contexts The property name of the context data.
-     * @param value    the value which should be set.
+     * @param value the value which should be set.
      */
     private void fillManualContextOverrideMap(final String[] contexts, final boolean value) {
         if (contexts != null) {

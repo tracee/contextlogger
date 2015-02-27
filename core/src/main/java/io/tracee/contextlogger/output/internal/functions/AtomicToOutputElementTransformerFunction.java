@@ -2,7 +2,7 @@ package io.tracee.contextlogger.output.internal.functions;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -21,7 +21,7 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
     }
 
     @Override
-    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object instance) {
 
         if (instance == null) {
             return NullValueOutputElement.INSTANCE;
@@ -30,11 +30,11 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
 
             OutputElement outputElement = new AtomicOutputElement(instance.getClass(), instance);
 
-            if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(outputElement)) {
-                return recursiveContextDeserializer.getRegisteredOutputElement(outputElement);
+            if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+                return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(outputElement);
             }
 
-            recursiveContextDeserializer.registerOutputElement(outputElement);
+            recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
             return outputElement;
         }
     }

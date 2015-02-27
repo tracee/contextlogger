@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.output.internal.testclasses;
 
 /**
- * Test class to check for circular dependency handling.
+ * Test class to check for alreadyprocessed dependency handling.
  */
 public class CircularTestClass2 {
 

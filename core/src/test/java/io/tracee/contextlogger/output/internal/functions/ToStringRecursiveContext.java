@@ -2,7 +2,7 @@ package io.tracee.contextlogger.output.internal.functions;
 
 import java.util.HashMap;
 
-import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -12,7 +12,7 @@ import io.tracee.contextlogger.profile.ProfileSettings;
 /**
  * Recursive Context for testing purposes.
  */
-public class ToStringRecursiveContext implements RecursiveContextDeserializer {
+public class ToStringRecursiveContext implements RecursiveOutputElementTreeBuilder {
 
     @Override
     public OutputElement convertInstanceRecursively(final Object instanceToDeserialize) {

@@ -1,9 +1,9 @@
 package io.tracee.contextlogger.output.internal.writer.type;
 
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
-import io.tracee.contextlogger.output.internal.writer.NodeOutputElementWriter;
-import io.tracee.contextlogger.output.internal.writer.OutputWriter;
-import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
+import io.tracee.contextlogger.output.internal.writer.api.NodeOutputElementWriter;
+import io.tracee.contextlogger.output.internal.writer.api.OutputWriter;
+import io.tracee.contextlogger.output.internal.writer.api.OutputStyle;
 
 /**
  * Writer for outputting type and identity hashcode of output element.

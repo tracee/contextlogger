@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.output.internal.writer.styles;
+package io.tracee.contextlogger.output.internal.writer.api;
 
 /**
  * Main interface for defining an output style.

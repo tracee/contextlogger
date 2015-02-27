@@ -2,7 +2,7 @@ package io.tracee.contextlogger.output.internal.functions;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -21,7 +21,7 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
     }
 
     @Override
-    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object[] array) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object[] array) {
 
         if (array == null) {
             // this shouldn't occur but should be caught
@@ -30,15 +30,15 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
 
         CollectionOutputElement outputElement = new CollectionOutputElement(array.getClass(), array);
 
-        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(outputElement)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(outputElement);
+        if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(outputElement);
         }
 
-        // must register output element before processing children to prevent problems with circular references
-        recursiveContextDeserializer.registerOutputElement(outputElement);
+        // must register output element before processing children to prevent problems with alreadyprocessed references
+        recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
 
         for (Object element : array) {
-            OutputElement childOutputElement = recursiveContextDeserializer.convertInstanceRecursively(element);
+            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(element);
             if (childOutputElement != null) {
                 outputElement.addElement(childOutputElement);
             }

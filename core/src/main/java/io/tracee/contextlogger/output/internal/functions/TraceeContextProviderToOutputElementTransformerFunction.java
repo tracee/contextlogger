@@ -6,12 +6,10 @@ import java.util.List;
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
-import io.tracee.contextlogger.contextprovider.utility.NameObjectValuePair;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.gson.MethodAnnotationPairComparator;
-import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.TraceeContextProviderOutputElement;
@@ -33,7 +31,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
     }
 
     @Override
-    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object instance) {
         TraceeContextProviderOutputElement complexOutputElement = new TraceeContextProviderOutputElement(instance.getClass(), instance);
 
         TraceeContextProvider annotation = TraceeContextLogAnnotationUtilities.getAnnotationFromType(instance);
@@ -62,31 +60,29 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
                     Object returnValue = singleEntry.getMethod().invoke(instance, null);
 
-                    if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod())
-                            && (isNameStringValuePair(returnValue) || isNameObjectValuePair(returnValue))) {
+                    if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod()) && isNameValuePair(returnValue)) {
 
                         // returnValue is single NameStringValuePair
-                        final NameValuePair nameValuePair = (NameStringValuePair)returnValue;
-                        addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameValuePair.getName(),
+                        final NameValuePair nameValuePair = (NameValuePair)returnValue;
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, nameValuePair.getName(),
                                 nameValuePair.getValue());
 
                     }
                     else if (TraceeContextLogAnnotationUtilities.isFlatable(singleEntry.getMethod())
-                            && (ListUtilities.isListOfType(returnValue, NameStringValuePair.class) || ListUtilities.isListOfType(returnValue,
-                                    NameObjectValuePair.class))) {
+                            && (ListUtilities.isListOfType(returnValue, NameValuePair.class))) {
 
                         // returnValue is List of NameValuePairs
                         final List<NameValuePair> list = (List<NameValuePair>)returnValue;
 
                         for (NameValuePair nameValuePair : list) {
-                            addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, nameValuePair.getName(),
+                            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, nameValuePair.getName(),
                                     nameValuePair.getValue());
                         }
 
                     }
                     else {
 
-                        addChildToComplexOutputElement(recursiveContextDeserializer, complexOutputElement, singleEntry.getAnnotation().displayName(),
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, singleEntry.getAnnotation().displayName(),
                                 returnValue);
 
                     }
@@ -107,26 +103,14 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
     }
 
     /**
-     * Checks if the passed instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameStringValuePair}.
+     * Checks if the passed instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameValuePair}.
      *
      * @param instance the instance to check
-     * @return returns true if the instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameStringValuePair}, otherwise false
+     * @return returns true if the instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameValuePair}, otherwise false
      */
-    static boolean isNameStringValuePair(Object instance) {
+    static boolean isNameValuePair(Object instance) {
 
-        return instance != null && NameStringValuePair.class.isInstance(instance);
-
-    }
-
-    /**
-     * Checks if the passed instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameStringValuePair}.
-     *
-     * @param instance the instance to check
-     * @return returns true if the instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameStringValuePair}, otherwise false
-     */
-    static boolean isNameObjectValuePair(Object instance) {
-
-        return instance != null && NameObjectValuePair.class.isInstance(instance);
+        return instance != null && NameValuePair.class.isInstance(instance);
 
     }
 

@@ -1,5 +1,6 @@
 package io.tracee.contextlogger.api;
 
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
 /**
@@ -46,5 +47,13 @@ public interface ConfigBuilder {
      * @return This instance cast as a ContextLoggerBuilder.
      */
     ContextLoggerBuilder apply();
+
+    /**
+     * Manually defines the OutputWriterConfiguration to use.
+     *
+     * @param outputWriterConfiguration the outputWriterConfiguration to use
+     * @return
+     */
+    ConfigBuilder enforceOutputWriterConfiguration(OutputWriterConfiguration outputWriterConfiguration);
 
 }

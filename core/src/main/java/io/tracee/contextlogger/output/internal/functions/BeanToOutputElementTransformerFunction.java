@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.output.internal.RecursiveContextDeserializer;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -26,25 +26,25 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
     }
 
     @Override
-    public OutputElement apply(final RecursiveContextDeserializer recursiveContextDeserializer, final Object instance) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object instance) {
 
         if (instance == null) {
             return NullValueOutputElement.INSTANCE;
         }
         ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
 
-        if (recursiveContextDeserializer.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
-            return recursiveContextDeserializer.getRegisteredOutputElement(complexOutputElement);
+        if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(complexOutputElement);
         }
 
-        // must register output element before processing children to prevent problems with circular references
-        recursiveContextDeserializer.registerOutputElement(complexOutputElement);
+        // must register output element before processing children to prevent problems with alreadyprocessed references
+        recursiveOutputElementTreeBuilder.registerOutputElement(complexOutputElement);
 
         // get internal fields with matching getter
         for (Method method : BeanUtility.getGetterMethodsRecursively(instance.getClass())) {
 
             complexOutputElement.addOutputElement(GetterUtilities.getFieldName(method),
-                    recursiveContextDeserializer.convertInstanceRecursively(invokeGetter(instance, method)));
+                    recursiveOutputElementTreeBuilder.convertInstanceRecursively(invokeGetter(instance, method)));
 
         }
 

@@ -1,11 +1,12 @@
 package io.tracee.contextlogger.impl;
 
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
-import io.tracee.contextlogger.profile.Profile;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Abstract base class for all context toJson builder implementations.
@@ -17,6 +18,7 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
     private Profile profile;
     private Map<String, Boolean> manualContextOverrides;
     private boolean keepOrder;
+    private OutputWriterConfiguration outputWriterConfiguration;
 
     @Override
     public final Set<Class> getWrapperClasses() {
@@ -50,6 +52,14 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
 
     public final void setKeepOrder(final boolean keepOrder) {
         this.keepOrder = keepOrder;
+    }
+
+    public OutputWriterConfiguration getOutputWriterConfiguration() {
+        return outputWriterConfiguration != null ? outputWriterConfiguration : OutputWriterConfiguration.JSON_INTENDED;
+    }
+
+    public final void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
+        this.outputWriterConfiguration = outputWriterConfiguration;
     }
 
 }

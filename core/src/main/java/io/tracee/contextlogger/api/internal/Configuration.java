@@ -1,9 +1,10 @@
 package io.tracee.contextlogger.api.internal;
 
-import io.tracee.contextlogger.api.ConfigBuilder;
-import io.tracee.contextlogger.profile.Profile;
-
 import java.util.Map;
+
+import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Interface for getting configuration from ConfigBuilder.
@@ -32,5 +33,11 @@ public interface Configuration extends ConfigBuilder {
      */
     boolean getKeepOrder();
 
+    /**
+     * Gets the OutputWriterConfiguration to use
+     *
+     * @return the OutputWriterConfiguration to use
+     */
+    OutputWriterConfiguration getOutputWriterConfiguration();
 
 }

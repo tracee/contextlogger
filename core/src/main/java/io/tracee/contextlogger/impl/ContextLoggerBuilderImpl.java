@@ -5,7 +5,7 @@ import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
-import io.tracee.contextlogger.output.internal.JsonTraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.output.internal.TraceeContextStringRepresentationBuilder;
 
 /**
  * Class for creating and configuring a gson context logger.
@@ -39,14 +39,15 @@ public class ContextLoggerBuilderImpl implements ContextLoggerBuilder {
      *
      * @return An instance of TraceeGsonContextStringRepresentationBuilder
      */
-    private JsonTraceeContextStringRepresentationBuilder createJsonContextStringRepresentationLogBuilder() {
+    private TraceeContextStringRepresentationBuilder createJsonContextStringRepresentationLogBuilder() {
 
-        JsonTraceeContextStringRepresentationBuilder jsonTraceeContextStringRepresentationBuilder = new JsonTraceeContextStringRepresentationBuilder();
-        jsonTraceeContextStringRepresentationBuilder.setWrapperClasses(contextLoggerConfiguration.getWrapperClasses());
-        jsonTraceeContextStringRepresentationBuilder.setManualContextOverrides(configuration.getManualContextOverrides());
-        jsonTraceeContextStringRepresentationBuilder.setProfile(this.configuration.getProfile());
-        jsonTraceeContextStringRepresentationBuilder.setKeepOrder(this.configuration.getKeepOrder());
+        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = new TraceeContextStringRepresentationBuilder();
+        traceeContextStringRepresentationBuilder.setWrapperClasses(contextLoggerConfiguration.getWrapperClasses());
+        traceeContextStringRepresentationBuilder.setManualContextOverrides(configuration.getManualContextOverrides());
+        traceeContextStringRepresentationBuilder.setProfile(this.configuration.getProfile());
+        traceeContextStringRepresentationBuilder.setKeepOrder(this.configuration.getKeepOrder());
+        traceeContextStringRepresentationBuilder.setOutputWriterConfiguration(this.configuration.getOutputWriterConfiguration());
 
-        return jsonTraceeContextStringRepresentationBuilder;
+        return traceeContextStringRepresentationBuilder;
     }
 }

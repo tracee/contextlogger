@@ -1,6 +1,4 @@
-package io.tracee.contextlogger.output.internal.writer;
-
-import io.tracee.contextlogger.output.internal.writer.styles.OutputStyle;
+package io.tracee.contextlogger.output.internal.writer.api;
 
 /**
  * Public interface for all writers of {@link io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement}s.
