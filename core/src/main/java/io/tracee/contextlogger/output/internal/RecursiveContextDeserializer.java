@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.output.internal;
 
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
  * Interface for recursively building the deserialization tree.
@@ -35,4 +36,13 @@ public interface RecursiveContextDeserializer {
      * @param outputElement the outputElement instance to get the existing output element for
      */
     OutputElement getRegisteredOutputElement(final OutputElement outputElement);
+
+    /**
+     * Allows access to profile settings
+     *
+     * @param profileSettings
+     * @return
+     */
+    ProfileSettings getProfileSettings(final ProfileSettings profileSettings);
+
 }

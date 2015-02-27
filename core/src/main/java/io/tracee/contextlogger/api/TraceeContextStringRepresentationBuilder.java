@@ -1,7 +1,5 @@
 package io.tracee.contextlogger.api;
 
-import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
-
 import java.util.Set;
 
 /**
@@ -19,7 +17,5 @@ public interface TraceeContextStringRepresentationBuilder {
     void setKeepOrder(final boolean keepOrder);
 
     String createStringRepresentation(final Object... instancesToLog);
-
-    String createStringRepresentationForPassedDataContextProvider(final PassedDataContextProvider passedContextData);
 
 }

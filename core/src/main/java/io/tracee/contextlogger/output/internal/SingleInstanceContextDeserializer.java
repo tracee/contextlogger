@@ -13,6 +13,7 @@ import io.tracee.contextlogger.output.internal.predicates.IsBeanTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsCollectionTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsMapTypePredicate;
 import io.tracee.contextlogger.output.internal.predicates.IsTraceeContextProviderPredicate;
+import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
  * Create deserialization tree for a single instance recursively. Acts as scheduler for ToOutputTransformerFunctions invocations.
@@ -23,8 +24,10 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
 
     private final InstanceToOutputElementPool instanceToOutputElementPool;
     private final ContextLoggerConfiguration contextLoggerConfiguration;
+    private final ProfileSettings profileSettings;
 
-    public SingleInstanceContextDeserializer() {
+    public SingleInstanceContextDeserializer(final ProfileSettings profileSettings) {
+        this.profileSettings = profileSettings;
         this.instanceToOutputElementPool = new InstanceToOutputElementPool();
         this.contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
     }
@@ -98,5 +101,10 @@ public class SingleInstanceContextDeserializer implements RecursiveContextDeseri
     @Override
     public OutputElement getRegisteredOutputElement(final OutputElement outputElement) {
         return this.instanceToOutputElementPool.getOutputElement(outputElement);
+    }
+
+    @Override
+    public ProfileSettings getProfileSettings(final ProfileSettings profileSettings) {
+        return this.profileSettings;
     }
 }

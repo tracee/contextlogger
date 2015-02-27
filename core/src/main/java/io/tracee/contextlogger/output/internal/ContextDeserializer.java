@@ -3,6 +3,7 @@ package io.tracee.contextlogger.output.internal;
 import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
  * Converts given instances to an OutputElement instance hierarchy.
@@ -14,8 +15,8 @@ public class ContextDeserializer {
     /**
      * Hidden constructor.
      */
-    protected ContextDeserializer() {
-        singleInstanceContextDeserializer = new SingleInstanceContextDeserializer();
+    protected ContextDeserializer(final ProfileSettings profileSettings) {
+        singleInstanceContextDeserializer = new SingleInstanceContextDeserializer(profileSettings);
     }
 
     protected OutputElement deserializeContextsMain(Object... instances) {
@@ -44,8 +45,8 @@ public class ContextDeserializer {
         }
     }
 
-    public static OutputElement deserializeContexts(Object... objects) {
-        return new ContextDeserializer().deserializeContextsMain(objects);
+    public static OutputElement deserializeContexts(final ProfileSettings profileSettings, final Object... objects) {
+        return new ContextDeserializer(profileSettings).deserializeContextsMain(objects);
     }
 
 }
