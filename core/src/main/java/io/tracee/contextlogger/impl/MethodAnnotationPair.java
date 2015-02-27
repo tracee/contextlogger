@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.impl.gson;
+package io.tracee.contextlogger.impl;
 
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.profile.ProfileSettings;

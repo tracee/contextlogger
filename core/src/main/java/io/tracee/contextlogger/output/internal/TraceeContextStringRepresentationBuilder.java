@@ -22,4 +22,7 @@ public class TraceeContextStringRepresentationBuilder extends AbstractContextStr
 
         return OutputWriterToOutputTransformer.produceOutput(this.getOutputWriterConfiguration(), tmp);
     }
+
+
+
 }

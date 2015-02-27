@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.impl.gson;
 
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.impl.MethodAnnotationPair;
 import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfileSettings;
 import org.hamcrest.Matchers;
@@ -13,7 +14,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Test class for {@link MethodAnnotationPair}.
+ * Test class for {@link io.tracee.contextlogger.impl.MethodAnnotationPair}.
  * Created by Tobias Gindler, holisticon AG on 01.04.14.
  */
 public class MethodAnnotationPairTest {

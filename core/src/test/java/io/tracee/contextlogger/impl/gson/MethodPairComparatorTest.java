@@ -1,6 +1,8 @@
 package io.tracee.contextlogger.impl.gson;
 
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.impl.MethodAnnotationPair;
+import io.tracee.contextlogger.impl.MethodAnnotationPairComparator;
 import io.tracee.contextlogger.testdata.AnnotationTestClass;
 import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
 import org.hamcrest.MatcherAssert;
@@ -12,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Test class for {@link MethodAnnotationPair}.
+ * Test class for {@link io.tracee.contextlogger.impl.MethodAnnotationPair}.
  * Created by Tobias Gindler, holistcon AG on 14.03.14.
  */
 public class MethodPairComparatorTest {

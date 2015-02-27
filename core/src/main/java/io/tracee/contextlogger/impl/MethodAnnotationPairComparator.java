@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.impl.gson;
+package io.tracee.contextlogger.impl;
 
 import java.util.Comparator;
 

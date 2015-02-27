@@ -3,6 +3,7 @@ package io.tracee.contextlogger;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.api.WrappedContextLoggerOutput;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 import io.tracee.contextlogger.connector.LogConnectorOutputProvider;
@@ -64,6 +65,11 @@ public final class TraceeContextLogger implements ContextLoggerBuilderAccessable
     @Override
     public String createJson(Object... instancesToLog) {
         return traceeContextLogBuilder.createStringRepresentation(instancesToLog);
+    }
+
+    @Override
+    public WrappedContextLoggerOutput wrap(final Object... instances) {
+        return WrappedContextLoggerOutput.wrap(this, instances);
     }
 
     @Override

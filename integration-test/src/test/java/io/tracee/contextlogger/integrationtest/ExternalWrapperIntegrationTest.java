@@ -1,5 +1,6 @@
 package io.tracee.contextlogger.integrationtest;
 
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -22,6 +23,8 @@ public class ExternalWrapperIntegrationTest {
     public void should_wrap_with_external_wrappers_correctly_using_enhanced_profile() {
 
         String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build().createJson(new WrappedTestContextData());
+
+        System.out.println(TraceeContextLogger.create().config().enforceOutputWriterConfiguration(OutputWriterConfiguration.JSON_INLINE).apply().build().wrap("ABC", "DEF", "IHK", this).toString());
 
         MatcherAssert.assertThat(result, Matchers.is("{\"testdata\":{\"testoutput\":\"IT WORKS !!!\"}}"));
 
