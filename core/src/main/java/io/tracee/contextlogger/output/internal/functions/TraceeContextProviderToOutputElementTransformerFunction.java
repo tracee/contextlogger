@@ -52,9 +52,9 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
             for (MethodAnnotationPair singleEntry : entriesToPrint) {
 
-                // if (!singleEntry.shouldBeProcessed(profileSettings)) {
-                // continue;
-                // }
+                if (!singleEntry.shouldBeProcessed(recursiveOutputElementTreeBuilder.getProfileSettings())) {
+                    continue;
+                }
 
                 try {
 

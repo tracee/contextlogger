@@ -40,9 +40,8 @@ public interface RecursiveOutputElementTreeBuilder {
     /**
      * Allows access to profile settings
      *
-     * @param profileSettings
      * @return
      */
-    ProfileSettings getProfileSettings(final ProfileSettings profileSettings);
+    ProfileSettings getProfileSettings();
 
 }

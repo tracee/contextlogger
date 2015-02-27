@@ -104,7 +104,7 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
     }
 
     @Override
-    public ProfileSettings getProfileSettings(final ProfileSettings profileSettings) {
+    public ProfileSettings getProfileSettings() {
         return this.profileSettings;
     }
 }
