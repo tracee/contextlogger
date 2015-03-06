@@ -28,7 +28,7 @@ public class ContextDeserializer {
         }
         else if (instances.length == 1) {
 
-            return recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(instances[0]);
+            return recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(new RecursiveOutputElementTreeBuilderState(), instances[0]);
 
         }
         else {
@@ -37,7 +37,8 @@ public class ContextDeserializer {
             CollectionOutputElement complexOutputElement = new CollectionOutputElement(Object[].class, instances);
 
             for (Object instance : instances) {
-                complexOutputElement.addElement(recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(instance));
+                complexOutputElement.addElement(recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(
+                        new RecursiveOutputElementTreeBuilderState(), instance));
             }
 
             return complexOutputElement;

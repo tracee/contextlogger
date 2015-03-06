@@ -5,17 +5,17 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit test for {@link io.tracee.contextlogger.output.internal.RecursiveOutputElementTeeBuilderState};
+ * Unit test for {@link RecursiveOutputElementTreeBuilderState};
  */
-public class RecursiveOutputElementTeeBuilderStateTest {
+public class RecursiveOutputElementTreeBuilderStateTest {
 
     public static final int MAX_DEPTH = 3;
 
     @Test
     public void should_create_next_instance_correctly() {
-        RecursiveOutputElementTeeBuilderState baseState = new RecursiveOutputElementTeeBuilderState(MAX_DEPTH);
+        RecursiveOutputElementTreeBuilderState baseState = new RecursiveOutputElementTreeBuilderState(MAX_DEPTH);
 
-        RecursiveOutputElementTeeBuilderState childState = baseState.next();
+        RecursiveOutputElementTreeBuilderState childState = baseState.next();
 
         MatcherAssert.assertThat(childState.getCurrentDepth(), Matchers.is(baseState.getCurrentDepth() + 1));
 
@@ -23,7 +23,7 @@ public class RecursiveOutputElementTeeBuilderStateTest {
 
     @Test
     public void should_detect_max_depth_boundary_correctly() {
-        RecursiveOutputElementTeeBuilderState baseState = new RecursiveOutputElementTeeBuilderState(MAX_DEPTH);
+        RecursiveOutputElementTreeBuilderState baseState = new RecursiveOutputElementTreeBuilderState(MAX_DEPTH);
 
         for (int i = 1; i < MAX_DEPTH; i++) {
             MatcherAssert.assertThat(baseState.maxDepthNotReached(), Matchers.is(true));

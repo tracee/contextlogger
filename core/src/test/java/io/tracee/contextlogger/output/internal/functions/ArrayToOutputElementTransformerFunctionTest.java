@@ -4,6 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElementType;
@@ -19,7 +20,7 @@ public class ArrayToOutputElementTransformerFunctionTest {
         Object[] array = { "ABC", "DEF", "GHI" };
 
         CollectionOutputElement collectionOutputElement = (CollectionOutputElement)ArrayToOutputElementTransformerFunction.getInstance().apply(
-                new ToStringRecursiveContext(), array);
+                new ToStringRecursiveContext(), new RecursiveOutputElementTreeBuilderState(), array);
 
         MatcherAssert.assertThat(collectionOutputElement.getOutputElementsBaseType(), Matchers.<Class> is(Object[].class));
         MatcherAssert.assertThat(collectionOutputElement.getOutputElements().size(), Matchers.is(3));
@@ -31,7 +32,8 @@ public class ArrayToOutputElementTransformerFunctionTest {
 
         Object[] array = null;
 
-        OutputElement outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(), array);
+        OutputElement outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(),
+                new RecursiveOutputElementTreeBuilderState(), array);
 
         MatcherAssert.assertThat(outputElement, Matchers.notNullValue());
         MatcherAssert.assertThat(outputElement.getOutputElementType(), Matchers.is(OutputElementType.NULL));

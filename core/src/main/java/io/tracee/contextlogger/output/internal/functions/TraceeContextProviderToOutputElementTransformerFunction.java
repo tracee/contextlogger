@@ -9,6 +9,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.MethodAnnotationPairComparator;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
@@ -31,7 +32,8 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
     }
 
     @Override
-    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object instance) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
+            final RecursiveOutputElementTreeBuilderState state, final Object instance) {
         TraceeContextProviderOutputElement complexOutputElement = new TraceeContextProviderOutputElement(instance.getClass(), instance);
 
         TraceeContextProvider annotation = TraceeContextLogAnnotationUtilities.getAnnotationFromType(instance);
@@ -64,7 +66,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
                         // returnValue is single NameStringValuePair
                         final NameValuePair nameValuePair = (NameValuePair)returnValue;
-                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, nameValuePair.getName(),
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, nameValuePair.getName(),
                                 nameValuePair.getValue());
 
                     }
@@ -75,15 +77,15 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
                         final List<NameValuePair> list = (List<NameValuePair>)returnValue;
 
                         for (NameValuePair nameValuePair : list) {
-                            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, nameValuePair.getName(),
+                            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, nameValuePair.getName(),
                                     nameValuePair.getValue());
                         }
 
                     }
                     else {
 
-                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, singleEntry.getAnnotation().displayName(),
-                                returnValue);
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, singleEntry.getAnnotation()
+                                .displayName(), returnValue);
 
                     }
 

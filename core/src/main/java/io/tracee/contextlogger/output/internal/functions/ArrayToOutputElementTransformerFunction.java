@@ -2,6 +2,7 @@ package io.tracee.contextlogger.output.internal.functions;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
@@ -21,7 +22,8 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
     }
 
     @Override
-    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Object[] array) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
+            final RecursiveOutputElementTreeBuilderState state, final Object[] array) {
 
         if (array == null) {
             // this shouldn't occur but should be caught
@@ -38,7 +40,7 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
         recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
 
         for (Object element : array) {
-            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(element);
+            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state.next(), element);
             if (childOutputElement != null) {
                 outputElement.addElement(childOutputElement);
             }

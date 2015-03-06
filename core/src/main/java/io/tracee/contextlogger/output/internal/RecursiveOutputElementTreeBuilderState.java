@@ -4,19 +4,25 @@ package io.tracee.contextlogger.output.internal;
  * Creates instance that holds the recursive state of the recusive output element tree creation.
  * Used to limit depth of Output Element tree.
  */
-public class RecursiveOutputElementTeeBuilderState {
+public class RecursiveOutputElementTreeBuilderState {
+
+    private static final int DEFAULT_MAX_DEPTH = 7;
 
     private final int maxDepth;
     private final int currentDepth;
 
-    private RecursiveOutputElementTeeBuilderState child = null;
+    private RecursiveOutputElementTreeBuilderState child = null;
 
-    public RecursiveOutputElementTeeBuilderState(int maxDepth) {
+    public RecursiveOutputElementTreeBuilderState() {
+        this(DEFAULT_MAX_DEPTH);
+    }
+
+    public RecursiveOutputElementTreeBuilderState(int maxDepth) {
         this.maxDepth = maxDepth;
         this.currentDepth = 1;
     }
 
-    public RecursiveOutputElementTeeBuilderState(int maxDepth, int currentDepth) {
+    public RecursiveOutputElementTreeBuilderState(int maxDepth, int currentDepth) {
         this.maxDepth = maxDepth;
         this.currentDepth = currentDepth;
     }
@@ -30,9 +36,9 @@ public class RecursiveOutputElementTeeBuilderState {
      *
      * @return
      */
-    public RecursiveOutputElementTeeBuilderState next() {
+    public RecursiveOutputElementTreeBuilderState next() {
         if (child == null) {
-            child = new RecursiveOutputElementTeeBuilderState(maxDepth, currentDepth + 1);
+            child = new RecursiveOutputElementTreeBuilderState(maxDepth, currentDepth + 1);
         }
 
         return child;

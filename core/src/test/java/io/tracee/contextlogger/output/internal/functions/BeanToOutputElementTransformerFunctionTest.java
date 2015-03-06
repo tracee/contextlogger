@@ -4,6 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.testclasses.BeanTestClass;
 
@@ -16,7 +17,7 @@ public class BeanToOutputElementTransformerFunctionTest {
     public void should_create_complex_output_element_correctly() {
 
         ComplexOutputElement complexOutputElement = (ComplexOutputElement)BeanToOutputElementTransformerFunction.getInstance().apply(
-                new ToStringRecursiveContext(), new BeanTestClass());
+                new ToStringRecursiveContext(), new RecursiveOutputElementTreeBuilderState(), new BeanTestClass());
 
         MatcherAssert.assertThat(complexOutputElement.getOutputElements().size(), Matchers.is(1));
         MatcherAssert.assertThat(complexOutputElement.getOutputElementsBaseType(), Matchers.<Class> is(BeanTestClass.class));

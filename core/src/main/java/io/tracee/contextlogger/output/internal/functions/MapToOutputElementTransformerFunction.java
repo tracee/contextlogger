@@ -4,6 +4,7 @@ import java.util.Map;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
@@ -23,7 +24,8 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
     }
 
     @Override
-    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Map map) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
+            final RecursiveOutputElementTreeBuilderState state, final Map map) {
 
         if (map == null) {
             return NullValueOutputElement.INSTANCE;
@@ -42,7 +44,7 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
 
             Map.Entry entry = (Map.Entry)entryObj;
 
-            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, complexOutputElement, entry.getKey().toString(), entry.getValue());
+            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state, complexOutputElement, entry.getKey().toString(), entry.getValue());
 
         }
 

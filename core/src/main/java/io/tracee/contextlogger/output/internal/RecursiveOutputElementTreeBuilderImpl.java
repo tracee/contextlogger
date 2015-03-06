@@ -32,7 +32,8 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
         this.contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
     }
 
-    public OutputElement convertInstanceRecursively(final Object passedInstanceToDeserialize) {
+    @Override
+    public OutputElement convertInstanceRecursively(final RecursiveOutputElementTreeBuilderState state, final Object passedInstanceToDeserialize) {
 
         OutputElement outputElement = null;
 
@@ -52,31 +53,31 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
                 // handle arrays and collections
 
                 if (instanceToDeserialize.getClass().isArray()) {
-                    outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, (Object[])instanceToDeserialize);
+                    outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Object[])instanceToDeserialize);
                 }
                 else {
-                    outputElement = CollectionToOutputElementTransformerFunction.getInstance().apply(this, (Collection)instanceToDeserialize);
+                    outputElement = CollectionToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Collection)instanceToDeserialize);
                 }
 
             }
             else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
-                outputElement = MapToOutputElementTransformerFunction.getInstance().apply(this, (Map)instanceToDeserialize);
+                outputElement = MapToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Map)instanceToDeserialize);
 
             }
             else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
 
-                outputElement = TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+                outputElement = TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
 
             }
             else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
-                outputElement = BeanToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+                outputElement = BeanToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
 
             }
             else {
                 // fallback deserialize instance as atomic value
-                outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, instanceToDeserialize);
+                outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
             }
 
         }

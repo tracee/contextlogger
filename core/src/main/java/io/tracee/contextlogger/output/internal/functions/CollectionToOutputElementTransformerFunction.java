@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.output.internal.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.NullValueOutputElement;
@@ -23,7 +24,8 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
     }
 
     @Override
-    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder, final Collection collection) {
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
+            final RecursiveOutputElementTreeBuilderState state, final Collection collection) {
 
         if (collection == null) {
             return NullValueOutputElement.INSTANCE;
@@ -39,7 +41,7 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
         recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
 
         for (Object element : collection) {
-            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(element);
+            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state.next(), element);
             if (childOutputElement != null) {
                 outputElement.addElement(childOutputElement);
             }

@@ -7,6 +7,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import io.tracee.contextlogger.output.internal.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.output.internal.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
 import io.tracee.contextlogger.output.internal.outputelements.OutputElementType;
@@ -25,7 +26,7 @@ public class MapToOutputElementTransformerFunctionTest {
         map.put("GHI", "ghi");
 
         ComplexOutputElement complexOutputElement = (ComplexOutputElement)MapToOutputElementTransformerFunction.getInstance().apply(
-                new ToStringRecursiveContext(), map);
+                new ToStringRecursiveContext(), new RecursiveOutputElementTreeBuilderState(), map);
 
         MatcherAssert.assertThat(complexOutputElement.getOutputElementsBaseType(), Matchers.<Class> is(HashMap.class));
         MatcherAssert.assertThat(complexOutputElement.getOutputElements().size(), Matchers.is(3));
@@ -37,7 +38,8 @@ public class MapToOutputElementTransformerFunctionTest {
 
         Map<String, String> map = null;
 
-        OutputElement outputElement = MapToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(), map);
+        OutputElement outputElement = MapToOutputElementTransformerFunction.getInstance().apply(new ToStringRecursiveContext(),
+                new RecursiveOutputElementTreeBuilderState(), map);
 
         MatcherAssert.assertThat(outputElement, Matchers.notNullValue());
         MatcherAssert.assertThat(outputElement.getOutputElementType(), Matchers.is(OutputElementType.NULL));

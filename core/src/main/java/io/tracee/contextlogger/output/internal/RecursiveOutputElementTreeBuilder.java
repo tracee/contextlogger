@@ -11,10 +11,11 @@ public interface RecursiveOutputElementTreeBuilder {
     /**
      * Method that is called recursively to create the deserialization tree
      *
+     * @param state holds recursion state
      * @param instanceToDeserialize the instance ro be processed
      * @return the output element
      */
-    OutputElement convertInstanceRecursively(final Object instanceToDeserialize);
+    OutputElement convertInstanceRecursively(final RecursiveOutputElementTreeBuilderState state, final Object instanceToDeserialize);
 
     /**
      * Registers the passed output ellement in the InstanceToOutputElementPool.
