@@ -1,4 +1,4 @@
-package io.tracee.contextlogger.impl;
+package io.tracee.contextlogger.outputgenerator;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,5 @@
 package io.tracee.contextlogger.outputgenerator;
 
-import io.tracee.contextlogger.impl.AbstractContextStringRepresentationBuilder;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterToOutputTransformer;
 import io.tracee.contextlogger.profile.ProfileSettings;
