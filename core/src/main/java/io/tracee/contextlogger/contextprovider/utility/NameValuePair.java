@@ -8,7 +8,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
  * Created by Tobias Gindler on 21.03.14.
  */
 @TraceeContextProvider(displayName = "name-value-pair")
-public abstract class NameValuePair<T> {
+public class NameValuePair<T> {
 
     protected static final String DEFAULT_NAME = "<null>";
 

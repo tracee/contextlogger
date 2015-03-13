@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 
 import io.tracee.contextlogger.connector.Connector;
 import io.tracee.contextlogger.connector.LogConnector;
+import io.tracee.contextlogger.util.test.ConnectorOutputProviderBuilder;
 import io.tracee.contextlogger.utility.DummyConnector;
 
 /**
@@ -174,9 +175,10 @@ public class ConnectorFactoryTest {
 
         };
 
-        connectorFactory.sendErrorReportToConnectors("AAA", "BBB");
+        connectorFactory.sendErrorReportToConnectors(ConnectorOutputProviderBuilder.createConnectorOutputProvider("AAA", "BBB"));
 
         MatcherAssert.assertThat(DummyConnector.isWasInvoked(), Matchers.equalTo(true));
 
     }
+
 }

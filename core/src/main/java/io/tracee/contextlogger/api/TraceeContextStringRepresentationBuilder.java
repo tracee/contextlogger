@@ -1,8 +1,8 @@
 package io.tracee.contextlogger.api;
 
-import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
-
 import java.util.Set;
+
+import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 
 /**
  * Annotation to mark class as toJson builder implementations.
@@ -20,6 +20,6 @@ public interface TraceeContextStringRepresentationBuilder {
 
     String createStringRepresentation(final Object... instancesToLog);
 
-    String createStringRepresentationForPassedDataContextProvider(final PassedDataContextProvider passedContextData);
+    void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration);
 
 }

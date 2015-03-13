@@ -3,7 +3,7 @@ package io.tracee.contextlogger.utility;
 import io.tracee.contextlogger.contextprovider.api.Flatten;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.impl.gson.MethodAnnotationPair;
+import io.tracee.contextlogger.impl.MethodAnnotationPair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

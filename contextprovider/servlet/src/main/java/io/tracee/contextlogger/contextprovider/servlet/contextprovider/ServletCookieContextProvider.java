@@ -29,6 +29,11 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
     }
 
     @Override
+    public Cookie getContextData() {
+        return this.cookie;
+    }
+
+    @Override
     public Class<Cookie> getWrappedType() {
         return Cookie.class;
     }

@@ -1,18 +1,20 @@
 package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
-import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Test class for {@link ServletSessionContextProvider}.
@@ -36,6 +38,7 @@ public class ServletSessionContextProviderTest {
     public void should_return_session_attributes() {
 
         final Enumeration<String> names = new Enumeration<String>() {
+
             boolean first = true;
 
             @Override
@@ -43,7 +46,8 @@ public class ServletSessionContextProviderTest {
                 if (first) {
                     first = false;
                     return true;
-                } else {
+                }
+                else {
                     return false;
                 }
             }
@@ -60,11 +64,11 @@ public class ServletSessionContextProviderTest {
 
         unit.setContextData(session);
 
-        final List<NameStringValuePair> result = unit.getSessionAttributes();
+        final List<NameValuePair<Object>> result = unit.getSessionAttributes();
 
         assertThat(result, Matchers.notNullValue());
         assertThat(result.size(), equalTo(1));
         assertThat(result.get(0).getName(), equalTo("key"));
-        assertThat(result.get(0).getValue(), equalTo("value"));
+        assertThat(result.get(0).getValue(), equalTo((Object)"value"));
     }
 }

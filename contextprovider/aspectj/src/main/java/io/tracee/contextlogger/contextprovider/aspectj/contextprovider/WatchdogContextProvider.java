@@ -29,6 +29,11 @@ public final class WatchdogContextProvider implements WrappedContextData<Watchdo
     }
 
     @Override
+    public WatchdogDataWrapper getContextData() {
+        return this.watchdogDataWrapper;
+    }
+
+    @Override
     public Class<WatchdogDataWrapper> getWrappedType() {
         return WatchdogDataWrapper.class;
     }

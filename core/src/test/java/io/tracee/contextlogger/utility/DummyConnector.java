@@ -3,6 +3,7 @@ package io.tracee.contextlogger.utility;
 import java.util.Map;
 
 import io.tracee.contextlogger.connector.Connector;
+import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 
 /**
  * Dummy Connector for unit test.
@@ -14,7 +15,7 @@ public class DummyConnector implements Connector {
     public void init(Map<String, String> properties) {
     }
 
-    public void sendErrorReport(String json) {
+    public void sendErrorReport(ConnectorOutputProvider connectorOutputProvider) {
         wasInvoked = true;
     }
 

@@ -35,8 +35,6 @@
                                         <include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.connector:*</include>
 										<include>io.tracee.contextlogger.contextprovider:*</include>
-										<include>com.google.code.gson:gson:jar</include>
-                                        <include>org.apache.commons:commons-lang3</include>
                                     </includes>
                                 </bannedDependencies>
                             </rules>
@@ -65,17 +63,6 @@
             <groupId>io.tracee</groupId>
             <artifactId>tracee-api</artifactId>
         </dependency>
-
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${apache.commonslang.version}</version>
-		</dependency>
 
         <!-- dependecies for unittests -->
         <dependency>

@@ -9,10 +9,10 @@ import io.tracee.TraceeBackend;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.Order;
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
 import io.tracee.contextlogger.contextprovider.api.Flatten;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Common context data provider.
@@ -36,13 +36,13 @@ public final class TraceeMdcContextProvider implements ImplicitContextData {
     @SuppressWarnings("unused")
     @Flatten
     @TraceeContextProviderMethod(displayName = "DYNAMIC", order = 10)
-    public List<NameStringValuePair> getNameValuePairs() {
+    public List<NameValuePair<String>> getNameValuePairs() {
 
-        final List<NameStringValuePair> list = new ArrayList<NameStringValuePair>();
+        final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
         final Map<String, String> keys = traceeBackend.copyToMap();
         for (Map.Entry<String, String> entry : keys.entrySet()) {
-            list.add(new NameStringValuePair(entry.getKey(), entry.getValue()));
+            list.add(new NameValuePair<String>(entry.getKey(), entry.getValue()));
         }
         return !list.isEmpty() ? list : null;
     }

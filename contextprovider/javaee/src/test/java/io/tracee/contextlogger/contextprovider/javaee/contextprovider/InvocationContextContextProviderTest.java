@@ -1,23 +1,24 @@
 package io.tracee.contextlogger.contextprovider.javaee.contextprovider;
 
-import io.tracee.contextlogger.contextprovider.utility.NameStringValuePair;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.interceptor.InvocationContext;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import javax.interceptor.InvocationContext;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 
 /**
  * Test class for {@link InvocationContextContextProvider}.
  * Created by Tobias Gindler, holiticon AG on 31.03.14.
  */
 public class InvocationContextContextProviderTest {
-
 
     private static Method METHOD;
 
@@ -28,12 +29,12 @@ public class InvocationContextContextProviderTest {
     {
         try {
             METHOD = InvocationContextContextProviderTest.class.getMethod("test", new Class[0]);
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
     }
-
 
     @Test
     public void should_return_wrapped_type() {
@@ -46,7 +47,6 @@ public class InvocationContextContextProviderTest {
 
     }
 
-
     @Test
     public void should_return_null_value_for_methodname_for_null_valued_invocation_context() {
 
@@ -58,7 +58,6 @@ public class InvocationContextContextProviderTest {
         MatcherAssert.assertThat(methodName, Matchers.nullValue());
 
     }
-
 
     @Test
     public void should_return_null_value_for_parameters_for_null_valued_invocation_context() {
@@ -78,7 +77,7 @@ public class InvocationContextContextProviderTest {
         InvocationContextContextProvider givenInvocationContextContextProvider = new InvocationContextContextProvider();
         givenInvocationContextContextProvider.setContextData(null);
 
-        String targetInstance = givenInvocationContextContextProvider.getSerializedTargetInstance();
+        Object targetInstance = givenInvocationContextContextProvider.getTargetInstance();
 
         MatcherAssert.assertThat(targetInstance, Matchers.nullValue());
 
@@ -90,12 +89,11 @@ public class InvocationContextContextProviderTest {
         InvocationContextContextProvider givenInvocationContextContextProvider = new InvocationContextContextProvider();
         givenInvocationContextContextProvider.setContextData(null);
 
-        List<NameStringValuePair> contextData = givenInvocationContextContextProvider.getContextData();
+        List<NameValuePair<Object>> contextData = givenInvocationContextContextProvider.getInvocationContextData();
 
         MatcherAssert.assertThat(contextData, Matchers.nullValue());
 
     }
-
 
     @Test
     public void should_return_methodname_for_valid_invocation_context() {
@@ -112,11 +110,10 @@ public class InvocationContextContextProviderTest {
 
     }
 
-
     @Test
     public void should_return_parameters_for_valid_invocation_context() {
 
-        Object[] PARAMETERS = {"a", 2};
+        Object[] PARAMETERS = { "a", 2 };
 
         InvocationContext invocationContext = Mockito.mock(InvocationContext.class);
         Mockito.when(invocationContext.getParameters()).thenReturn(PARAMETERS);
@@ -139,10 +136,10 @@ public class InvocationContextContextProviderTest {
         InvocationContextContextProvider givenInvocationContextContextProvider = new InvocationContextContextProvider();
         givenInvocationContextContextProvider.setContextData(invocationContext);
 
-        String targetInstance = givenInvocationContextContextProvider.getSerializedTargetInstance();
+        Object targetInstance = givenInvocationContextContextProvider.getTargetInstance();
 
         MatcherAssert.assertThat(targetInstance, Matchers.notNullValue());
-        MatcherAssert.assertThat(targetInstance, Matchers.startsWith("InvocationContextContextProviderTest@"));
+        MatcherAssert.assertThat(targetInstance, Matchers.is((Object)this));
 
     }
 
@@ -158,12 +155,12 @@ public class InvocationContextContextProviderTest {
         InvocationContextContextProvider givenInvocationContextContextProvider = new InvocationContextContextProvider();
         givenInvocationContextContextProvider.setContextData(invocationContext);
 
-        List<NameStringValuePair> contextData = givenInvocationContextContextProvider.getContextData();
+        List<NameValuePair<Object>> contextData = givenInvocationContextContextProvider.getInvocationContextData();
 
         MatcherAssert.assertThat(contextData, Matchers.notNullValue());
         MatcherAssert.assertThat(contextData.size(), Matchers.equalTo(1));
         MatcherAssert.assertThat(contextData.get(0).getName(), Matchers.equalTo("a"));
-        MatcherAssert.assertThat(contextData.get(0).getValue(), Matchers.startsWith("String@"));
+        MatcherAssert.assertThat(contextData.get(0).getValue(), Matchers.is((Object)"value"));
 
     }
 

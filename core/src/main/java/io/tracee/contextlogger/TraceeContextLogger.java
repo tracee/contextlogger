@@ -1,13 +1,14 @@
 package io.tracee.contextlogger;
 
-import io.tracee.contextlogger.api.*;
+import io.tracee.contextlogger.api.ContextLogger;
+import io.tracee.contextlogger.api.ContextLoggerBuilder;
+import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.api.WrappedContextLoggerOutput;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
-import io.tracee.contextlogger.contextprovider.TypeToWrapper;
-import io.tracee.contextlogger.contextprovider.tracee.PassedDataContextProvider;
+import io.tracee.contextlogger.connector.ConnectorOutputProvider;
+import io.tracee.contextlogger.connector.LogConnectorOutputProvider;
 import io.tracee.contextlogger.impl.ContextLoggerBuilderImpl;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
-import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
-import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
  * The main context logger class.
@@ -16,17 +17,31 @@ import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 
-public final class TraceeContextLogger implements ContextLoggerBuilderAccessable {
+public final class TraceeContextLogger implements ContextLoggerBuilderAccessable, LogConnectorOutputProvider {
 
     private ConnectorFactory connectorsWrapper;
-
     private final ContextLoggerConfiguration contextLoggerConfiguration;
     private TraceeContextStringRepresentationBuilder traceeContextLogBuilder;
 
+    private String prefix;
+    private Class[] excludedTypes;
+    private Object[] objectsToProcess;
 
     private TraceeContextLogger(ContextLoggerConfiguration contextLoggerConfiguration) {
         this.contextLoggerConfiguration = contextLoggerConfiguration;
         initConnectors();
+    }
+
+    private TraceeContextLogger(TraceeContextLogger instanceToClone) {
+
+        this.connectorsWrapper = instanceToClone.connectorsWrapper;
+        this.contextLoggerConfiguration = instanceToClone.contextLoggerConfiguration;
+        this.traceeContextLogBuilder = instanceToClone.traceeContextLogBuilder;
+
+        this.prefix = instanceToClone.prefix;
+        this.excludedTypes = instanceToClone.excludedTypes;
+        this.objectsToProcess = instanceToClone.objectsToProcess;
+
     }
 
     /**
@@ -49,7 +64,12 @@ public final class TraceeContextLogger implements ContextLoggerBuilderAccessable
 
     @Override
     public String createJson(Object... instancesToLog) {
-        return propagateToContextLogBuilder(instancesToLog);
+        return traceeContextLogBuilder.createStringRepresentation(instancesToLog);
+    }
+
+    @Override
+    public WrappedContextLoggerOutput wrap(final Object... instances) {
+        return WrappedContextLoggerOutput.wrap(this, instances);
     }
 
     @Override
@@ -59,115 +79,47 @@ public final class TraceeContextLogger implements ContextLoggerBuilderAccessable
 
     @Override
     public void logJsonWithPrefixedMessage(String prefixedMessage, Object... instancesToLog) {
-        this.connectorsWrapper.sendErrorReportToConnectors(prefixedMessage, createJson(instancesToLog));
+
+        this.prefix = prefixedMessage;
+        this.objectsToProcess = instancesToLog;
+
+        this.connectorsWrapper.sendErrorReportToConnectors(this);
     }
 
-    /**
-     * This method handles the wrapping of the incoming object and passes them to the context toJson builder implementation.
-     *
-     * @param instancesToLog an array of objects to wrap
-     * @return the contextual toJson information as a String
-     */
+    @Override
+    public ConnectorOutputProvider excludeContextProviders(final Class... contextProvidersToInclude) {
 
-    String propagateToContextLogBuilder(Object[] instancesToLog) {
+        TraceeContextLogger traceeContextLogger = new TraceeContextLogger(this);
+        traceeContextLogger.excludedTypes = contextProvidersToInclude;
 
-        Object[] propagateArray = null;
-        if (instancesToLog != null) {
-            propagateArray = new Object[instancesToLog.length];
-
-            for (int i = 0; i < instancesToLog.length; i++) {
-                propagateArray[i] = wrapInstance(instancesToLog[i]);
-            }
-        }
-
-
-        return traceeContextLogBuilder.createStringRepresentationForPassedDataContextProvider(new PassedDataContextProvider(propagateArray, traceeContextLogBuilder.getKeepOrder()));
+        return traceeContextLogger;
     }
 
+    @Override
+    public String provideOutput() {
 
-    /**
-     * tries to wrap a single instance into known wrapper class instances.
-     *
-     * @param instance
-     * @return
-     */
-    private Object wrapInstance(Object instance) {
+        return traceeContextLogBuilder.createStringRepresentation(objectsToProcess);
+    }
 
-        if (instance == null) {
-            return null;
-        }
+    @Override
+    public String getPrefix() {
+        return prefix;
+    }
 
-        // check for known implicit instances
-        if (instance instanceof ImplicitContext) {
-            return createInstance(contextLoggerConfiguration.getImplicitContextClassMap().get(instance));
-        }
+    boolean isInstanceTypeExcluded(Object contextProviderType) {
 
-        // check for external implicit context provider
-        if (instance instanceof CustomImplicitContextData) {
-            return instance;
-        }
+        if (excludedTypes != null && contextProviderType != null) {
 
-        // check for external implicit context provider type
-        if (instance instanceof Class && CustomImplicitContextData.class.isAssignableFrom((Class) instance)) {
-            try {
-                return ((Class) instance).newInstance();
-            } catch (Exception e) {
-                // ignore exception
-            }
-        }
+            for (Class type : excludedTypes) {
 
-
-        // now try to find instance type in known wrapper types map
-        Class knownWrapperType = contextLoggerConfiguration.getClassToWrapperMap().get(instance.getClass());
-        if (knownWrapperType != null) {
-            Object wrappedInstance = createInstance(knownWrapperType);
-            if (WrappedContextData.class.isAssignableFrom(knownWrapperType)) {
-                ((WrappedContextData) wrappedInstance).setContextData(instance);
-            }
-        }
-
-        // now try to find instance type in TypeToWrapper List
-        for (TypeToWrapper wrapper : contextLoggerConfiguration.getWrapperList()) {
-            if (wrapper.getWrappedInstanceType().isAssignableFrom(instance.getClass())) {
-                try {
-                    WrappedContextData wrapperInstance = (WrappedContextData) createInstance(wrapper.getWrapperType());
-                    wrapperInstance.setContextData(instance);
-
-                    // THIS WON'T WORK ANYMORE BECAUSE MAP IS IMMUTABLE
-                    //if (wrapperInstance != null) {
-                    // add class to map for future usage
-                    //classToWrapperMap.put(instance.getClass(), wrapper.getWrapperType());
-                    //}
-
-                    return wrapperInstance;
-                } catch (Exception e) {
-                    // continue
-                    return null;
+                if (type.isAssignableFrom(contextProviderType.getClass())) {
+                    return true;
                 }
 
             }
+
         }
-
-        // if instance can't be wrapped pass instance as is
-        return instance;
-    }
-
-
-    /**
-     * Creates a new instance of the passed type via reflection.
-     *
-     * @param type the type of the new instance
-     * @return a new instance of the passed type or null if an exception occurred  during the creation of the instance of if the passed type is null.
-     */
-    private Object createInstance(final Class type) {
-        if (type != null) {
-            try {
-                return type.newInstance();
-            } catch (Exception e) {
-                // should not occur
-            }
-        }
-        return null;
+        return false;
     }
 
     @Override

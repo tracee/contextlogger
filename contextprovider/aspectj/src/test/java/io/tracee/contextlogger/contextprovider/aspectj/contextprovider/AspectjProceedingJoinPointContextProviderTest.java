@@ -1,14 +1,14 @@
 package io.tracee.contextlogger.contextprovider.aspectj.contextprovider;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * Test class for {@link AspectjProceedingJoinPointContextProvider}.
@@ -25,7 +25,8 @@ public class AspectjProceedingJoinPointContextProviderTest {
     {
         try {
             METHOD = AspectjProceedingJoinPointContextProviderTest.class.getMethod("test", new Class[0]);
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -42,7 +43,6 @@ public class AspectjProceedingJoinPointContextProviderTest {
 
     }
 
-
     @Test
     public void should_return_null_for_class_for_null_valued_proceedingoinpoint() {
         AspectjProceedingJoinPointContextProvider givenAspectjProceedingJoinPointContextProvider = new AspectjProceedingJoinPointContextProvider();
@@ -52,7 +52,6 @@ public class AspectjProceedingJoinPointContextProviderTest {
 
         MatcherAssert.assertThat(result, Matchers.nullValue());
     }
-
 
     @Test
     public void should_return_null_for_method_for_null_valued_proceedingoinpoint() {
@@ -64,28 +63,25 @@ public class AspectjProceedingJoinPointContextProviderTest {
         MatcherAssert.assertThat(result, Matchers.nullValue());
     }
 
-
     @Test
     public void should_return_null_for_parameters_for_null_valued_proceedingoinpoint() {
         AspectjProceedingJoinPointContextProvider givenAspectjProceedingJoinPointContextProvider = new AspectjProceedingJoinPointContextProvider();
         givenAspectjProceedingJoinPointContextProvider.setContextData(null);
 
-        List<String> result = givenAspectjProceedingJoinPointContextProvider.getParameters();
+        List<Object> result = givenAspectjProceedingJoinPointContextProvider.getParameters();
 
         MatcherAssert.assertThat(result, Matchers.nullValue());
     }
-
 
     @Test
     public void should_return_null_for_instance_for_null_valued_proceedingoinpoint() {
         AspectjProceedingJoinPointContextProvider givenAspectjProceedingJoinPointContextProvider = new AspectjProceedingJoinPointContextProvider();
         givenAspectjProceedingJoinPointContextProvider.setContextData(null);
 
-        String result = givenAspectjProceedingJoinPointContextProvider.getSerializedTargetInstance();
+        Object result = givenAspectjProceedingJoinPointContextProvider.getSerializedTargetInstance();
 
         MatcherAssert.assertThat(result, Matchers.nullValue());
     }
-
 
     @Test
     public void should_return_class_for_null_valid_proceedingoinpoint() {
@@ -102,7 +98,6 @@ public class AspectjProceedingJoinPointContextProviderTest {
 
         MatcherAssert.assertThat(result, Matchers.equalTo(AspectjProceedingJoinPointContextProviderTest.class.getCanonicalName()));
     }
-
 
     @Test
     public void should_return_for_method_for_valid_proceedingoinpoint() {
@@ -121,11 +116,10 @@ public class AspectjProceedingJoinPointContextProviderTest {
         MatcherAssert.assertThat(result, Matchers.equalTo(METHOD.getName()));
     }
 
-
     @Test
     public void should_return_parameters_for_valid_proceedingoinpoint() {
 
-        final Object[] PARAMETERS = {"a", 2};
+        final Object[] PARAMETERS = { "a", 2 };
 
         ProceedingJoinPoint proceedingJoinPoint = Mockito.mock(ProceedingJoinPoint.class);
         Mockito.when(proceedingJoinPoint.getArgs()).thenReturn(PARAMETERS);
@@ -133,13 +127,12 @@ public class AspectjProceedingJoinPointContextProviderTest {
         AspectjProceedingJoinPointContextProvider givenAspectjProceedingJoinPointContextProvider = new AspectjProceedingJoinPointContextProvider();
         givenAspectjProceedingJoinPointContextProvider.setContextData(proceedingJoinPoint);
 
-        List<String> result = givenAspectjProceedingJoinPointContextProvider.getParameters();
+        List<Object> result = givenAspectjProceedingJoinPointContextProvider.getParameters();
 
         MatcherAssert.assertThat(result, Matchers.notNullValue());
         MatcherAssert.assertThat(result.size(), Matchers.equalTo(2));
-        MatcherAssert.assertThat(result, Matchers.contains("a", "2"));
+        MatcherAssert.assertThat(result, Matchers.contains((Object)"a", 2));
     }
-
 
     @Test
     public void should_return_instance_for_valid_proceedingoinpoint() {
@@ -150,11 +143,10 @@ public class AspectjProceedingJoinPointContextProviderTest {
         AspectjProceedingJoinPointContextProvider givenAspectjProceedingJoinPointContextProvider = new AspectjProceedingJoinPointContextProvider();
         givenAspectjProceedingJoinPointContextProvider.setContextData(proceedingJoinPoint);
 
-        String result = givenAspectjProceedingJoinPointContextProvider.getSerializedTargetInstance();
+        Object result = givenAspectjProceedingJoinPointContextProvider.getSerializedTargetInstance();
 
         MatcherAssert.assertThat(result, Matchers.notNullValue());
-        MatcherAssert.assertThat(result, Matchers.startsWith("AspectjProceedingJoinPointContextProviderTest@"));
+        MatcherAssert.assertThat(result, Matchers.is((Object)this));
     }
-
 
 }
