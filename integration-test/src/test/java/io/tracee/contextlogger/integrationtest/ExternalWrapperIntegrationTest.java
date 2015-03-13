@@ -1,11 +1,11 @@
 package io.tracee.contextlogger.integrationtest;
 
-import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
 public class ExternalWrapperIntegrationTest {
@@ -24,7 +24,12 @@ public class ExternalWrapperIntegrationTest {
 
         String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build().createJson(new WrappedTestContextData());
 
-        System.out.println(TraceeContextLogger.create().config().enforceOutputWriterConfiguration(OutputWriterConfiguration.JSON_INLINE).apply().build().wrap("ABC", "DEF", "IHK", this).toString());
+        /*
+         * System.out.println(TraceeContextLogger.create().config().enforceOutputWriterConfiguration(OutputWriterConfiguration.JSON_INLINE).apply().build()
+         * .wrap("ABC", "DEF", "IHK", this).toString());
+         */
+        System.out.println(TraceeContextLogger.create().config().enforceOutputWriterConfiguration(OutputWriterConfiguration.JSON_INLINE).apply().build()
+                .wrap("ABC", "DEF", "IHK", 23.8, 25L, 32434.324, this).toString());
 
         MatcherAssert.assertThat(result, Matchers.is("{\"testdata\":{\"testoutput\":\"IT WORKS !!!\"}}"));
 

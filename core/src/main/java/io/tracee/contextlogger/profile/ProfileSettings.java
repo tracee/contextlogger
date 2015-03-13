@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.profile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -14,6 +15,12 @@ public class ProfileSettings {
     private List<Properties> profileProperties = null;
     private Map<String, Boolean> manualContextOverrides = null;
 
+    /**
+     * Main Constructor.
+     *
+     * @param profile the profile to use
+     * @param manualContextOverrides a map that defines manual overrides for profile settings.
+     */
     public ProfileSettings(Profile profile, Map<String, Boolean> manualContextOverrides) {
 
         // if passed profile is null then use default profile
@@ -21,13 +28,29 @@ public class ProfileSettings {
 
         try {
             this.profileProperties = tmpProfile.getProperties();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // shouldn't occur for non CUSTOM profiles
         }
 
         this.manualContextOverrides = manualContextOverrides;
     }
 
+    /**
+     * Constructor without manual overrides for convenience.
+     *
+     * @param profile the profile to use
+     */
+    public ProfileSettings(Profile profile) {
+        this(profile, new HashMap<String, Boolean>());
+    }
+
+    /**
+     * Checks whether the property for the passed key is enabled or not.
+     *
+     * @param propertyKey the property key to check
+     * @return true, if the property is enabled in profile or manual overrides and not disabled in manual overrides, otherwise false
+     */
     public final Boolean getPropertyValue(final String propertyKey) {
 
         if (propertyKey == null) {

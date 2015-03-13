@@ -27,8 +27,8 @@ public class RecursiveOutputElementTreeBuilderState {
         this.currentDepth = currentDepth;
     }
 
-    public boolean maxDepthNotReached() {
-        return this.currentDepth < this.maxDepth;
+    public boolean maxDepthReached() {
+        return this.currentDepth > this.maxDepth;
     }
 
     /**

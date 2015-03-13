@@ -43,6 +43,12 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             outputElement = NullValueOutputElement.INSTANCE;
 
         }
+        else if (state.maxDepthReached()) {
+            // fallback deserialize instance as atomic value
+            outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, state.next(),
+                    TraceeContextProviderWrapperFunction.getInstance().apply(contextLoggerConfiguration, passedInstanceToDeserialize));
+
+        }
         else {
 
             // wraps passed instance in tracee context provider if possible or otherwise returns the passed instance

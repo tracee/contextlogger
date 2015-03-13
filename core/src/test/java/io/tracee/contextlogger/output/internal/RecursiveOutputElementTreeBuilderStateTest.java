@@ -25,13 +25,13 @@ public class RecursiveOutputElementTreeBuilderStateTest {
     public void should_detect_max_depth_boundary_correctly() {
         RecursiveOutputElementTreeBuilderState baseState = new RecursiveOutputElementTreeBuilderState(MAX_DEPTH);
 
-        for (int i = 1; i < MAX_DEPTH; i++) {
-            MatcherAssert.assertThat(baseState.maxDepthNotReached(), Matchers.is(true));
+        for (int i = 1; i <= MAX_DEPTH; i++) {
+            MatcherAssert.assertThat(baseState.maxDepthReached(), Matchers.is(false));
 
             baseState = baseState.next();
 
         }
-        MatcherAssert.assertThat(baseState.maxDepthNotReached(), Matchers.is(false));
+        MatcherAssert.assertThat(baseState.maxDepthReached(), Matchers.is(true));
 
     }
 
