@@ -9,8 +9,8 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.MethodAnnotationPairComparator;
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.TraceeContextProviderOutputElement;
@@ -101,7 +101,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
         }
 
-        return complexOutputElement;
+        return complexOutputElement.isEmpty() ? null : complexOutputElement;
     }
 
     /**

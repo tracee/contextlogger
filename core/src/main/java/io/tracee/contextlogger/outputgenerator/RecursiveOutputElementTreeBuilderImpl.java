@@ -9,7 +9,10 @@ import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 import io.tracee.contextlogger.outputgenerator.functions.*;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
-import io.tracee.contextlogger.outputgenerator.predicates.*;
+import io.tracee.contextlogger.outputgenerator.predicates.IsBeanTypePredicate;
+import io.tracee.contextlogger.outputgenerator.predicates.IsCollectionTypePredicate;
+import io.tracee.contextlogger.outputgenerator.predicates.IsMapTypePredicate;
+import io.tracee.contextlogger.outputgenerator.predicates.IsTraceeContextProviderPredicate;
 import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
@@ -52,7 +55,7 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             Object instanceToDeserialize = TraceeContextProviderWrapperFunction.getInstance()
                     .apply(contextLoggerConfiguration, passedInstanceToDeserialize);
 
-			if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
+            if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
                 // handle arrays and collections
 
                 if (instanceToDeserialize.getClass().isArray()) {
