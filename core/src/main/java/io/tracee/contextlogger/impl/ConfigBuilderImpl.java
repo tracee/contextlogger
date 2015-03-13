@@ -6,7 +6,7 @@ import java.util.Map;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
-import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
 /**

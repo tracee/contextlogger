@@ -1,12 +1,13 @@
 package io.tracee.contextlogger.output.internal;
 
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderImpl;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.tracee.contextlogger.output.internal.outputelements.AtomicOutputElement;
-import io.tracee.contextlogger.output.internal.outputelements.OutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfileSettings;
 

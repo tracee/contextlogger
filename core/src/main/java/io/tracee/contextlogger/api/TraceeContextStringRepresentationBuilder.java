@@ -2,7 +2,7 @@ package io.tracee.contextlogger.api;
 
 import java.util.Set;
 
-import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 
 /**
  * Annotation to mark class as toJson builder implementations.

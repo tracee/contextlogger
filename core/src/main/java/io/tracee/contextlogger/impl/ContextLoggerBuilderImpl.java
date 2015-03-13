@@ -5,7 +5,7 @@ import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
-import io.tracee.contextlogger.output.internal.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.TraceeContextStringRepresentationBuilder;
 
 /**
  * Class for creating and configuring a gson context logger.

@@ -1,11 +1,12 @@
 package io.tracee.contextlogger.output.internal;
 
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit test for {@link RecursiveOutputElementTreeBuilderState};
+ * Unit test for {@link io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState};
  */
 public class RecursiveOutputElementTreeBuilderStateTest {
 

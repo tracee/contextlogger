@@ -5,7 +5,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.output.internal.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
 public class ExternalWrapperIntegrationTest {
