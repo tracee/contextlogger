@@ -39,7 +39,7 @@ public class RecursiveOutputElementTreeBuilderImplTest {
         boolean resultShouldInitiallyNotBeRegistered = unit.checkIfInstanceIsAlreadyRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldInitiallyNotBeRegistered, Matchers.is(false));
 
-        OutputElement resultShouldInitiallyNotBeRegisteredOutputElement = unit.getRegisteredOutputElement(ATOMIC_OUTPUT_ELEMENT);
+        OutputElement resultShouldInitiallyNotBeRegisteredOutputElement = unit.getRegisteredOutputElementAndMarkItAsMultipleRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldInitiallyNotBeRegisteredOutputElement, Matchers.nullValue());
 
         // register
@@ -49,7 +49,7 @@ public class RecursiveOutputElementTreeBuilderImplTest {
         boolean resultShouldBeRegistered = unit.checkIfInstanceIsAlreadyRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldBeRegistered, Matchers.is(true));
 
-        OutputElement resultShouldBeRegisteredOutputElement = unit.getRegisteredOutputElement(ATOMIC_OUTPUT_ELEMENT);
+        OutputElement resultShouldBeRegisteredOutputElement = unit.getRegisteredOutputElementAndMarkItAsMultipleRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldBeRegisteredOutputElement, Matchers.notNullValue());
         MatcherAssert.assertThat(resultShouldBeRegisteredOutputElement, Matchers.is(ATOMIC_OUTPUT_ELEMENT));
 

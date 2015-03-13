@@ -106,8 +106,12 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
     }
 
     @Override
-    public OutputElement getRegisteredOutputElement(final OutputElement outputElement) {
-        return this.instanceToOutputElementPool.getOutputElement(outputElement);
+    public OutputElement getRegisteredOutputElementAndMarkItAsMultipleRegistered(final OutputElement outputElement) {
+        OutputElement alreadyRegisteredOutputElement = this.instanceToOutputElementPool.getOutputElement(outputElement);
+        if (alreadyRegisteredOutputElement != null) {
+            alreadyRegisteredOutputElement.setIsMarkedAsMultipleReferenced();
+        }
+        return alreadyRegisteredOutputElement;
     }
 
     @Override

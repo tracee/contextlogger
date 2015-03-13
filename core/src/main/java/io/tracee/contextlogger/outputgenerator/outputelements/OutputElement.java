@@ -40,4 +40,16 @@ public interface OutputElement {
      */
     Object getEncapsulatedInstance();
 
+    /**
+     * Marks the element as referenced by multiple other OutputElements.
+     */
+    void setIsMarkedAsMultipleReferenced();
+
+    /**
+     * Returns if the OutputElement is marked as referenced by multiple other OutputElements.
+     *
+     * @return true, if the OutputElement is marked as referenced by multiple other OutputElements
+     */
+    boolean getIsAsMarkedAsMultipleReferenced();
+
 }

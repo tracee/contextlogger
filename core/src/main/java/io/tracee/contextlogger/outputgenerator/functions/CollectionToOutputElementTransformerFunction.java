@@ -34,7 +34,7 @@ public class CollectionToOutputElementTransformerFunction implements ToOutputEle
         CollectionOutputElement outputElement = new CollectionOutputElement(collection.getClass(), collection);
 
         if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
-            return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(outputElement);
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(outputElement);
         }
 
         // must register output element before processing children to prevent problems with alreadyprocessed references

@@ -20,7 +20,7 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriterTest {
 
         String result = new TypedWithInstanceIdToStringAtomicOutputElementWriter().produceOutput(atomicOutputElement);
 
-        MatcherAssert.assertThat(result, Matchers.is("String@" + System.identityHashCode(value) + "['" + value + "']"));
+        MatcherAssert.assertThat(result, Matchers.is("String['" + value + "']"));
 
     }
 
@@ -33,7 +33,7 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriterTest {
 
         String result = new TypedWithInstanceIdToStringAtomicOutputElementWriter().produceOutput(atomicOutputElement);
 
-        MatcherAssert.assertThat(result, Matchers.is("String['<NULL>']"));
+        MatcherAssert.assertThat(result, Matchers.is("String[]"));
 
     }
 

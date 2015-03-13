@@ -33,7 +33,7 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
             OutputElement outputElement = new AtomicOutputElement(instance.getClass(), instance);
 
             if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
-                return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(outputElement);
+                return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(outputElement);
             }
 
             recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);

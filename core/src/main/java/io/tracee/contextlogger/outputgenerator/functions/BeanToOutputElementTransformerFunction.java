@@ -36,7 +36,7 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
         ComplexOutputElement complexOutputElement = new ComplexOutputElement(instance.getClass(), instance);
 
         if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
-            return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(complexOutputElement);
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(complexOutputElement);
         }
 
         // must register output element before processing children to prevent problems with alreadyprocessed references

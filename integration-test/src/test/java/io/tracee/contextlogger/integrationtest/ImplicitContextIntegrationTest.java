@@ -28,4 +28,18 @@ public class ImplicitContextIntegrationTest {
         MatcherAssert.assertThat(result, Matchers.is("null"));
     }
 
+    @Test
+    public void should_write_instance_for_multiple_referenced_instances() {
+        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build().createJson("ABC");
+
+        MatcherAssert.assertThat(result, Matchers.is("null"));
+    }
+
+    @Test
+    public void should_write_this_instance_without_tostring_overwrite_correctly() {
+        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build().createJson(this);
+
+        MatcherAssert.assertThat(result, Matchers.is("null"));
+    }
+
 }

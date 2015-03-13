@@ -34,7 +34,7 @@ public class MapToOutputElementTransformerFunction extends ToComplexOutputElemen
         ComplexOutputElement complexOutputElement = new ComplexOutputElement(map.getClass(), map);
 
         if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(complexOutputElement)) {
-            return recursiveOutputElementTreeBuilder.getRegisteredOutputElement(complexOutputElement);
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(complexOutputElement);
         }
 
         // must register output element before processing children to prevent problems with alreadyprocessed references
