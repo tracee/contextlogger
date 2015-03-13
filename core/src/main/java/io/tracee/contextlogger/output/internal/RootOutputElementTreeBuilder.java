@@ -8,14 +8,14 @@ import io.tracee.contextlogger.profile.ProfileSettings;
 /**
  * Converts given instances to an OutputElement instance hierarchy.
  */
-public class ContextDeserializer {
+public class RootOutputElementTreeBuilder {
 
     private final RecursiveOutputElementTreeBuilderImpl recursiveOutputElementTreeBuilderImpl;
 
     /**
      * Hidden constructor.
      */
-    protected ContextDeserializer(final ProfileSettings profileSettings) {
+    protected RootOutputElementTreeBuilder(final ProfileSettings profileSettings) {
         recursiveOutputElementTreeBuilderImpl = new RecursiveOutputElementTreeBuilderImpl(profileSettings);
     }
 
@@ -47,7 +47,7 @@ public class ContextDeserializer {
     }
 
     public static OutputElement deserializeContexts(final ProfileSettings profileSettings, final Object... objects) {
-        return new ContextDeserializer(profileSettings).deserializeContextsMain(objects);
+        return new RootOutputElementTreeBuilder(profileSettings).deserializeContextsMain(objects);
     }
 
 }
