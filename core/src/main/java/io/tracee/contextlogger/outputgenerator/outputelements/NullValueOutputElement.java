@@ -7,9 +7,9 @@ public class NullValueOutputElement implements OutputElement {
 
     public final static NullValueOutputElement INSTANCE = new NullValueOutputElement();
 
-	/**
-	 * Hidden constructor.
-	 */
+    /**
+     * Hidden constructor.
+     */
     private NullValueOutputElement() {
 
     }
@@ -37,6 +37,17 @@ public class NullValueOutputElement implements OutputElement {
     @Override
     public Object getEncapsulatedInstance() {
         return null;
+    }
+
+    @Override
+    public void setIsMarkedAsMultipleReferenced() {
+        // nothing to do
+    }
+
+    @Override
+    public boolean getIsAsMarkedAsMultipleReferenced() {
+        // always return false
+        return false;
     }
 
 }

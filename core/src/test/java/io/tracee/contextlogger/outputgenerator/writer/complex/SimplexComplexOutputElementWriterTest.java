@@ -2,6 +2,7 @@ package io.tracee.contextlogger.outputgenerator.writer.complex;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
@@ -36,6 +37,7 @@ public class SimplexComplexOutputElementWriterTest {
     }
 
     @Test
+    @Ignore
     public void should_create_output_for_bean_correctly() {
 
         ComplexOutputElement givenComplexOutputElement = new ComplexOutputElement(this.getClass(), this);

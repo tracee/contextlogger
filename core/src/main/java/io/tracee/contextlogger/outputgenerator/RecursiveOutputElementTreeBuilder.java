@@ -36,7 +36,7 @@ public interface RecursiveOutputElementTreeBuilder {
      *
      * @param outputElement the outputElement instance to get the existing output element for
      */
-    OutputElement getRegisteredOutputElement(final OutputElement outputElement);
+    OutputElement getRegisteredOutputElementAndMarkItAsMultipleRegistered(final OutputElement outputElement);
 
     /**
      * Allows access to profile settings

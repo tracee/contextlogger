@@ -7,7 +7,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
  * Main Interface for name value pairs.
  * Created by Tobias Gindler on 21.03.14.
  */
-@TraceeContextProvider(displayName = "name-value-pair")
+@TraceeContextProvider(displayName = "name-value-pair", suppressTypeInOutput = true)
 public class NameValuePair<T> {
 
     protected static final String DEFAULT_NAME = "<null>";
@@ -39,6 +39,5 @@ public class NameValuePair<T> {
     public final T getValue() {
         return this.value;
     }
-
 
 }

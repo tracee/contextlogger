@@ -4,9 +4,10 @@ import java.util.Map;
 
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
-import io.tracee.contextlogger.outputgenerator.writer.api.OutputWriter;
 import io.tracee.contextlogger.outputgenerator.writer.api.ComplexOutputElementWriter;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputStyle;
+import io.tracee.contextlogger.outputgenerator.writer.api.OutputWriter;
+import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
 
 /**
  * Simple complex output element writer implementation.
@@ -18,17 +19,19 @@ public class SimpleComplexOutputElementWriter implements ComplexOutputElementWri
             final ComplexOutputElement nodeOutputElement) {
         stringBuilder.append(outputStyle.openingComplexType());
 
+        // Prepend type
+        boolean shouldWriteSeparator = TypeProviderFunction.getInstance().apply(stringBuilder, outputStyle, nodeOutputElement);
+
         // create style for children
         OutputStyle childrenOutputStyle = outputStyle.getChildConfiguration();
 
-        boolean isFirst = true;
         for (Map.Entry<String, OutputElement> child : nodeOutputElement.getOutputElements().entrySet()) {
 
-            if (!isFirst) {
-                stringBuilder.append(outputStyle.complexTypeElementSeparator());
+            if (!shouldWriteSeparator) {
+                shouldWriteSeparator = true;
             }
             else {
-                isFirst = false;
+                stringBuilder.append(outputStyle.complexTypeElementSeparator());
             }
 
             stringBuilder.append(outputStyle.complexTypeOpeningName());

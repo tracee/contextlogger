@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.outputgenerator;
 
-import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.profile.ProfileSettings;
 
@@ -23,13 +23,14 @@ public class RootOutputElementTreeBuilder {
 
         if (instances == null || instances.length == 0) {
 
-            return new AtomicOutputElement(Void.class, null);
+            return NullValueOutputElement.INSTANCE;
 
         }
         else if (instances.length == 1) {
 
-            return recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(new RecursiveOutputElementTreeBuilderState(), instances[0]);
-
+            OutputElement outputElement = recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(new RecursiveOutputElementTreeBuilderState(),
+                    instances[0]);
+            return outputElement != null ? outputElement : NullValueOutputElement.INSTANCE;
         }
         else {
 
@@ -37,8 +38,12 @@ public class RootOutputElementTreeBuilder {
             CollectionOutputElement complexOutputElement = new CollectionOutputElement(Object[].class, instances);
 
             for (Object instance : instances) {
-                complexOutputElement.addElement(recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(
-                        new RecursiveOutputElementTreeBuilderState(), instance));
+
+                OutputElement outputElement = recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(
+                        new RecursiveOutputElementTreeBuilderState(), instance);
+                if (outputElement != null) {
+                    complexOutputElement.addElement(outputElement);
+                }
             }
 
             return complexOutputElement;

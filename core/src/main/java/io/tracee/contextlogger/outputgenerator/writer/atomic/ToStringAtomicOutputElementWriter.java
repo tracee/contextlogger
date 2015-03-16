@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.outputgenerator.writer.atomic;
 
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.outputgenerator.predicates.IsOverwritingToStringPredicate;
 import io.tracee.contextlogger.outputgenerator.writer.api.AtomicOutputElementWriter;
 
 /**
@@ -10,7 +11,16 @@ public class ToStringAtomicOutputElementWriter implements AtomicOutputElementWri
 
     @Override
     public String produceOutput(final AtomicOutputElement atomicOutputElement) {
-        return atomicOutputElement != null && atomicOutputElement.getEncapsulatedInstance() != null ? atomicOutputElement.getEncapsulatedInstance()
-                .toString() : "<NULL>";
+
+        if (atomicOutputElement != null && atomicOutputElement.getEncapsulatedInstance() != null) {
+            if (IsOverwritingToStringPredicate.getInstance().apply(atomicOutputElement.getEncapsulatedInstance())) {
+                return atomicOutputElement.getEncapsulatedInstance().toString();
+            }
+            else {
+                return "";
+            }
+        }
+        return "<NULL>";
+
     }
 }

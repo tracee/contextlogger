@@ -15,7 +15,10 @@ public class TypedToStringAtomicOutputElementWriter extends ToStringAtomicOutput
 
         if (atomicOutputElement != null && atomicOutputElement.getOutputElementsBaseType() != null) {
             type = atomicOutputElement.getOutputElementsBaseType().getSimpleName();
-            return type + "['" + super.produceOutput(atomicOutputElement) + "']";
+
+            String toStringValue = super.produceOutput(atomicOutputElement);
+
+            return type + (!toStringValue.isEmpty() ? ("['" + toStringValue + "']") : "");
         }
 
         return super.produceOutput(atomicOutputElement);

@@ -9,6 +9,7 @@ public abstract class AbstractOutputElement implements OutputElement {
     private final int identityHashCode;
 
     private final Object encapsulatedInstance;
+    private boolean isMarkedAsMultipleReferenced = false;
 
     /**
      * Constructor.
@@ -35,5 +36,15 @@ public abstract class AbstractOutputElement implements OutputElement {
     @Override
     public Object getEncapsulatedInstance() {
         return this.encapsulatedInstance;
+    }
+
+    @Override
+    public void setIsMarkedAsMultipleReferenced() {
+        this.isMarkedAsMultipleReferenced = true;
+    }
+
+    @Override
+    public boolean getIsAsMarkedAsMultipleReferenced() {
+        return this.isMarkedAsMultipleReferenced;
     }
 }

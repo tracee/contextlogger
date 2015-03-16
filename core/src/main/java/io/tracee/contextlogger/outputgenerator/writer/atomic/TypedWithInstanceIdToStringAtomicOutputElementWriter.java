@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.outputgenerator.writer.atomic;
 
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.outputgenerator.predicates.IsOverwritingToStringPredicate;
 
 /**
  * Produces String representation for atomic value.
@@ -15,11 +16,17 @@ public class TypedWithInstanceIdToStringAtomicOutputElementWriter extends ToStri
             String type = atomicOutputElement.getOutputElementsBaseType().getSimpleName();
             String instanceId = "";
 
-            if (atomicOutputElement.getEncapsulatedInstance() != null) {
+            if (atomicOutputElement.getIsAsMarkedAsMultipleReferenced() && atomicOutputElement.getEncapsulatedInstance() != null) {
                 instanceId = "@" + atomicOutputElement.getIdentityHashCode();
             }
 
-            return type + instanceId + "['" + super.produceOutput(atomicOutputElement) + "']";
+            String toStringValue = "";
+            if (IsOverwritingToStringPredicate.getInstance().apply(atomicOutputElement.getEncapsulatedInstance())) {
+                String value = super.produceOutput(atomicOutputElement);
+                toStringValue = !value.isEmpty() ? "'" + value + "'" : "";
+            }
+
+            return type + instanceId + "[" + toStringValue + "]";
         }
 
         return super.produceOutput(atomicOutputElement);

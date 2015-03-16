@@ -32,7 +32,7 @@ public class ToStringRecursiveContext implements RecursiveOutputElementTreeBuild
     }
 
     @Override
-    public OutputElement getRegisteredOutputElement(final OutputElement outputElement) {
+    public OutputElement getRegisteredOutputElementAndMarkItAsMultipleRegistered(final OutputElement outputElement) {
         return null;
     }
 

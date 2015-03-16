@@ -3,6 +3,7 @@ package io.tracee.contextlogger.outputgenerator.functions;
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
+import io.tracee.contextlogger.outputgenerator.predicates.IsImplicitContextEnumValuePredicate;
 
 /**
  * Wrapper function that wraps a given instance in a matching Tracee context logging provider.
@@ -31,6 +32,11 @@ public class TraceeContextProviderWrapperFunction {
      * @return either a tracee context provider that encapsulates the passed instance or the instance itself if no matching context provider exists
      */
     public Object apply(ContextLoggerConfiguration contextLoggerConfiguration, Object instanceToWrap) {
+
+        // check for implicit context
+        if (IsImplicitContextEnumValuePredicate.getInstance().apply(instanceToWrap)) {
+            return createInstance((Class)contextLoggerConfiguration.getImplicitContextClassMap().get(instanceToWrap));
+        }
 
         // now try to find instance type in known wrapper types map
         Class matchingWrapperType = contextLoggerConfiguration.getClassToWrapperMap().get(instanceToWrap.getClass());
