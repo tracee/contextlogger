@@ -18,4 +18,6 @@ public @interface TraceeContextProvider {
 
     int order() default 100;
 
+    boolean suppressTypeInOutput() default false;
+
 }
