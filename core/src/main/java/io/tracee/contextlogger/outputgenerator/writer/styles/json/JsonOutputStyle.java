@@ -3,7 +3,7 @@ package io.tracee.contextlogger.outputgenerator.writer.styles.json;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputStyle;
 
 /**
- * Created by TGI on 13.02.2015.
+ * Base class for json Output styles.
  */
 public abstract class JsonOutputStyle implements OutputStyle {
 
