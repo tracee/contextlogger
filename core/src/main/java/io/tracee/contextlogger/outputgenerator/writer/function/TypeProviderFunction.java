@@ -50,8 +50,13 @@ public class TypeProviderFunction {
 
     boolean handleCollectionType(final StringBuilder stringBuilder, final OutputStyle outputStyle, final OutputElement outputElement) {
 
+        String tmpTypeString = OUTPUT_STRING_TYPE + ":" + outputElement.getOutputElementsBaseType().getSimpleName();
+        if (outputElement.getIsAsMarkedAsMultipleReferenced()) {
+            tmpTypeString = tmpTypeString + "@" + outputElement.getIdentityHashCode();
+        }
+
         stringBuilder.append(outputStyle.openingAtomicType());
-        stringBuilder.append(outputStyle.escapeString(OUTPUT_STRING_TYPE + ":" + outputElement.getOutputElementsBaseType().getSimpleName()));
+        stringBuilder.append(outputStyle.escapeString(tmpTypeString));
         stringBuilder.append(outputStyle.closingAtomicType());
 
         return true;

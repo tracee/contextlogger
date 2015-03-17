@@ -25,7 +25,7 @@ public class BrokenExternalWrapperIntegrationTest {
         // should not break because of the thrown NPE, Exception is handled internally ==> getter with exception should be ignored
         String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build()
                 .createJson(new TestBrokenImplicitContextDataProvider());
-        MatcherAssert.assertThat(result, Matchers.is("{\"testBrokenImplicitContextData\":{}}"));
+        MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
 
