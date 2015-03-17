@@ -37,7 +37,7 @@ public class JsonOutputStyleTest {
     @Test
     public void should_escape_string_correctly() {
 
-        final String givenString = "\\ \" / \b \t \n \f \r ü ABCD" + (char)27;
+        final String givenString = "\\ \" / \b \t \n \f \r ü ABCD " + (char)27;
         String result = jsonOutputStyle.escapeString(givenString);
 
         MatcherAssert.assertThat(result, Matchers.is("\\\\ \\\" \\/ \\b \\t \\n \\f \\r ü ABCD \\u001b"));
