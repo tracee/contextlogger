@@ -26,10 +26,28 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
     private final ContextLoggerConfiguration contextLoggerConfiguration;
     private final ProfileSettings profileSettings;
 
+    /**
+     * Main constructor.
+     *
+     * @param profileSettings the profile settings to use.
+     */
     public RecursiveOutputElementTreeBuilderImpl(final ProfileSettings profileSettings) {
+        this(profileSettings, new InstanceToOutputElementPool(), ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration());
+
+    }
+
+    /**
+     * Constructor used by tests.
+     *
+     * @param profileSettings the profile settings to use.
+     * @param instanceToOutputElementPool the instance output element
+     * @param contextLoggerConfiguration The context logger configuration to use
+     */
+    protected RecursiveOutputElementTreeBuilderImpl(final ProfileSettings profileSettings, final InstanceToOutputElementPool instanceToOutputElementPool,
+            final ContextLoggerConfiguration contextLoggerConfiguration) {
         this.profileSettings = profileSettings;
-        this.instanceToOutputElementPool = new InstanceToOutputElementPool();
-        this.contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
+        this.instanceToOutputElementPool = instanceToOutputElementPool;
+        this.contextLoggerConfiguration = contextLoggerConfiguration;
     }
 
     @Override
