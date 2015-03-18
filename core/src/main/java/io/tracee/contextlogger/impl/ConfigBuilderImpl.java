@@ -6,6 +6,7 @@ import java.util.Map;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLoggerBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
+import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
@@ -22,7 +23,7 @@ public class ConfigBuilderImpl implements Configuration {
 
     private Map<String, Boolean> manualContextOverrides = new HashMap<String, Boolean>();
 
-    private OutputWriterConfiguration outputWriterConfiguration = OutputWriterConfiguration.JSON_INTENDED;
+    private OutputWriterConfiguration outputWriterConfiguration = BasicOutputWriterConfiguration.JSON_INTENDED;
 
     public ConfigBuilderImpl(ContextLoggerBuilder owningBuilder) {
         this.owningBuilder = owningBuilder;

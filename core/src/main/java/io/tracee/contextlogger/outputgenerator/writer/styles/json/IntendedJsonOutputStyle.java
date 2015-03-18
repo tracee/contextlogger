@@ -88,4 +88,8 @@ public class IntendedJsonOutputStyle extends JsonOutputStyle {
         return stringBuilder.toString();
 
     }
+
+    public int getIndent() {
+        return indent;
+    }
 }

@@ -10,12 +10,12 @@ import io.tracee.contextlogger.outputgenerator.writer.api.OutputWriter;
 public class OutputWriterToOutputTransformer implements OutputWriter {
 
     private OutputWriterConfiguration outputWriterConfiguration;
-    private OutputElementPool outputElementPool = new OutputElementPool();
+    protected OutputElementPool outputElementPool = new OutputElementPool();
 
     /**
      * Hidden constructor.
      */
-    private OutputWriterToOutputTransformer() {
+    protected OutputWriterToOutputTransformer() {
 
     }
 

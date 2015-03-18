@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
@@ -55,7 +56,7 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
     }
 
     public OutputWriterConfiguration getOutputWriterConfiguration() {
-        return outputWriterConfiguration != null ? outputWriterConfiguration : OutputWriterConfiguration.JSON_INTENDED;
+        return outputWriterConfiguration != null ? outputWriterConfiguration : BasicOutputWriterConfiguration.JSON_INTENDED;
     }
 
     public final void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
