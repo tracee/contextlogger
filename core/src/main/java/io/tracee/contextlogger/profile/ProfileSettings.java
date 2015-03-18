@@ -51,7 +51,7 @@ public class ProfileSettings {
      * @param propertyKey the property key to check
      * @return true, if the property is enabled in profile or manual overrides and not disabled in manual overrides, otherwise false
      */
-    public final Boolean getPropertyValue(final String propertyKey) {
+    public Boolean getPropertyValue(final String propertyKey) {
 
         if (propertyKey == null) {
             return null;
