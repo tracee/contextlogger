@@ -14,26 +14,34 @@ public final class NameValuePairComparator implements Comparator<NameValuePair> 
         // primary sort criteria is the order value of the annotation
         if (instance1 == null && instance2 == null) {
             return 0;
-        } else if (instance1 != null && instance2 == null) {
+        }
+        else if (instance1 != null && instance2 == null) {
             return -1;
-        } else if (instance1 == null) {
+        }
+        else if (instance1 == null) {
             return 1;
-        } else {
+        }
+        else {
 
-            String name1 = instance1.getName();
-            String name2 = instance2.getName();
-
-            if (name1 == null && name2 == null) {
-                return 0;
-            } else if (name1 != null && name2 == null) {
-                return -1;
-            } else if (name1 == null) {
-                return 1;
-            } else {
-                return name1.compareTo(name2);
-            }
+            return compareNames(instance1.getName(), instance2.getName());
 
         }
 
     }
+
+    public int compareNames(final String name1, final String name2) {
+        if (name1 == null && name2 == null) {
+            return 0;
+        }
+        else if (name1 != null && name2 == null) {
+            return -1;
+        }
+        else if (name1 == null) {
+            return 1;
+        }
+        else {
+            return name1.compareTo(name2);
+        }
+    }
+
 }

@@ -10,13 +10,13 @@ import io.tracee.contextlogger.profile.ProfileSettings;
  */
 public class RootOutputElementTreeBuilder {
 
-    private final RecursiveOutputElementTreeBuilderImpl recursiveOutputElementTreeBuilderImpl;
+    private final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilderImpl;
 
     /**
      * Hidden constructor.
      */
-    protected RootOutputElementTreeBuilder(final ProfileSettings profileSettings) {
-        recursiveOutputElementTreeBuilderImpl = new RecursiveOutputElementTreeBuilderImpl(profileSettings);
+    protected RootOutputElementTreeBuilder(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder) {
+        this.recursiveOutputElementTreeBuilderImpl = recursiveOutputElementTreeBuilder;
     }
 
     protected OutputElement deserializeContextsMain(Object... instances) {
@@ -52,7 +52,7 @@ public class RootOutputElementTreeBuilder {
     }
 
     public static OutputElement deserializeContexts(final ProfileSettings profileSettings, final Object... objects) {
-        return new RootOutputElementTreeBuilder(profileSettings).deserializeContextsMain(objects);
+        return new RootOutputElementTreeBuilder(new RecursiveOutputElementTreeBuilderImpl(profileSettings)).deserializeContextsMain(objects);
     }
 
 }
