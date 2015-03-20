@@ -2,6 +2,7 @@ package io.tracee.contextlogger;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
+import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 import io.tracee.contextlogger.connector.LogConnectorOutputProvider;
 import io.tracee.contextlogger.impl.ConfigBuilderImpl;
@@ -55,11 +56,6 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
     }
 
     @Override
-    public String create(Object... instancesToLog) {
-        return traceeContextLogBuilder.createStringRepresentation(instancesToLog);
-    }
-
-    @Override
     public void log(Object... instancesToLog) {
         this.logWithPrefixedMessage(null, instancesToLog);
     }
@@ -78,6 +74,16 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
 
         TraceeContextLogger traceeContextLogger = new TraceeContextLogger(this);
         traceeContextLogger.excludedTypes = contextProvidersToInclude;
+        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = traceeContextLogBuilder.cloneStringRepresentationBuilder();
+
+        for (Class type : contextProvidersToInclude) {
+
+            if (type != null) {
+                traceeContextStringRepresentationBuilder.getManualContextOverrides().put(type.getCanonicalName(), Boolean.FALSE);
+            }
+        }
+
+        traceeContextLogger.setStringRepresentationBuilder(traceeContextStringRepresentationBuilder);
 
         return traceeContextLogger;
     }

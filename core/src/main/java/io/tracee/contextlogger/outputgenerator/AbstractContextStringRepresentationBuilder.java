@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.outputgenerator;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,6 +62,16 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
 
     public final void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
         this.outputWriterConfiguration = outputWriterConfiguration;
+    }
+
+    protected void cloneTo(AbstractContextStringRepresentationBuilder cloneTo) {
+
+        cloneTo.setWrapperClasses(new HashSet<Class>(wrapperClasses));
+        cloneTo.setProfile(profile);
+        cloneTo.setManualContextOverrides(manualContextOverrides);
+        cloneTo.setKeepOrder(keepOrder);
+        cloneTo.setOutputWriterConfiguration(outputWriterConfiguration);
+
     }
 
 }

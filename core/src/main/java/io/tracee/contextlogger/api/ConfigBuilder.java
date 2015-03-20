@@ -35,6 +35,14 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
     ConfigBuilder disable(String... contexts);
 
     /**
+     * Manually disables context data output for a single createStringRepresentation statement.
+     *
+     * @param types The context data to be disabled.
+     * @return This instance
+     */
+    ConfigBuilder disableTypes(Class... types);
+
+    /**
      * Disable sorting of passed context instances.
      *
      * @return This instance

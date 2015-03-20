@@ -1,5 +1,6 @@
 package io.tracee.contextlogger.api;
 
+import java.util.Map;
 import java.util.Set;
 
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
@@ -21,5 +22,11 @@ public interface TraceeContextStringRepresentationBuilder {
     String createStringRepresentation(final Object... instancesToLog);
 
     void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration);
+
+    void setManualContextOverrides(final Map<String, Boolean> manualContextOverrides);
+
+    Map<String, Boolean> getManualContextOverrides();
+
+    TraceeContextStringRepresentationBuilder cloneStringRepresentationBuilder();
 
 }

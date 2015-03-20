@@ -28,10 +28,10 @@ public class RootOutputElementTreeBuilderTest {
     @Test
     public void should_handle_zero_instances_correctly() {
 
-        OutputElement outputElement = unit.deserializeContextsMain();
+        OutputElement outputElement = unit.buildOutputElementTreeMain();
         MatcherAssert.assertThat(outputElement, Matchers.is((OutputElement)NullValueOutputElement.INSTANCE));
 
-        outputElement = unit.deserializeContextsMain(new Object[0]);
+        outputElement = unit.buildOutputElementTreeMain(new Object[0]);
         MatcherAssert.assertThat(outputElement, Matchers.is((OutputElement)NullValueOutputElement.INSTANCE));
         Mockito.verify(recursiveOutputElementTreeBuilder, Mockito.never()).convertInstanceRecursively(
                 Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.any(Object.class));
@@ -45,7 +45,7 @@ public class RootOutputElementTreeBuilderTest {
                 recursiveOutputElementTreeBuilder.convertInstanceRecursively(Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.eq("ABC")))
                 .thenReturn(atomicOutputElement);
 
-        OutputElement outputElement = unit.deserializeContextsMain("ABC");
+        OutputElement outputElement = unit.buildOutputElementTreeMain("ABC");
         MatcherAssert.assertThat(outputElement, Matchers.instanceOf(AtomicOutputElement.class));
         MatcherAssert.assertThat(outputElement, Matchers.is((OutputElement)atomicOutputElement));
 
@@ -60,7 +60,7 @@ public class RootOutputElementTreeBuilderTest {
                 recursiveOutputElementTreeBuilder.convertInstanceRecursively(Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.eq("ABC")))
                 .thenReturn(atomicOutputElement);
 
-        OutputElement outputElement = unit.deserializeContextsMain("ABC");
+        OutputElement outputElement = unit.buildOutputElementTreeMain("ABC");
         MatcherAssert.assertThat(outputElement, Matchers.is((OutputElement)NullValueOutputElement.INSTANCE));
 
         Mockito.verify(recursiveOutputElementTreeBuilder, Mockito.times(1)).convertInstanceRecursively(
@@ -79,7 +79,7 @@ public class RootOutputElementTreeBuilderTest {
                 recursiveOutputElementTreeBuilder.convertInstanceRecursively(Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.eq("DEF")))
                 .thenReturn(atomicOutputElement2);
 
-        CollectionOutputElement outputElement = (CollectionOutputElement)unit.deserializeContextsMain("ABC", "DEF");
+        CollectionOutputElement outputElement = (CollectionOutputElement)unit.buildOutputElementTreeMain("ABC", "DEF");
         MatcherAssert.assertThat(outputElement.getOutputElements(), Matchers.hasSize(1));
         MatcherAssert.assertThat(outputElement.getOutputElements().get(0), Matchers.is((OutputElement)atomicOutputElement1));
 

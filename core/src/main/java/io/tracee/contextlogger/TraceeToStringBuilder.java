@@ -1,6 +1,7 @@
 package io.tracee.contextlogger;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.impl.ConfigBuilderImpl;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 
@@ -20,7 +21,7 @@ public class TraceeToStringBuilder extends AbstractToStringBuilder<TraceeToStrin
 
     }
 
-    public static TraceeToStringBuilder createDefault() {
+    public static ToStringBuilder createDefault() {
         return create().apply();
     }
 

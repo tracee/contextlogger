@@ -19,7 +19,7 @@ public class RootOutputElementTreeBuilder {
         this.recursiveOutputElementTreeBuilderImpl = recursiveOutputElementTreeBuilder;
     }
 
-    protected OutputElement deserializeContextsMain(Object... instances) {
+    protected OutputElement buildOutputElementTreeMain(Object... instances) {
 
         if (instances == null || instances.length == 0) {
 
@@ -51,8 +51,8 @@ public class RootOutputElementTreeBuilder {
         }
     }
 
-    public static OutputElement deserializeContexts(final ProfileSettings profileSettings, final Object... objects) {
-        return new RootOutputElementTreeBuilder(new RecursiveOutputElementTreeBuilderImpl(profileSettings)).deserializeContextsMain(objects);
+    public static OutputElement buildOutputElementTree(final ProfileSettings profileSettings, final Object... objects) {
+        return new RootOutputElementTreeBuilder(new RecursiveOutputElementTreeBuilderImpl(profileSettings)).buildOutputElementTreeMain(objects);
     }
 
 }
