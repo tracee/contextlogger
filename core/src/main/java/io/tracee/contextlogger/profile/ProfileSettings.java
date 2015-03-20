@@ -26,6 +26,8 @@ public class ProfileSettings {
         // if passed profile is null then use default profile
         Profile tmpProfile = profile != null ? profile : Profile.getCurrentProfile();
 
+        this.manualContextOverrides = manualContextOverrides;
+
         try {
             this.profileProperties = tmpProfile.getProperties();
         }
@@ -33,7 +35,6 @@ public class ProfileSettings {
             // shouldn't occur for non CUSTOM profiles
         }
 
-        this.manualContextOverrides = manualContextOverrides;
     }
 
     /**

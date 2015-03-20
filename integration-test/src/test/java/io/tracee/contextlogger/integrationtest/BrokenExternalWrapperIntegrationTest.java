@@ -13,8 +13,7 @@ public class BrokenExternalWrapperIntegrationTest {
     public void should_ignore_properties_for_wrapper_that_throw_an_exception() {
 
         // should not break because of the thrown NPE, Exception is handled internally ==> getter with exception should be ignored
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build()
-                .createJson(new WrappedBrokenTestContextData());
+        String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply().toString(new WrappedBrokenTestContextData());
         MatcherAssert.assertThat(result, Matchers.is("{\"brokenCustomContextDataWrapper\":{}}"));
 
     }
@@ -23,8 +22,7 @@ public class BrokenExternalWrapperIntegrationTest {
     public void should_ignore_properties_for_custom_implicit_context_data_provider_that_throw_an_exception() {
 
         // should not break because of the thrown NPE, Exception is handled internally ==> getter with exception should be ignored
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build()
-                .createJson(new TestBrokenImplicitContextDataProvider());
+        String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply().toString(new TestBrokenImplicitContextDataProvider());
         MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
@@ -33,8 +31,7 @@ public class BrokenExternalWrapperIntegrationTest {
     public void should_ignore_properties_for_custom_implicit_context_data_provider_that_throw_an_exception2() {
 
         // should not break because of the thrown NPE, Exception is handled internally ==> getter with exception should be ignored
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.ENHANCED).apply().build()
-                .createJson(TestBrokenImplicitContextDataProvider.class);
+        String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply().toString(TestBrokenImplicitContextDataProvider.class);
         MatcherAssert.assertThat(result, Matchers.is("{\"testBrokenImplicitContextData\":{}}"));
 
     }

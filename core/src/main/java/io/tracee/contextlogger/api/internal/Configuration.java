@@ -3,6 +3,7 @@ package io.tracee.contextlogger.api.internal;
 import java.util.Map;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
@@ -10,7 +11,7 @@ import io.tracee.contextlogger.profile.Profile;
  * Interface for getting configuration from ConfigBuilder.
  * Created by Tobias Gindler on 19.06.14.
  */
-public interface Configuration extends ConfigBuilder {
+public interface Configuration<T extends ToStringBuilder> extends ConfigBuilder<T> {
 
     /**
      * Gets a map containing all manual context overrides.

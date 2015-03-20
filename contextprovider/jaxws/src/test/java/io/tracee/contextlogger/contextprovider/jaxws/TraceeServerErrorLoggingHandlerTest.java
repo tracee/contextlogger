@@ -153,8 +153,8 @@ public class TraceeServerErrorLoggingHandlerTest {
         final SOAPMessageContext messageContext = mock(SOAPMessageContext.class);
         when(messageContext.getMessage()).thenReturn(buildSpiedTestMessage("vA"));
         unit.handleFault(messageContext);
-        verify(contextLogger).logJsonWithPrefixedMessage(eq(LOG_MESSAGE_PREFIX), eq(ImplicitContext.COMMON), eq(ImplicitContext.TRACEE),
-                Mockito.any(JaxWsWrapper.class));
+        verify(contextLogger).logWithPrefixedMessage(eq(LOG_MESSAGE_PREFIX), eq(ImplicitContext.COMMON), eq(ImplicitContext.TRACEE),
+				Mockito.any(JaxWsWrapper.class));
     }
 
     @Test

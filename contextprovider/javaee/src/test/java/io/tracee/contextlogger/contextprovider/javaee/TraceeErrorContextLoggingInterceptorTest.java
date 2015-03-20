@@ -71,7 +71,7 @@ public class TraceeErrorContextLoggingInterceptorTest {
 
         unit.intercept(invocationContext);
         verify(invocationContext).proceed();
-        verify(contextLogger, never()).logJsonWithPrefixedMessage(anyString(), any(), any(), any(), any());
+        verify(contextLogger, never()).logWithPrefixedMessage(anyString(), any(), any(), any(), any());
     }
 
     @Test(expected = RuntimeException.class)
@@ -87,8 +87,8 @@ public class TraceeErrorContextLoggingInterceptorTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext,
-                    exception);
+            verify(contextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext,
+					exception);
             throw e;
         }
     }
@@ -107,8 +107,8 @@ public class TraceeErrorContextLoggingInterceptorTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, traceeMessage, ImplicitContext.COMMON, ImplicitContext.TRACEE,
-                    invocationContext, exception);
+            verify(contextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, traceeMessage, ImplicitContext.COMMON, ImplicitContext.TRACEE,
+					invocationContext, exception);
             throw e;
         }
     }

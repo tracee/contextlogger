@@ -1,17 +1,19 @@
 package io.tracee.contextlogger.impl;
 
-import io.tracee.contextlogger.api.ConfigBuilder;
-import io.tracee.contextlogger.api.ContextLogger;
-import io.tracee.contextlogger.api.ContextLoggerBuilder;
-import io.tracee.contextlogger.api.internal.Configuration;
-import io.tracee.contextlogger.profile.Profile;
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ContextLogger;
+import io.tracee.contextlogger.api.internal.Configuration;
+import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Test class for {@link ConfigBuilderImpl}.
@@ -19,28 +21,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ConfigBuilderImplTest {
 
-
-    ContextLoggerBuilder contextLoggerBuilder;
-    ConfigBuilder configBuilder;
+    ContextLoggerBuilderAccessable contextLogger;
+    ConfigBuilder<ContextLogger> configBuilder;
 
     @Before
     public void init() {
 
-        contextLoggerBuilder = new
+        contextLogger = Mockito.mock(ContextLoggerBuilderAccessable.class);
+        Mockito.when(contextLogger.getContextLoggerConfiguration()).thenReturn(ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration());
 
-                ContextLoggerBuilder() {
-                    @Override
-                    public ConfigBuilder config() {
-                        return new ConfigBuilderImpl(this);
-                    }
+        configBuilder = new ConfigBuilderImpl(contextLogger);
 
-                    @Override
-                    public ContextLogger build() {
-                        return null;
-                    }
-                }
-        ;
-        configBuilder = contextLoggerBuilder.config();
     }
 
     @Test
@@ -52,7 +43,7 @@ public class ConfigBuilderImplTest {
         final String ENABLED_1 = "E1";
         final String ENABLED_2 = "E2";
 
-        Configuration configuration = (Configuration) contextLoggerBuilder.config().disable(DISABLED_1, DISABLED_2).enable(ENABLED_1, ENABLED_2);
+        Configuration configuration = (Configuration)configBuilder.disable(DISABLED_1, DISABLED_2).enable(ENABLED_1, ENABLED_2);
         assertThat(configuration, Matchers.notNullValue());
 
         Map<String, Boolean> manualContextOverrides = configuration.getManualContextOverrides();
@@ -66,7 +57,7 @@ public class ConfigBuilderImplTest {
 
     @Test
     public void should_have_default_empty_manual_context_override_map() {
-        Configuration configuration = (Configuration) contextLoggerBuilder.config();
+        Configuration configuration = (Configuration)configBuilder;
         assertThat(configuration, Matchers.notNullValue());
 
         Map<String, Boolean> manualContextOverrides = configuration.getManualContextOverrides();
@@ -76,31 +67,30 @@ public class ConfigBuilderImplTest {
 
     @Test
     public void should_set_keepOrder_correctly() {
-        Configuration configuration = (Configuration) contextLoggerBuilder.config().keepOrder();
+        Configuration configuration = (Configuration)configBuilder.keepOrder();
         assertThat(configuration, Matchers.notNullValue());
         assertThat(configuration.getKeepOrder(), Matchers.is(true));
     }
 
     @Test
     public void should_have_correct_default_keep_order_value() {
-        Configuration configuration = (Configuration) contextLoggerBuilder.config();
+        Configuration configuration = (Configuration)configBuilder;
         assertThat(configuration, Matchers.notNullValue());
         assertThat(configuration.getKeepOrder(), Matchers.is(false));
     }
 
-
     @Test
     public void should_return_config_logger_builder_on_apply() {
 
-        ContextLoggerBuilder result = contextLoggerBuilder.config().apply();
-        assertThat(result, Matchers.is(contextLoggerBuilder));
+        ContextLogger result = configBuilder.apply();
+        assertThat(result, Matchers.is((ContextLogger)contextLogger));
 
     }
 
     @Test
     public void should_return_null_valued_default_profile() {
 
-        Configuration configuration = (Configuration) contextLoggerBuilder.config();
+        Configuration configuration = (Configuration)configBuilder;
         assertThat(configuration, Matchers.notNullValue());
         assertThat(configuration.getProfile(), Matchers.nullValue());
 
@@ -109,7 +99,7 @@ public class ConfigBuilderImplTest {
     @Test
     public void should_set_profile_correctly() {
 
-        Configuration configuration = (Configuration) contextLoggerBuilder.config().enforceProfile(Profile.FULL);
+        Configuration configuration = (Configuration)configBuilder.enforceProfile(Profile.FULL);
         assertThat(configuration, Matchers.notNullValue());
         assertThat(configuration.getProfile(), Matchers.is(Profile.FULL));
 

@@ -73,6 +73,12 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             Object instanceToDeserialize = TraceeContextProviderWrapperFunction.getInstance()
                     .apply(contextLoggerConfiguration, passedInstanceToDeserialize);
 
+            // abort execution if class is disabled
+            Boolean isClassActive = profileSettings.getPropertyValue(instanceToDeserialize.getClass().getCanonicalName());
+            if (isClassActive != null && !isClassActive) {
+                return null;
+            }
+
             if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
                 // handle arrays and collections
 

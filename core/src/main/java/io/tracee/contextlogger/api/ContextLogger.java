@@ -4,38 +4,22 @@ package io.tracee.contextlogger.api;
  * The context logger interface used to enable fluent API.
  * Created by Tobias Gindler, holisticon AG on 28.03.14.
  */
-public interface ContextLogger {
+public interface ContextLogger extends ToStringBuilder {
 
     /**
-     * Creates a json string representation of the passed instancesToLog.
+     * Creates a string representation of the passed instancesToLog and passes them to all configured connectors.
      *
-     * @param instancesToLog The instances to be converted into a json string.
-     * @return
+     * @param instancesToLog The instances to be converted into a string.
      */
-    String createJson(Object... instancesToLog);
+    void log(Object... instancesToLog);
 
     /**
-     * Prepares building of output and returns an Wrapper instance. The output will produced by calling WrappedContextLoggerOutput toString method.
-     *
-     * @param instances the instances to output
-     * @return the wrapped output provider
-     */
-    WrappedContextLoggerOutput wrap(Object... instances);
-
-    /**
-     * Creates a json string representation of the passed instancesToLog and passes them to all configured connectors.
-     *
-     * @param instancesToLog The instances to be converted into a json string.
-     */
-    void logJson(Object... instancesToLog);
-
-    /**
-     * Creates a json string representation of the passed instancesToLog and passes them to all configured connectors.
+     * Creates a string representation of the passed instancesToLog and passes them to all configured connectors.
      * Adds a prefixed message string for {@link io.tracee.contextlogger.connector.LogConnector}.
      *
      * @param prefixedMessage The message to be prefixed with the LogConnector
-     * @param instancesToLog The instances to be converted into a json string.
+     * @param instancesToLog The instances to be converted into a string.
      */
-    void logJsonWithPrefixedMessage(String prefixedMessage, Object... instancesToLog);
+    void logWithPrefixedMessage(String prefixedMessage, Object... instancesToLog);
 
 }

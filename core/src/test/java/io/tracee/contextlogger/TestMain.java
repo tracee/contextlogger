@@ -9,8 +9,8 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        TraceeContextLogger.createDefault().logJsonWithPrefixedMessage("ABC", "DEF", ImplicitContext.COMMON, ImplicitContext.TRACEE);
-		TraceeContextLogger.createDefault().logJson("ABC", "DEF", ImplicitContext.COMMON, ImplicitContext.TRACEE);
+        TraceeContextLogger.createDefault().logWithPrefixedMessage("ABC", "DEF", ImplicitContext.COMMON, ImplicitContext.TRACEE);
+		TraceeContextLogger.createDefault().log("ABC", "DEF", ImplicitContext.COMMON, ImplicitContext.TRACEE);
 
     }
 
