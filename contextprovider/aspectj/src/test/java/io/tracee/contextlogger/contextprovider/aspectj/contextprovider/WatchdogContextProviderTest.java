@@ -37,7 +37,7 @@ public class WatchdogContextProviderTest {
     @Ignore
     @Test
     public void should_generate_json() {
-        String result = TraceeContextLogger.createDefault().createJson(WatchdogDataWrapper.wrap("ID", proceedingJoinPoint));
+        String result = TraceeContextLogger.createDefault().create(WatchdogDataWrapper.wrap("ID", proceedingJoinPoint));
 
         assertThat(
                 result,

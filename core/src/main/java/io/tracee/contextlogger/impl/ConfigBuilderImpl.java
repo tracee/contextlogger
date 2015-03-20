@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
-import io.tracee.contextlogger.api.ContextLoggerBuilder;
+import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
+import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.outputgenerator.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
@@ -13,9 +15,10 @@ import io.tracee.contextlogger.profile.Profile;
 /**
  * Implementation class to create a configuration by using the fluent api.
  */
-public class ConfigBuilderImpl implements Configuration {
+public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configuration<T> {
 
-    private ContextLoggerBuilder owningBuilder;
+    private final ContextLoggerBuilderAccessable contextLogger;
+    private final ContextLoggerConfiguration contextLoggerConfiguration;
 
     private Profile profile = null;
 
@@ -25,8 +28,11 @@ public class ConfigBuilderImpl implements Configuration {
 
     private OutputWriterConfiguration outputWriterConfiguration = BasicOutputWriterConfiguration.JSON_INTENDED;
 
-    public ConfigBuilderImpl(ContextLoggerBuilder owningBuilder) {
-        this.owningBuilder = owningBuilder;
+    public ConfigBuilderImpl(ContextLoggerBuilderAccessable traceeContextLoggerBuilderAccessable) {
+
+        this.contextLogger = traceeContextLoggerBuilderAccessable;
+        this.contextLoggerConfiguration = traceeContextLoggerBuilderAccessable.getContextLoggerConfiguration();
+
     }
 
     @Override
@@ -54,14 +60,15 @@ public class ConfigBuilderImpl implements Configuration {
     }
 
     @Override
-    public ConfigBuilder enforceOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
+    public ConfigBuilder enforceOutputWriterConfiguration(final BasicOutputWriterConfiguration outputWriterConfiguration) {
         this.outputWriterConfiguration = outputWriterConfiguration;
         return this;
     }
 
     @Override
-    public ContextLoggerBuilder apply() {
-        return owningBuilder;
+    public T apply() {
+        contextLogger.setStringRepresentationBuilder(createJsonContextStringRepresentationLogBuilder());
+        return (T)contextLogger;
     }
 
     public Map<String, Boolean> getManualContextOverrides() {
@@ -99,5 +106,22 @@ public class ConfigBuilderImpl implements Configuration {
             }
 
         }
+    }
+
+    /**
+     * Creates a TraceeGsonContextStringRepresentationBuilder instance which can be used for creating the createStringRepresentation message.
+     *
+     * @return An instance of TraceeGsonContextStringRepresentationBuilder
+     */
+    private TraceeContextStringRepresentationBuilder createJsonContextStringRepresentationLogBuilder() {
+
+        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = new TraceeContextStringRepresentationBuilder();
+        traceeContextStringRepresentationBuilder.setWrapperClasses(contextLoggerConfiguration.getWrapperClasses());
+        traceeContextStringRepresentationBuilder.setManualContextOverrides(this.getManualContextOverrides());
+        traceeContextStringRepresentationBuilder.setProfile(this.getProfile());
+        traceeContextStringRepresentationBuilder.setKeepOrder(this.getKeepOrder());
+        traceeContextStringRepresentationBuilder.setOutputWriterConfiguration(this.getOutputWriterConfiguration());
+
+        return traceeContextStringRepresentationBuilder;
     }
 }

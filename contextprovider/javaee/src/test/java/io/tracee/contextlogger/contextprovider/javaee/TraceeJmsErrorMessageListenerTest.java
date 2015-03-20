@@ -54,7 +54,7 @@ public class TraceeJmsErrorMessageListenerTest {
 
         unit.intercept(invocationContext);
         verify(invocationContext).proceed();
-        verify(contextLogger, never()).logJsonWithPrefixedMessage(anyString(), any(), any(), any(), any());
+        verify(contextLogger, never()).logWithPrefixedMessage(anyString(), any(), any(), any(), any());
     }
 
     @Test(expected = RuntimeException.class)
@@ -68,8 +68,8 @@ public class TraceeJmsErrorMessageListenerTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logJsonWithPrefixedMessage(TraceeJmsErrorMessageListener.JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON,
-                    ImplicitContext.TRACEE, invocationContext, exception);
+            verify(contextLogger).logWithPrefixedMessage(TraceeJmsErrorMessageListener.JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON,
+					ImplicitContext.TRACEE, invocationContext, exception);
             throw e;
         }
     }

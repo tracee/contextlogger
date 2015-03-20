@@ -65,8 +65,8 @@ public class TraceeErrorLoggingFilterTest {
             unit.doFilter(request, response, filterChain);
         }
         catch (Exception e) {
-            verify(traceeContextLogger).logJsonWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, request, response,
-                    session, expectedException);
+            verify(traceeContextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, request, response,
+					session, expectedException);
             throw e;
         }
     }

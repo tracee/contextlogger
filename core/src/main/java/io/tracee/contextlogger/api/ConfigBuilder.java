@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.api;
 
-import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.profile.Profile;
 
 /**
@@ -8,7 +8,7 @@ import io.tracee.contextlogger.profile.Profile;
  * Used to enable fluent API.
  * Created by Tobias Gindler on 28.03.14.
  */
-public interface ConfigBuilder {
+public interface ConfigBuilder<T extends ToStringBuilder> {
 
     /**
      * Enforces profile for a single createStringRepresentation statement.
@@ -46,7 +46,7 @@ public interface ConfigBuilder {
      *
      * @return This instance cast as a ContextLoggerBuilder.
      */
-    ContextLoggerBuilder apply();
+    T apply();
 
     /**
      * Manually defines the OutputWriterConfiguration to use.
@@ -54,6 +54,6 @@ public interface ConfigBuilder {
      * @param outputWriterConfiguration the outputWriterConfiguration to use
      * @return
      */
-    ConfigBuilder enforceOutputWriterConfiguration(OutputWriterConfiguration outputWriterConfiguration);
+    ConfigBuilder enforceOutputWriterConfiguration(BasicOutputWriterConfiguration outputWriterConfiguration);
 
 }

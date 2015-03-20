@@ -107,14 +107,14 @@ public class WatchdogAspect {
         ErrorMessage errorMessage = WatchdogUtils.getErrorMessageAnnotation(proceedingJoinPoint);
 
         if (errorMessage == null) {
-            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
-                    MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), ImplicitContext.COMMON, ImplicitContext.TRACEE,
-                    WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
+            TraceeContextLogger.createDefault().logWithPrefixedMessage(
+					MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), ImplicitContext.COMMON, ImplicitContext.TRACEE,
+					WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
         }
         else {
-            TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(
-                    MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), TraceeMessage.wrap(errorMessage.value()),
-                    ImplicitContext.COMMON, ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
+            TraceeContextLogger.createDefault().logWithPrefixedMessage(
+					MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), TraceeMessage.wrap(errorMessage.value()),
+					ImplicitContext.COMMON, ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
         }
     }
 

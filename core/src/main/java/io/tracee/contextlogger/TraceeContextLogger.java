@@ -1,13 +1,10 @@
 package io.tracee.contextlogger;
 
+import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
-import io.tracee.contextlogger.api.ContextLoggerBuilder;
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
-import io.tracee.contextlogger.api.WrappedContextLoggerOutput;
-import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 import io.tracee.contextlogger.connector.LogConnectorOutputProvider;
-import io.tracee.contextlogger.impl.ContextLoggerBuilderImpl;
+import io.tracee.contextlogger.impl.ConfigBuilderImpl;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 
 /**
@@ -17,30 +14,25 @@ import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 
-public final class TraceeContextLogger implements ContextLoggerBuilderAccessable, LogConnectorOutputProvider {
+public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLogger> implements LogConnectorOutputProvider {
 
     private ConnectorFactory connectorsWrapper;
-    private final ContextLoggerConfiguration contextLoggerConfiguration;
-    private TraceeContextStringRepresentationBuilder traceeContextLogBuilder;
 
     private String prefix;
     private Class[] excludedTypes;
-    private Object[] objectsToProcess;
 
     private TraceeContextLogger(ContextLoggerConfiguration contextLoggerConfiguration) {
-        this.contextLoggerConfiguration = contextLoggerConfiguration;
+        super(contextLoggerConfiguration);
         initConnectors();
     }
 
     private TraceeContextLogger(TraceeContextLogger instanceToClone) {
+        super(instanceToClone);
 
         this.connectorsWrapper = instanceToClone.connectorsWrapper;
-        this.contextLoggerConfiguration = instanceToClone.contextLoggerConfiguration;
-        this.traceeContextLogBuilder = instanceToClone.traceeContextLogBuilder;
 
         this.prefix = instanceToClone.prefix;
         this.excludedTypes = instanceToClone.excludedTypes;
-        this.objectsToProcess = instanceToClone.objectsToProcess;
 
     }
 
@@ -51,34 +43,29 @@ public final class TraceeContextLogger implements ContextLoggerBuilderAccessable
         connectorsWrapper = new ConnectorFactory();
     }
 
-    public static ContextLoggerBuilder create() {
+    public static ConfigBuilder<ContextLogger> create() {
 
         TraceeContextLogger contextLoggerInstance = new TraceeContextLogger(ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration());
-        return new ContextLoggerBuilderImpl(contextLoggerInstance);
+        return new ConfigBuilderImpl<ContextLogger>(contextLoggerInstance);
 
     }
 
     public static ContextLogger createDefault() {
-        return create().build();
+        return create().apply();
     }
 
     @Override
-    public String createJson(Object... instancesToLog) {
+    public String create(Object... instancesToLog) {
         return traceeContextLogBuilder.createStringRepresentation(instancesToLog);
     }
 
     @Override
-    public WrappedContextLoggerOutput wrap(final Object... instances) {
-        return WrappedContextLoggerOutput.wrap(this, instances);
+    public void log(Object... instancesToLog) {
+        this.logWithPrefixedMessage(null, instancesToLog);
     }
 
     @Override
-    public void logJson(Object... instancesToLog) {
-        this.logJsonWithPrefixedMessage(null, instancesToLog);
-    }
-
-    @Override
-    public void logJsonWithPrefixedMessage(String prefixedMessage, Object... instancesToLog) {
+    public void logWithPrefixedMessage(String prefixedMessage, Object... instancesToLog) {
 
         this.prefix = prefixedMessage;
         this.objectsToProcess = instancesToLog;
@@ -122,13 +109,4 @@ public final class TraceeContextLogger implements ContextLoggerBuilderAccessable
         return false;
     }
 
-    @Override
-    public void setStringRepresentationBuilder(TraceeContextStringRepresentationBuilder stringRepresentationBuilder) {
-        this.traceeContextLogBuilder = stringRepresentationBuilder;
-    }
-
-    @Override
-    public ContextLoggerConfiguration getContextLoggerConfiguration() {
-        return this.contextLoggerConfiguration;
-    }
 }

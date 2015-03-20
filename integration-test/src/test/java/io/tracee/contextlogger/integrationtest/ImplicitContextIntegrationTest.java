@@ -15,29 +15,28 @@ public class ImplicitContextIntegrationTest {
 
     @Test
     public void shouldOutputImplicitContextCorrectly() {
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build()
-                .createJson(ImplicitContext.COMMON, ImplicitContext.TRACEE);
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().create(ImplicitContext.COMMON, ImplicitContext.TRACEE);
 
         MatcherAssert.assertThat(result, Matchers.is("{\"testImplicitContextData\":{}}"));
     }
 
     @Test
     public void shouldOutputSingleEmptyImplicitContextCorrectly() {
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build().createJson(ImplicitContext.TRACEE);
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().create(ImplicitContext.TRACEE);
 
         MatcherAssert.assertThat(result, Matchers.is("null"));
     }
 
     @Test
     public void should_write_instance_for_multiple_referenced_instances() {
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build().createJson("ABC");
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().create("ABC");
 
         MatcherAssert.assertThat(result, Matchers.is("null"));
     }
 
     @Test
     public void should_write_this_instance_without_tostring_overwrite_correctly() {
-        String result = TraceeContextLogger.create().config().enforceProfile(Profile.BASIC).apply().build().createJson(this);
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().create(this);
 
         MatcherAssert.assertThat(result, Matchers.is("null"));
     }

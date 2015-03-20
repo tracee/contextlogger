@@ -31,7 +31,7 @@ public class TraceeJmsErrorMessageListener {
         	final boolean isMdbInvocation = isMessageListenerOnMessageMethod(ctx.getMethod());
 
             if (isMdbInvocation) {
-                TraceeContextLogger.createDefault().logJsonWithPrefixedMessage(JSON_PREFIXED_MESSAGE,
+                TraceeContextLogger.createDefault().logWithPrefixedMessage(JSON_PREFIXED_MESSAGE,
 						ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
 
