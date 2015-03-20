@@ -17,7 +17,7 @@ public class MissingConstructorIntegrationTest {
 
         // should not break because of the missing no args constructor => type will be deserialized instead
         String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply()
-                .create(TestBrokenImplicitContentDataProviderWithoutDefaultConstructor.class);
+                .toString(TestBrokenImplicitContentDataProviderWithoutDefaultConstructor.class);
         MatcherAssert.assertThat(result, Matchers.startsWith("{\"java.lang.Class\""));
 
     }
@@ -27,7 +27,7 @@ public class MissingConstructorIntegrationTest {
 
         // should not default deserialization mechanism, because context data provider wrapper can't be created.
         String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply()
-                .create(new BrokenCustomContextDataWrapperWithMissingNoargsConstructor());
+                .toString(new BrokenCustomContextDataWrapperWithMissingNoargsConstructor());
         MatcherAssert.assertThat(result,
                 Matchers.startsWith("{\"io.tracee.contextlogger.integrationtest.BrokenCustomContextDataWrapperWithMissingNoargsConstructor\""));
 

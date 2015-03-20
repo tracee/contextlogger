@@ -30,8 +30,13 @@ public abstract class AbstractToStringBuilder<T extends ToStringBuilder> impleme
     }
 
     @Override
-    public String create(Object... instancesToLog) {
+    public String toString(Object... instancesToLog) {
         return traceeContextLogBuilder.createStringRepresentation(instancesToLog);
+    }
+
+    @Override
+    public String create(Object... instancesToLog) {
+        return toString(instancesToLog);
     }
 
     @Override

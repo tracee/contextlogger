@@ -11,6 +11,16 @@ public interface ToStringBuilder {
      * @param instancesToLog The instances to be converted into a string.
      * @return
      */
+    String toString(Object... instancesToLog);
+
+    /**
+     * Creates a string representation of the passed instancesToLog.
+     * This method is deprecated - please use toString(Object... instancesToLog) method instead
+     *
+     * @param instancesToLog The instances to be converted into a string.
+     * @return
+     */
+    @Deprecated
     String create(Object... instancesToLog);
 
     /**

@@ -17,7 +17,7 @@ public class WrappedContextLoggerOutput {
     @Override
     public String toString() {
         if (generatedOutput == null) {
-            generatedOutput = (traceeContextLogger != null ? traceeContextLogger.create(instancesToOutput) : null);
+            generatedOutput = (traceeContextLogger != null ? traceeContextLogger.toString(instancesToOutput) : null);
         }
 
         return generatedOutput;
