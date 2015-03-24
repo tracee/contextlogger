@@ -19,6 +19,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
 
@@ -30,6 +31,8 @@ public class TraceeJmsErrorMessageListenerTest {
 
     private final ContextLogger contextLogger = mock(ContextLogger.class);
 
+    private final ConfigBuilder<ContextLogger> configBuilder = mock(ConfigBuilder.class);
+
     @Before
     public void setupMocks() throws Exception {
 
@@ -40,7 +43,9 @@ public class TraceeJmsErrorMessageListenerTest {
         when(unit.isMessageListenerOnMessageMethod(Mockito.any(Method.class))).thenReturn(true);
 
         mockStatic(TraceeContextLogger.class);
-        when(TraceeContextLogger.createDefault()).thenReturn(contextLogger);
+        when(TraceeContextLogger.create()).thenReturn(configBuilder);
+        when(configBuilder.enforceOrder()).thenReturn(configBuilder);
+        when(configBuilder.apply()).thenReturn(contextLogger);
     }
 
     @Test
@@ -69,7 +74,7 @@ public class TraceeJmsErrorMessageListenerTest {
         catch (Exception e) {
             verify(invocationContext).proceed();
             verify(contextLogger).logWithPrefixedMessage(TraceeJmsErrorMessageListener.JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON,
-					ImplicitContext.TRACEE, invocationContext, exception);
+                    ImplicitContext.TRACEE, invocationContext, exception);
             throw e;
         }
     }

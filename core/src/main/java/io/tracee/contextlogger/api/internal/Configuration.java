@@ -32,7 +32,7 @@ public interface Configuration<T extends ToStringBuilder> extends ConfigBuilder<
      *
      * @return
      */
-    boolean getKeepOrder();
+    boolean getEnforceOrder();
 
     /**
      * Gets the OutputWriterConfiguration to use

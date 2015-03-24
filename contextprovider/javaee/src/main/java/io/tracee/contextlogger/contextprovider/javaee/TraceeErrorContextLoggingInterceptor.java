@@ -33,14 +33,22 @@ public class TraceeErrorContextLoggingInterceptor {
 
             // now log context informations
             if (errorMessage == null) {
-                TraceeContextLogger.createDefault().logWithPrefixedMessage(
-						MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
-						ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
+                TraceeContextLogger
+                        .create()
+                        .enforceOrder()
+                        .apply()
+                        .logWithPrefixedMessage(
+                                MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
+                                ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
             else {
-                TraceeContextLogger.createDefault().logWithPrefixedMessage(
-						MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
-						TraceeMessage.wrap(errorMessage.value()), ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
+                TraceeContextLogger
+                        .create()
+                        .enforceOrder()
+                        .apply()
+                        .logWithPrefixedMessage(
+                                MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorContextLoggingInterceptor.class),
+                                TraceeMessage.wrap(errorMessage.value()), ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
             throw e;
         }

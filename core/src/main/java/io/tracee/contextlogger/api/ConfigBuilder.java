@@ -16,7 +16,7 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
      * @param profile the profile to use
      * @return this instance
      */
-    ConfigBuilder enforceProfile(Profile profile);
+    ConfigBuilder<T> enforceProfile(Profile profile);
 
     /**
      * Manually enables context data output for a single createStringRepresentation statement.
@@ -24,7 +24,7 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
      * @param contexts The context data to be enabled.
      * @return This instance
      */
-    ConfigBuilder enable(String... contexts);
+    ConfigBuilder<T> enable(String... contexts);
 
     /**
      * Manually disables context data output for a single createStringRepresentation statement.
@@ -32,7 +32,7 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
      * @param contexts The context data to be disabled.
      * @return This instance
      */
-    ConfigBuilder disable(String... contexts);
+    ConfigBuilder<T> disable(String... contexts);
 
     /**
      * Manually disables context data output for a single createStringRepresentation statement.
@@ -40,14 +40,14 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
      * @param types The context data to be disabled.
      * @return This instance
      */
-    ConfigBuilder disableTypes(Class... types);
+    ConfigBuilder<T> disableTypes(Class... types);
 
     /**
-     * Disable sorting of passed context instances.
+     * Enforces sorting of passed tracee context provider instances. Other instances will be prepended in passed order.
      *
      * @return This instance
      */
-    ConfigBuilder keepOrder();
+    ConfigBuilder<T> enforceOrder();
 
     /**
      * Closes configuration.
@@ -62,6 +62,6 @@ public interface ConfigBuilder<T extends ToStringBuilder> {
      * @param outputWriterConfiguration the outputWriterConfiguration to use
      * @return
      */
-    ConfigBuilder enforceOutputWriterConfiguration(BasicOutputWriterConfiguration outputWriterConfiguration);
+    ConfigBuilder<T> enforceOutputWriterConfiguration(BasicOutputWriterConfiguration outputWriterConfiguration);
 
 }

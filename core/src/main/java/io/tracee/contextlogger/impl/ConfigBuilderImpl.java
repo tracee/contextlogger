@@ -24,7 +24,7 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
 
     private Profile profile = null;
 
-    private boolean keepOrder = false;
+    private boolean enforceOrder = false;
 
     private Map<String, Boolean> manualContextOverrides = new HashMap<String, Boolean>();
 
@@ -44,13 +44,13 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
     }
 
     @Override
-    public ConfigBuilder enable(String... contexts) {
+    public ConfigBuilder<T> enable(String... contexts) {
         fillManualContextOverrideMap(contexts, true);
         return this;
     }
 
     @Override
-    public ConfigBuilder disableTypes(final Class... types) {
+    public ConfigBuilder<T> disableTypes(final Class... types) {
         List<String> classNames = new ArrayList<String>();
         if (types != null) {
 
@@ -65,19 +65,19 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
     }
 
     @Override
-    public ConfigBuilder disable(String... contexts) {
+    public ConfigBuilder<T> disable(String... contexts) {
         fillManualContextOverrideMap(contexts, false);
         return this;
     }
 
     @Override
-    public ConfigBuilder keepOrder() {
-        this.keepOrder = true;
+    public ConfigBuilder<T> enforceOrder() {
+        this.enforceOrder = true;
         return this;
     }
 
     @Override
-    public ConfigBuilder enforceOutputWriterConfiguration(final BasicOutputWriterConfiguration outputWriterConfiguration) {
+    public ConfigBuilder<T> enforceOutputWriterConfiguration(final BasicOutputWriterConfiguration outputWriterConfiguration) {
         this.outputWriterConfiguration = outputWriterConfiguration;
         return this;
     }
@@ -96,8 +96,8 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
         return profile;
     }
 
-    public boolean getKeepOrder() {
-        return keepOrder;
+    public boolean getEnforceOrder() {
+        return enforceOrder;
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
         traceeContextStringRepresentationBuilderImpl.setWrapperClasses(contextLoggerConfiguration.getWrapperClasses());
         traceeContextStringRepresentationBuilderImpl.setManualContextOverrides(this.getManualContextOverrides());
         traceeContextStringRepresentationBuilderImpl.setProfile(this.getProfile());
-        traceeContextStringRepresentationBuilderImpl.setKeepOrder(this.getKeepOrder());
+        traceeContextStringRepresentationBuilderImpl.setEnforceOrder(this.getEnforceOrder());
         traceeContextStringRepresentationBuilderImpl.setOutputWriterConfiguration(this.getOutputWriterConfiguration());
 
         return traceeContextStringRepresentationBuilderImpl;

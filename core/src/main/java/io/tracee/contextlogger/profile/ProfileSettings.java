@@ -1,10 +1,10 @@
 package io.tracee.contextlogger.profile;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+
+import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
 
 /**
  * This class mixes profile settings with system.property overrides.
@@ -13,27 +13,19 @@ import java.util.Properties;
 public class ProfileSettings {
 
     private List<Properties> profileProperties = null;
-    private Map<String, Boolean> manualContextOverrides = null;
+
+    private TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder = null;
 
     /**
      * Main Constructor.
      *
-     * @param profile the profile to use
-     * @param manualContextOverrides a map that defines manual overrides for profile settings.
+     * @param toTraceeContextStringRepresentationBuilder a map that defines manual overrides for profile settings.
      */
-    public ProfileSettings(Profile profile, Map<String, Boolean> manualContextOverrides) {
+    public ProfileSettings(TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder) {
+        this(toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getProfile() != null
+                ? toTraceeContextStringRepresentationBuilder.getProfile() : Profile.getCurrentProfile());
 
-        // if passed profile is null then use default profile
-        Profile tmpProfile = profile != null ? profile : Profile.getCurrentProfile();
-
-        this.manualContextOverrides = manualContextOverrides;
-
-        try {
-            this.profileProperties = tmpProfile.getProperties();
-        }
-        catch (IOException e) {
-            // shouldn't occur for non CUSTOM profiles
-        }
+        this.toTraceeContextStringRepresentationBuilder = toTraceeContextStringRepresentationBuilder;
 
     }
 
@@ -43,7 +35,16 @@ public class ProfileSettings {
      * @param profile the profile to use
      */
     public ProfileSettings(Profile profile) {
-        this(profile, new HashMap<String, Boolean>());
+        try {
+            this.profileProperties = profile.getProperties();
+        }
+        catch (IOException e) {
+            // shouldn't occur for non CUSTOM profiles
+        }
+    }
+
+    public TraceeContextStringRepresentationBuilder getToTraceeContextStringRepresentationBuilder() {
+        return toTraceeContextStringRepresentationBuilder;
     }
 
     /**
@@ -59,8 +60,8 @@ public class ProfileSettings {
         }
 
         // check system property override
-        if (manualContextOverrides != null) {
-            Boolean manualOverrideCheck = manualContextOverrides.get(propertyKey);
+        if (toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getManualContextOverrides() != null) {
+            Boolean manualOverrideCheck = toTraceeContextStringRepresentationBuilder.getManualContextOverrides().get(propertyKey);
             if (manualOverrideCheck != null) {
                 return manualOverrideCheck;
             }

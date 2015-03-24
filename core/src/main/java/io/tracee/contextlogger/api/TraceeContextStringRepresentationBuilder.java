@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
+import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Annotation to mark class as toJson builder implementations.
@@ -15,9 +16,9 @@ public interface TraceeContextStringRepresentationBuilder {
 
     void setWrapperClasses(final Set<Class> wrapperClasses);
 
-    boolean getKeepOrder();
+    boolean getEnforceOrder();
 
-    void setKeepOrder(final boolean keepOrder);
+    void setEnforceOrder(final boolean keepOrder);
 
     String createStringRepresentation(final Object... instancesToLog);
 
@@ -28,5 +29,9 @@ public interface TraceeContextStringRepresentationBuilder {
     Map<String, Boolean> getManualContextOverrides();
 
     TraceeContextStringRepresentationBuilder cloneStringRepresentationBuilder();
+
+	 void setProfile(final Profile profile);
+
+	Profile getProfile();
 
 }

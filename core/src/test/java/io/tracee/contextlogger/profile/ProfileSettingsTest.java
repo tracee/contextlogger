@@ -8,6 +8,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.testdata.ProfileSettingsBuilder;
 
 /**
  * Test class for {@link io.tracee.contextlogger.profile.ProfileSettings} Created by Tobias Gindler, holisticon AG on 25.03.14.
@@ -17,7 +18,7 @@ public class ProfileSettingsTest {
     @Test
     public void should_return_true_for_throwable_message_in_basic_profile() {
 
-        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC, null);
+        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC);
         boolean shouldBeFalse = profileSettings.getPropertyValue(JavaThrowableContextProvider.class.getCanonicalName() + ".message");
 
         MatcherAssert.assertThat(shouldBeFalse, Matchers.equalTo(true));
@@ -27,7 +28,7 @@ public class ProfileSettingsTest {
     @Test
     public void should_return_false_for_unknown_property_key_in_basic_profile() {
 
-        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC, null);
+        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC);
         Boolean shouldBeFalse = profileSettings.getPropertyValue("UNKNOWN");
 
         MatcherAssert.assertThat(shouldBeFalse, Matchers.nullValue());
@@ -37,7 +38,7 @@ public class ProfileSettingsTest {
     @Test
     public void should_return_null_for_null_valued_property_key_in_basic_profile() {
 
-        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC, null);
+        ProfileSettings profileSettings = new ProfileSettings(Profile.BASIC);
         Boolean shouldBeNull = profileSettings.getPropertyValue(null);
 
         MatcherAssert.assertThat(shouldBeNull, Matchers.nullValue());
@@ -47,10 +48,10 @@ public class ProfileSettingsTest {
     public void should_return_true_for_manual_override() {
         final String KEY = "KEY_UNKNOWN_IN_PROFILE";
         final boolean VALUE = true;
-        Map<String, Boolean> overrideMap = new HashMap<String, Boolean>();
+        final Map<String, Boolean> overrideMap = new HashMap<String, Boolean>();
         overrideMap.put(KEY, VALUE);
 
-        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE, overrideMap);
+        ProfileSettings profileSettings = ProfileSettingsBuilder.create(Profile.NONE, overrideMap);
 
         boolean result = profileSettings.getPropertyValue(KEY);
 
@@ -61,11 +62,10 @@ public class ProfileSettingsTest {
     public void should_return_false_for_manual_override() {
         final String KEY = "KEY_UNKNOWN_IN_PROFILE";
         final boolean VALUE = false;
-        Map<String, Boolean> overrideMap = new HashMap<String, Boolean>();
+        final Map<String, Boolean> overrideMap = new HashMap<String, Boolean>();
         overrideMap.put(KEY, VALUE);
 
-        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE, overrideMap);
-
+        ProfileSettings profileSettings = ProfileSettingsBuilder.create(Profile.NONE, overrideMap);
         boolean result = profileSettings.getPropertyValue(KEY);
 
         MatcherAssert.assertThat(result, Matchers.equalTo(false));

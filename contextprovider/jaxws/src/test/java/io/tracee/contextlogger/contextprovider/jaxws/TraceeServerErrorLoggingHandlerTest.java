@@ -30,13 +30,14 @@ import io.tracee.Tracee;
 import io.tracee.TraceeBackend;
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
 import io.tracee.contextlogger.contextprovider.jaxws.contextprovider.JaxWsWrapper;
 
 /**
- * Test class for {@link AbstractTraceeErrorLoggingHandler} and
- * {@link TraceeServerErrorLoggingHandler}.
+ * Test class for {@link AbstractTraceeErrorLoggingHandler} and {@link TraceeServerErrorLoggingHandler}.
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ TraceeContextLogger.class, Tracee.class, MessagePrefixProvider.class })
@@ -50,6 +51,7 @@ public class TraceeServerErrorLoggingHandlerTest {
 
     private TraceeServerErrorLoggingHandler unit;
     private TraceeContextLogger contextLogger;
+    private final ConfigBuilder<ContextLogger> configBuilder = mock(ConfigBuilder.class);
 
     @Before
     public void setup() {
@@ -60,7 +62,9 @@ public class TraceeServerErrorLoggingHandlerTest {
         // Stuff for TraceeServerErrorLoggingHandler.handleFault()
         mockStatic(TraceeContextLogger.class);
         contextLogger = mock(TraceeContextLogger.class);
-        when(TraceeContextLogger.createDefault()).thenReturn(contextLogger);
+        when(TraceeContextLogger.create()).thenReturn(configBuilder);
+        when(configBuilder.enforceOrder()).thenReturn(configBuilder);
+        when(configBuilder.apply()).thenReturn(contextLogger);
 
         // mock log message prefix creation
         mockStatic(MessagePrefixProvider.class);
@@ -154,7 +158,7 @@ public class TraceeServerErrorLoggingHandlerTest {
         when(messageContext.getMessage()).thenReturn(buildSpiedTestMessage("vA"));
         unit.handleFault(messageContext);
         verify(contextLogger).logWithPrefixedMessage(eq(LOG_MESSAGE_PREFIX), eq(ImplicitContext.COMMON), eq(ImplicitContext.TRACEE),
-				Mockito.any(JaxWsWrapper.class));
+                Mockito.any(JaxWsWrapper.class));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package io.tracee.contextlogger.contextprovider.aspectj;
 
-import io.tracee.contextlogger.contextprovider.aspectj.contextprovider.WatchdogDataWrapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,8 +12,9 @@ import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
+import io.tracee.contextlogger.contextprovider.aspectj.contextprovider.WatchdogDataWrapper;
 import io.tracee.contextlogger.contextprovider.aspectj.util.WatchdogUtils;
+import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
 
 /**
  * Watchdog Assert class.
@@ -107,14 +107,21 @@ public class WatchdogAspect {
         ErrorMessage errorMessage = WatchdogUtils.getErrorMessageAnnotation(proceedingJoinPoint);
 
         if (errorMessage == null) {
-            TraceeContextLogger.createDefault().logWithPrefixedMessage(
-					MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), ImplicitContext.COMMON, ImplicitContext.TRACEE,
-					WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
+            TraceeContextLogger
+                    .create()
+                    .enforceOrder()
+                    .apply()
+                    .logWithPrefixedMessage(MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), ImplicitContext.COMMON,
+                            ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
         }
         else {
-            TraceeContextLogger.createDefault().logWithPrefixedMessage(
-					MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class), TraceeMessage.wrap(errorMessage.value()),
-					ImplicitContext.COMMON, ImplicitContext.TRACEE, WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
+            TraceeContextLogger
+                    .create()
+                    .enforceOrder()
+                    .apply()
+                    .logWithPrefixedMessage(MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, Watchdog.class),
+                            TraceeMessage.wrap(errorMessage.value()), ImplicitContext.COMMON, ImplicitContext.TRACEE,
+                            WatchdogDataWrapper.wrap(annotatedId, proceedingJoinPoint), e);
         }
     }
 

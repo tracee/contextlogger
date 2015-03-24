@@ -15,8 +15,7 @@ public class TraceeContextStringRepresentationBuilderImpl extends AbstractContex
 
     @Override
     public String createStringRepresentation(final Object... instancesToLog) {
-        OutputElement tmp = RootOutputElementTreeBuilder.buildOutputElementTree(new ProfileSettings(this.getProfile(), this.getManualContextOverrides()),
-                instancesToLog);
+        OutputElement tmp = RootOutputElementTreeBuilder.buildOutputElementTree(new ProfileSettings(this), instancesToLog);
 
         return OutputWriterToOutputTransformer.produceOutput(this.getOutputWriterConfiguration(), tmp);
     }

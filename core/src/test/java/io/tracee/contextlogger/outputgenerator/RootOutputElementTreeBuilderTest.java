@@ -6,10 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
+import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
  * Test class for {@link io.tracee.contextlogger.outputgenerator.RootOutputElementTreeBuilder}.
@@ -70,6 +72,8 @@ public class RootOutputElementTreeBuilderTest {
     @Test
     public void should_handle_multiple_instances_correctly() {
         AtomicOutputElement atomicOutputElement1 = new AtomicOutputElement(String.class, "ABC");
+        ProfileSettings profileSettings = Mockito.mock(ProfileSettings.class);
+        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = Mockito.mock(TraceeContextStringRepresentationBuilder.class);
 
         AtomicOutputElement atomicOutputElement2 = null;
         Mockito.when(
@@ -78,6 +82,9 @@ public class RootOutputElementTreeBuilderTest {
         Mockito.when(
                 recursiveOutputElementTreeBuilder.convertInstanceRecursively(Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.eq("DEF")))
                 .thenReturn(atomicOutputElement2);
+        Mockito.when(recursiveOutputElementTreeBuilder.getProfileSettings()).thenReturn(profileSettings);
+        Mockito.when(profileSettings.getToTraceeContextStringRepresentationBuilder()).thenReturn(traceeContextStringRepresentationBuilder);
+        Mockito.when(traceeContextStringRepresentationBuilder.getEnforceOrder()).thenReturn(false);
 
         CollectionOutputElement outputElement = (CollectionOutputElement)unit.buildOutputElementTreeMain("ABC", "DEF");
         MatcherAssert.assertThat(outputElement.getOutputElements(), Matchers.hasSize(1));
@@ -88,5 +95,4 @@ public class RootOutputElementTreeBuilderTest {
         Mockito.verify(recursiveOutputElementTreeBuilder, Mockito.times(1)).convertInstanceRecursively(
                 Mockito.any(RecursiveOutputElementTreeBuilderState.class), Mockito.eq("DEF"));
     }
-
 }

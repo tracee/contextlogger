@@ -48,11 +48,11 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
         return manualContextOverrides != null ? manualContextOverrides : new HashMap<String, Boolean>();
     }
 
-    public final boolean getKeepOrder() {
+    public final boolean getEnforceOrder() {
         return keepOrder;
     }
 
-    public final void setKeepOrder(final boolean keepOrder) {
+    public final void setEnforceOrder(final boolean keepOrder) {
         this.keepOrder = keepOrder;
     }
 
@@ -69,7 +69,7 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
         cloneTo.setWrapperClasses(new HashSet<Class>(wrapperClasses));
         cloneTo.setProfile(profile);
         cloneTo.setManualContextOverrides(manualContextOverrides);
-        cloneTo.setKeepOrder(keepOrder);
+        cloneTo.setEnforceOrder(keepOrder);
         cloneTo.setOutputWriterConfiguration(outputWriterConfiguration);
 
     }
