@@ -40,7 +40,7 @@ public class TraceeContextProviderOrderFunction {
                 return 1;
             }
 
-            return Integer.compare(o1cp.order(), o2cp.order());
+            return ((Integer)o1cp.order()).compareTo(o2cp.order());
         }
 
     }
