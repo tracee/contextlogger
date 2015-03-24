@@ -1,13 +1,13 @@
 package io.tracee.contextlogger.contextprovider.javaee;
 
-
-import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ImplicitContext;
+import java.lang.reflect.Method;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jms.Message;
-import java.lang.reflect.Method;
+
+import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ImplicitContext;
 
 /**
  * Message listener to detect exceptions that happened during javaee message processing.
@@ -16,9 +16,9 @@ import java.lang.reflect.Method;
  */
 public class TraceeJmsErrorMessageListener {
 
-	static final String JSON_PREFIXED_MESSAGE = "TRACEE JMS ERROR CONTEXT LOGGING LISTENER  : ";
+    static final String JSON_PREFIXED_MESSAGE = "TRACEE JMS ERROR CONTEXT LOGGING LISTENER  : ";
 
-	@SuppressWarnings("unused")
+    @SuppressWarnings("unused")
     public TraceeJmsErrorMessageListener() {
 
     }
@@ -27,12 +27,13 @@ public class TraceeJmsErrorMessageListener {
     public Object intercept(InvocationContext ctx) throws Exception {
         try {
             return ctx.proceed();
-        } catch (Exception e) {
-        	final boolean isMdbInvocation = isMessageListenerOnMessageMethod(ctx.getMethod());
+        }
+        catch (Exception e) {
+            final boolean isMdbInvocation = isMessageListenerOnMessageMethod(ctx.getMethod());
 
             if (isMdbInvocation) {
-                TraceeContextLogger.createDefault().logWithPrefixedMessage(JSON_PREFIXED_MESSAGE,
-						ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
+                TraceeContextLogger.create().enforceOrder().apply()
+                        .logWithPrefixedMessage(JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
             }
 
             throw e;
@@ -40,9 +41,7 @@ public class TraceeJmsErrorMessageListener {
     }
 
     boolean isMessageListenerOnMessageMethod(Method method) {
-        return "onMessage".equals(method.getName())
-                && method.getParameterTypes().length == 1
-                && method.getParameterTypes()[0] == Message.class;
+        return "onMessage".equals(method.getName()) && method.getParameterTypes().length == 1 && method.getParameterTypes()[0] == Message.class;
     }
 
 }

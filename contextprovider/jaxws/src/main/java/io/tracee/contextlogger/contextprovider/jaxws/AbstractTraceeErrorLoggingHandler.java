@@ -64,9 +64,12 @@ public abstract class AbstractTraceeErrorLoggingHandler implements SOAPHandler<S
         // Must pipe out Soap envelope
         SOAPMessage soapMessage = context.getMessage();
 
-        TraceeContextLogger.createDefault().logWithPrefixedMessage(MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, "JAX-WS"),
-				ImplicitContext.COMMON, ImplicitContext.TRACEE,
-				JaxWsWrapper.wrap(THREAD_LOCAL_SOAP_MESSAGE_STR.get(), convertSoapMessageAsString(soapMessage)));
+        TraceeContextLogger
+                .create()
+                .enforceOrder()
+                .apply()
+                .logWithPrefixedMessage(MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, "JAX-WS"), ImplicitContext.COMMON,
+                        ImplicitContext.TRACEE, JaxWsWrapper.wrap(THREAD_LOCAL_SOAP_MESSAGE_STR.get(), convertSoapMessageAsString(soapMessage)));
 
         return true;
     }

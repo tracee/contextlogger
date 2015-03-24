@@ -48,9 +48,12 @@ public class TraceeErrorLoggingFilter implements Filter {
 
     private void handleHttpServletRequest(HttpServletRequest servletRequest, HttpServletResponse servletResponse, Exception e) {
 
-        TraceeContextLogger.createDefault().logWithPrefixedMessage(
-				MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorLoggingFilter.class), ImplicitContext.COMMON,
-				ImplicitContext.TRACEE, servletRequest, servletResponse, servletRequest.getSession(false), e);
+        TraceeContextLogger
+                .create()
+                .enforceOrder()
+                .apply()
+                .logWithPrefixedMessage(MessagePrefixProvider.provideLogMessagePrefix(MessageLogLevel.ERROR, TraceeErrorLoggingFilter.class),
+                        ImplicitContext.COMMON, ImplicitContext.TRACEE, servletRequest, servletResponse, servletRequest.getSession(false), e);
 
     }
 

@@ -1,17 +1,19 @@
 package io.tracee.contextlogger.impl.gson;
 
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.impl.MethodAnnotationPair;
-import io.tracee.contextlogger.profile.Profile;
-import io.tracee.contextlogger.profile.ProfileSettings;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.impl.MethodAnnotationPair;
+import io.tracee.contextlogger.profile.Profile;
+import io.tracee.contextlogger.profile.ProfileSettings;
+import io.tracee.contextlogger.testdata.ProfileSettingsBuilder;
 
 /**
  * Test class for {@link io.tracee.contextlogger.impl.MethodAnnotationPair}.
@@ -21,7 +23,6 @@ public class MethodAnnotationPairTest {
 
     private final static String PROPERTY_NAME = MethodAnnotationPairTest.class.getCanonicalName() + ".testWithPropertyName";
     private static Method METHOD;
-
 
     @TraceeContextProviderMethod(displayName = "")
     public void testWithEmptyPropertyName() {
@@ -36,7 +37,8 @@ public class MethodAnnotationPairTest {
     {
         try {
             METHOD = MethodAnnotationPairTest.class.getMethod("testWithPropertyName", new Class[0]);
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -46,24 +48,22 @@ public class MethodAnnotationPairTest {
     public void should_return_true_for_non_annotated_method() {
 
         MethodAnnotationPair methodAnnotationPair = new MethodAnnotationPair(MethodAnnotationPairTest.class, METHOD, null);
-        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE, new HashMap<String, Boolean>());
+        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE);
 
         Boolean result = methodAnnotationPair.shouldBeProcessed(profileSettings);
 
         assertThat(result, Matchers.equalTo(true));
 
-
     }
-
 
     @Test
     public void should_return_true_for_annotated_method_with_property_name_and_set_profiler_settings() {
 
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        final Map<String, Boolean> map = new HashMap<String, Boolean>();
         map.put(PROPERTY_NAME, true);
 
         MethodAnnotationPair methodAnnotationPair = new MethodAnnotationPair(MethodAnnotationPairTest.class, METHOD, getAnnotation(METHOD));
-        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE, map);
+        ProfileSettings profileSettings = ProfileSettingsBuilder.create(Profile.NONE, map);
 
         boolean result = methodAnnotationPair.shouldBeProcessed(profileSettings);
 
@@ -78,7 +78,7 @@ public class MethodAnnotationPairTest {
         map.put(PROPERTY_NAME, false);
 
         MethodAnnotationPair methodAnnotationPair = new MethodAnnotationPair(MethodAnnotationPairTest.class, METHOD, getAnnotation(METHOD));
-        ProfileSettings profileSettings = new ProfileSettings(Profile.NONE, map);
+        ProfileSettings profileSettings = ProfileSettingsBuilder.create(Profile.NONE, map);
 
         boolean result = methodAnnotationPair.shouldBeProcessed(profileSettings);
 
@@ -107,6 +107,5 @@ public class MethodAnnotationPairTest {
     private TraceeContextProviderMethod getAnnotation(final Method method) {
         return method.getAnnotation(TraceeContextProviderMethod.class);
     }
-
 
 }

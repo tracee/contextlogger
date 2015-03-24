@@ -67,16 +67,16 @@ public class ConfigBuilderImplTest {
 
     @Test
     public void should_set_keepOrder_correctly() {
-        Configuration configuration = (Configuration)configBuilder.keepOrder();
+        Configuration configuration = (Configuration)configBuilder.enforceOrder();
         assertThat(configuration, Matchers.notNullValue());
-        assertThat(configuration.getKeepOrder(), Matchers.is(true));
+        assertThat(configuration.getEnforceOrder(), Matchers.is(true));
     }
 
     @Test
     public void should_have_correct_default_keep_order_value() {
         Configuration configuration = (Configuration)configBuilder;
         assertThat(configuration, Matchers.notNullValue());
-        assertThat(configuration.getKeepOrder(), Matchers.is(false));
+        assertThat(configuration.getEnforceOrder(), Matchers.is(false));
     }
 
     @Test

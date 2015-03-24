@@ -18,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
 import io.tracee.contextlogger.api.ImplicitContext;
@@ -39,6 +40,7 @@ public class TraceeErrorContextLoggingInterceptorTest {
     private final TraceeErrorContextLoggingInterceptor unit = mock(TraceeErrorContextLoggingInterceptor.class);
 
     private final ContextLogger contextLogger = mock(ContextLogger.class);
+    private final ConfigBuilder<ContextLogger> configBuilder = mock(ConfigBuilder.class);
 
     private final TraceeMessage traceeMessage = new TraceeMessage("ABC");
 
@@ -50,7 +52,9 @@ public class TraceeErrorContextLoggingInterceptorTest {
         // java.lang.reflect.Method is not suitable for mocks. Also Powermock is unable to create a mock for it!
         when(unit.intercept(Mockito.any(InvocationContext.class))).thenCallRealMethod();
         mockStatic(TraceeContextLogger.class);
-        when(TraceeContextLogger.createDefault()).thenReturn(contextLogger);
+        when(TraceeContextLogger.create()).thenReturn(configBuilder);
+        when(configBuilder.enforceOrder()).thenReturn(configBuilder);
+        when(configBuilder.apply()).thenReturn(contextLogger);
         mockStatic(TraceeMessage.class);
         when(TraceeMessage.wrap(ERROR_MESSAGE)).thenReturn(traceeMessage);
 
@@ -87,8 +91,7 @@ public class TraceeErrorContextLoggingInterceptorTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext,
-					exception);
+            verify(contextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, invocationContext, exception);
             throw e;
         }
     }
@@ -108,7 +111,7 @@ public class TraceeErrorContextLoggingInterceptorTest {
         catch (Exception e) {
             verify(invocationContext).proceed();
             verify(contextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, traceeMessage, ImplicitContext.COMMON, ImplicitContext.TRACEE,
-					invocationContext, exception);
+                    invocationContext, exception);
             throw e;
         }
     }

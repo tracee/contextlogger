@@ -23,6 +23,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import io.tracee.TraceeException;
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
 
@@ -38,6 +40,7 @@ public class TraceeErrorLoggingFilterTest {
     private final HttpSession session = mock(HttpSession.class);
     private final FilterChain filterChain = mock(FilterChain.class);
     private TraceeContextLogger traceeContextLogger = mock(TraceeContextLogger.class);
+    private final ConfigBuilder<ContextLogger> configBuilder = mock(ConfigBuilder.class);
 
     @Before
     public void setUpMocks() {
@@ -47,7 +50,9 @@ public class TraceeErrorLoggingFilterTest {
         when(MessagePrefixProvider.provideLogMessagePrefix(Mockito.any(MessageLogLevel.class), Mockito.any(Class.class))).thenReturn(LOG_MESSAGE_PREFIX);
 
         mockStatic(TraceeContextLogger.class);
-        when(TraceeContextLogger.createDefault()).thenReturn(traceeContextLogger);
+        when(TraceeContextLogger.create()).thenReturn(configBuilder);
+        when(configBuilder.enforceOrder()).thenReturn(configBuilder);
+        when(configBuilder.apply()).thenReturn(traceeContextLogger);
         when(request.getSession(false)).thenReturn(session);
     }
 
@@ -66,7 +71,7 @@ public class TraceeErrorLoggingFilterTest {
         }
         catch (Exception e) {
             verify(traceeContextLogger).logWithPrefixedMessage(LOG_MESSAGE_PREFIX, ImplicitContext.COMMON, ImplicitContext.TRACEE, request, response,
-					session, expectedException);
+                    session, expectedException);
             throw e;
         }
     }

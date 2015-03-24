@@ -45,6 +45,6 @@ public class ToStringRecursiveContext implements RecursiveOutputElementTreeBuild
 
     @Override
     public ProfileSettings getProfileSettings() {
-        return new ProfileSettings(Profile.BASIC, new HashMap<String, Boolean>());
+        return new ProfileSettings(Profile.BASIC);
     }
 }

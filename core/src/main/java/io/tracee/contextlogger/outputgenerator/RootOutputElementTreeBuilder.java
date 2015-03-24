@@ -1,5 +1,9 @@
 package io.tracee.contextlogger.outputgenerator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.tracee.contextlogger.outputgenerator.functions.TraceeContextProviderOrderFunction;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
@@ -37,13 +41,23 @@ public class RootOutputElementTreeBuilder {
             // must wrap all passed objects inside a complex element
             CollectionOutputElement complexOutputElement = new CollectionOutputElement(Object[].class, instances);
 
+            List<OutputElement> outputElementList = new ArrayList<OutputElement>();
             for (Object instance : instances) {
-
                 OutputElement outputElement = recursiveOutputElementTreeBuilderImpl.convertInstanceRecursively(
                         new RecursiveOutputElementTreeBuilderState(), instance);
                 if (outputElement != null) {
-                    complexOutputElement.addElement(outputElement);
+                    outputElementList.add(outputElement);
                 }
+            }
+
+            // sort by TraceeContextProvider order number if enforced
+            if (this.recursiveOutputElementTreeBuilderImpl.getProfileSettings().getToTraceeContextStringRepresentationBuilder().getEnforceOrder()) {
+                outputElementList = TraceeContextProviderOrderFunction.getInstance().apply(outputElementList);
+            }
+
+            // copy elements to superordinated output element
+            for (OutputElement outputElement : outputElementList) {
+                complexOutputElement.addElement(outputElement);
             }
 
             return complexOutputElement;
