@@ -144,7 +144,7 @@ Output element tree depth is limited to keep output and processing time small. C
 The output element tree are processed recursively. It is possible to use different kind of output styles(for example inline/formatted Json). 
 
 
-# Integrating TracEE into your application
+# Integrating TracEE Context-Logger into your application
 
 The steps to get TracEE contextual logging up and running pretty much depend on your application scenario. The most common use case would be to provide contextual invocation data from a servlet container based frontend or an ejb based backend.
 
