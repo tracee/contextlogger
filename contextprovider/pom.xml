@@ -24,6 +24,7 @@
         <module>javaee</module>
 		<module>jaxws</module>
 		<module>servlet</module>
+		<module>springmvc</module>
 
 	</modules>
 </project>

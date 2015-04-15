@@ -14,6 +14,11 @@ io.tracee.contextlogger.contextprovider.servlet.contextprovider.ServletRequestCo
 io.tracee.contextlogger.contextprovider.servlet.contextprovider.ServletResponseContextProvider
 io.tracee.contextlogger.contextprovider.servlet.contextprovider.ServletSessionContextProvider
 
+#spring web mvc
+io.tracee.contextlogger.contextprovider.springmvc.contextprovider.HandlerMethodContextProvider
+io.tracee.contextlogger.contextprovider.springmvc.contextprovider.MethodParameterContextProvider
+
+
 # java language or tracee related
 io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider
 io.tracee.contextlogger.contextprovider.tracee.TraceeMessageContextProvider
