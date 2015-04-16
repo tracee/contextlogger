@@ -102,6 +102,12 @@
 			<artifactId>testhelper</artifactId>
 		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+		</dependency>
+
+
+	</dependencies>
 
 </project>

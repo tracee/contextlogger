@@ -1,7 +1,6 @@
 package io.tracee.contextlogger.contextprovider.springmvc.contextprovider;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.web.method.HandlerMethod;
 
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
@@ -38,8 +37,8 @@ public class MethodParameterContextProvider implements WrappedContextData<Method
         return MethodParameter.class;
     }
 
-    public static HandlerMethodContextProvider wrap(final HandlerMethod handlerMethod) {
-        return new HandlerMethodContextProvider(handlerMethod);
+    public static MethodParameterContextProvider wrap(final MethodParameter methodParameter) {
+        return new MethodParameterContextProvider(methodParameter);
     }
 
     @SuppressWarnings("unused")
