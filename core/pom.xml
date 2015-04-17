@@ -96,16 +96,18 @@
             <artifactId>joda-time</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-        </dependency>
 
 		<dependency>
 			<groupId>io.tracee.contextlogger</groupId>
 			<artifactId>testhelper</artifactId>
 		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+		</dependency>
+
+
+	</dependencies>
 
 </project>

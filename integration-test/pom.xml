@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tracee.contextlogger</groupId>
         <artifactId>contextlogger-parent</artifactId>
-        <version>0.8.0-SNAPSHOT</version>
+        <version>0.9.0-SNAPSHOT</version>
     </parent>
 
     <name>contextlogger-integration-test</name>
@@ -29,7 +29,6 @@
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
 			<artifactId>contextprovider-api</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
 		</dependency>
         <dependency>
             <groupId>io.tracee.contextlogger</groupId>

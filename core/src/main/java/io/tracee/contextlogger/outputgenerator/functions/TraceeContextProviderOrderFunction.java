@@ -18,7 +18,7 @@ public class TraceeContextProviderOrderFunction {
 
     private static TraceeContextProviderOrderFunction instance = new TraceeContextProviderOrderFunction();
 
-    public class TraceeContextProviderOutputElementComparator implements Comparator<TraceeContextProviderOutputElement> {
+    public static class TraceeContextProviderOutputElementComparator implements Comparator<TraceeContextProviderOutputElement> {
 
         @Override
         public int compare(final TraceeContextProviderOutputElement o1, final TraceeContextProviderOutputElement o2) {
