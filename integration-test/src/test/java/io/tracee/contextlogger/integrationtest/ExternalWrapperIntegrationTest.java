@@ -15,23 +15,17 @@ public class ExternalWrapperIntegrationTest {
 
         String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString(new WrappedTestContextData());
 
-        MatcherAssert.assertThat(result, Matchers.is("{\"testdata\":{}}"));
+        MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
 
     @Test
     public void should_wrap_with_external_wrappers_correctly_using_enhanced_profile() {
 
-        String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply().toString(new WrappedTestContextData());
+        String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
+                .enforceProfile(Profile.ENHANCED).apply().toString(new WrappedTestContextData());
 
-        /*
-         * System.out.println(TraceeContextLogger.create().config().enforceOutputWriterConfiguration(OutputWriterConfiguration.JSON_INLINE).apply().build()
-         * .wrap("ABC", "DEF", "IHK", this).toString());
-         */
-        System.out.println(TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE).apply()
-                .wrap("ABC", "DEF", "IHK", 23.8, 25L, 32434.324, this).toString());
-
-        MatcherAssert.assertThat(result, Matchers.is("{\"testdata\":{\"testoutput\":\"IT WORKS !!!\"}}"));
+        MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testdata\",\"testoutput\":\"String['IT WORKS !!!']\"}"));
 
     }
 
@@ -41,7 +35,7 @@ public class ExternalWrapperIntegrationTest {
         String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).disable(TestContextDataWrapper.PROPERTY_NAME).apply()
                 .toString(new WrappedTestContextData());
 
-        MatcherAssert.assertThat(result, Matchers.is("{\"testdata\":{}}"));
+        MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
 
@@ -50,16 +44,17 @@ public class ExternalWrapperIntegrationTest {
 
         String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString(new TestImplicitContextDataProvider());
 
-        MatcherAssert.assertThat(result, Matchers.is("{\"testImplicitContextData\":{}}"));
+        MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
 
     @Test
     public void should_wrap_with_implicit_context_provider_correctly_using_enhanced_profile() {
 
-        String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).apply().toString(new TestImplicitContextDataProvider());
+        String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
+                .enforceProfile(Profile.ENHANCED).apply().toString(new TestImplicitContextDataProvider());
 
-        MatcherAssert.assertThat(result, Matchers.is("{\"testImplicitContextData\":{\"output\":\"IT WORKS TOO!!!\"}}"));
+        MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testImplicitContextData\",\"output\":\"String['IT WORKS TOO!!!']\"}"));
 
     }
 
@@ -69,7 +64,7 @@ public class ExternalWrapperIntegrationTest {
         String result = TraceeContextLogger.create().enforceProfile(Profile.ENHANCED).disable(TestImplicitContextDataProvider.PROPERTY_NAME).apply()
                 .toString(new TestImplicitContextDataProvider());
 
-        MatcherAssert.assertThat(result, Matchers.is("{\"testImplicitContextData\":{}}"));
+        MatcherAssert.assertThat(result, Matchers.is("null"));
 
     }
 

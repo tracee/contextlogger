@@ -10,12 +10,18 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 @TraceeContextProvider(displayName = "testBrokenImplicitContextData", order = 200)
 public class TestBrokenImplicitContextDataProvider implements CustomImplicitContextData {
 
-	public static final String PROPERTY_NAME = "io.tracee.contextlogger.integrationtest.TestBrokenImplicitContextDataProvider.output";
+    public static final String PROPERTY_NAME = "io.tracee.contextlogger.integrationtest.TestBrokenImplicitContextDataProvider.output";
 
-	@SuppressWarnings("unused")
-	@TraceeContextProviderMethod(displayName = "output", order = 10)
-	public final String getOutput() {
-		throw new NullPointerException("Whoops!!!");
-	}
+    @SuppressWarnings("unused")
+    @TraceeContextProviderMethod(displayName = "output", order = 10)
+    public final String getOutput() {
+        throw new NullPointerException("Whoops!!!");
+    }
+
+    @SuppressWarnings("unused")
+    @TraceeContextProviderMethod(displayName = "workingOutput", order = 20)
+    public final String getWorkingOutput() {
+        return "IT_WORKS";
+    }
 
 }
