@@ -68,7 +68,7 @@ public abstract class AbstractContextStringRepresentationBuilder implements Trac
 
         cloneTo.setWrapperClasses(new HashSet<Class>(wrapperClasses));
         cloneTo.setProfile(profile);
-        cloneTo.setManualContextOverrides(manualContextOverrides);
+        cloneTo.setManualContextOverrides(new HashMap<String, Boolean>(manualContextOverrides));
         cloneTo.setEnforceOrder(keepOrder);
         cloneTo.setOutputWriterConfiguration(outputWriterConfiguration);
 
