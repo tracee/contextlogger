@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.api;
 
 /**
- * Class for providing output at runtime vi toString.
+ * Class for providing output at runtime via toString.
  */
 public class WrappedContextLoggerOutput {
 

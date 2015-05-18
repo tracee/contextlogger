@@ -11,10 +11,10 @@ import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
  */
 public abstract class AbstractToStringBuilder<T extends ToStringBuilder> implements ContextLoggerBuilderAccessable {
 
-    protected final ContextLoggerConfiguration contextLoggerConfiguration;
-    protected TraceeContextStringRepresentationBuilder traceeContextLogBuilder;
+    private final ContextLoggerConfiguration contextLoggerConfiguration;
+    private TraceeContextStringRepresentationBuilder traceeContextLogBuilder;
 
-    protected Object[] objectsToProcess;
+    private Object[] objectsToProcess;
 
     protected AbstractToStringBuilder(ContextLoggerConfiguration contextLoggerConfiguration) {
         this.contextLoggerConfiguration = contextLoggerConfiguration;
@@ -49,8 +49,20 @@ public abstract class AbstractToStringBuilder<T extends ToStringBuilder> impleme
         this.traceeContextLogBuilder = stringRepresentationBuilder;
     }
 
+    protected TraceeContextStringRepresentationBuilder getStringRepresentationBuilder() {
+        return this.traceeContextLogBuilder;
+    }
+
     @Override
     public ContextLoggerConfiguration getContextLoggerConfiguration() {
         return this.contextLoggerConfiguration;
+    }
+
+    protected Object[] getObjectsToProcess() {
+        return objectsToProcess;
+    }
+
+    protected void setObjectsToProcess(final Object[] objectsToProcess) {
+        this.objectsToProcess = objectsToProcess;
     }
 }

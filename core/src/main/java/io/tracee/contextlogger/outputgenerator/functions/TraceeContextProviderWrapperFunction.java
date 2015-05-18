@@ -75,7 +75,7 @@ public class TraceeContextProviderWrapperFunction {
      * @param type the type of the new instance
      * @return a new instance of the passed type or null if an exception occurred during the creation of the instance of if the passed type is null.
      */
-    private Object createInstance(final Class type) {
+    protected Object createInstance(final Class type) {
         if (type != null) {
             try {
                 return type.newInstance();

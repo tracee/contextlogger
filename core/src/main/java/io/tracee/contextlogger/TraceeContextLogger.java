@@ -20,7 +20,6 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
     private ConnectorFactory connectorsWrapper;
 
     private String prefix;
-    private Class[] excludedTypes;
 
     private TraceeContextLogger(ContextLoggerConfiguration contextLoggerConfiguration) {
         super(contextLoggerConfiguration);
@@ -33,7 +32,6 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
         this.connectorsWrapper = instanceToClone.connectorsWrapper;
 
         this.prefix = instanceToClone.prefix;
-        this.excludedTypes = instanceToClone.excludedTypes;
 
     }
 
@@ -64,7 +62,7 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
     public void logWithPrefixedMessage(String prefixedMessage, Object... instancesToLog) {
 
         this.prefix = prefixedMessage;
-        this.objectsToProcess = instancesToLog;
+        this.setObjectsToProcess(instancesToLog);
 
         this.connectorsWrapper.sendErrorReportToConnectors(this);
     }
@@ -73,8 +71,8 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
     public ConnectorOutputProvider excludeContextProviders(final Class... contextProvidersToInclude) {
 
         TraceeContextLogger traceeContextLogger = new TraceeContextLogger(this);
-        traceeContextLogger.excludedTypes = contextProvidersToInclude;
-        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = traceeContextLogBuilder.cloneStringRepresentationBuilder();
+        TraceeContextStringRepresentationBuilder traceeContextStringRepresentationBuilder = this.getStringRepresentationBuilder()
+                .cloneStringRepresentationBuilder();
 
         for (Class type : contextProvidersToInclude) {
 
@@ -91,28 +89,12 @@ public final class TraceeContextLogger extends AbstractToStringBuilder<ContextLo
     @Override
     public String provideOutput() {
 
-        return traceeContextLogBuilder.createStringRepresentation(objectsToProcess);
+        return this.getStringRepresentationBuilder().createStringRepresentation(this.getObjectsToProcess());
     }
 
     @Override
     public String getPrefix() {
         return prefix;
-    }
-
-    boolean isInstanceTypeExcluded(Object contextProviderType) {
-
-        if (excludedTypes != null && contextProviderType != null) {
-
-            for (Class type : excludedTypes) {
-
-                if (type.isAssignableFrom(contextProviderType.getClass())) {
-                    return true;
-                }
-
-            }
-
-        }
-        return false;
     }
 
 }
