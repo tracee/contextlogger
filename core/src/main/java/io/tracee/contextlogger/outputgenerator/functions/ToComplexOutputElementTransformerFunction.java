@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.outputgenerator.functions;
 
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 
@@ -14,7 +14,7 @@ public abstract class ToComplexOutputElementTransformerFunction<T> implements To
             final RecursiveOutputElementTreeBuilderState state, final ComplexOutputElement complexOutputElement, final String name,
             final Object childInstance) {
 
-        OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state.next(), childInstance);
+        OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state, childInstance);
         if (childOutputElement != null) {
             complexOutputElement.addOutputElement(name, childOutputElement);
         }

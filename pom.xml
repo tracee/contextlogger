@@ -196,6 +196,7 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
+						<verbose>true</verbose>
 						<source>1.6</source>
 						<target>1.6</target>
 					</configuration>
@@ -334,6 +335,14 @@
 				<groupId>io.tracee.contextlogger.contextprovider</groupId>
 				<artifactId>contextprovider-servlet-core</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<!-- needed to check contextprovider annotations at compile time -->
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-test</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<!-- Tracee Dependencies -->

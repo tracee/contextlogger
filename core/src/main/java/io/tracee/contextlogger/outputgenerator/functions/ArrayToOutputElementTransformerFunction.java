@@ -2,8 +2,8 @@ package io.tracee.contextlogger.outputgenerator.functions;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
@@ -33,14 +33,14 @@ public class ArrayToOutputElementTransformerFunction implements ToOutputElementT
         CollectionOutputElement outputElement = new CollectionOutputElement(array.getClass(), array);
 
         if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
-			 return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(outputElement);
+            return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(outputElement);
         }
 
         // must register output element before processing children to prevent problems with alreadyprocessed references
         recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
 
         for (Object element : array) {
-            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state.next(), element);
+            OutputElement childOutputElement = recursiveOutputElementTreeBuilder.convertInstanceRecursively(state, element);
             if (childOutputElement != null) {
                 outputElement.addElement(childOutputElement);
             }

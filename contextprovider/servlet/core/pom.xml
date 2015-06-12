@@ -48,5 +48,11 @@
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito</artifactId>
 		</dependency>
+
+		<!-- dependency for annotation processing at compile time -->
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-test</artifactId>
+		</dependency>
     </dependencies>
 </project>

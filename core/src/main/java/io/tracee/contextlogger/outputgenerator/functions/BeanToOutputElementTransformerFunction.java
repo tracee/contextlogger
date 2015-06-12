@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 import io.tracee.Tracee;
 import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
@@ -46,7 +46,7 @@ public class BeanToOutputElementTransformerFunction extends ToComplexOutputEleme
         for (Method method : BeanUtility.getGetterMethodsRecursively(instance.getClass())) {
 
             complexOutputElement.addOutputElement(GetterUtilities.getFieldName(method),
-                    recursiveOutputElementTreeBuilder.convertInstanceRecursively(state.next(), invokeGetter(instance, method)));
+                    recursiveOutputElementTreeBuilder.convertInstanceRecursively(state, invokeGetter(instance, method)));
 
         }
 

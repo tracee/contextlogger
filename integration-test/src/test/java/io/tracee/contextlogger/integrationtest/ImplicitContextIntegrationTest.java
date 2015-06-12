@@ -20,7 +20,7 @@ public class ImplicitContextIntegrationTest {
         String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
                 .enforceProfile(Profile.BASIC).apply().toString(ImplicitContext.COMMON, ImplicitContext.TRACEE);
 
-        MatcherAssert.assertThat(result, RegexMatcher.matches("\\[\"TYPE:Object\\[]\",\\{\"TYPE\":\"common\",\"thread-id\".*"));
+        MatcherAssert.assertThat(result, RegexMatcher.matches("\\[\"TYPE:Object\\[]\",\\{\"TYPE\":\"common\".*"));
     }
 
     @Test

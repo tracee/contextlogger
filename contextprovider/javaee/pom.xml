@@ -30,6 +30,12 @@
             <groupId>io.tracee</groupId>
         </dependency>
 
+		<!-- dependency for annotation processing at compile time -->
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-test</artifactId>
+		</dependency>
+
 		<!-- supported frameworks dependencies -->
         <dependency>
             <groupId>javax.ejb</groupId>
