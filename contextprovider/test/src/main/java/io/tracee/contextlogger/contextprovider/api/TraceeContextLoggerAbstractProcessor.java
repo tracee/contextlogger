@@ -62,7 +62,18 @@ public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProce
     }
 
     protected boolean isValidMethod(Element element) {
-        return isValidOfKind(element, ElementKind.METHOD);
+
+        // must not be abstract and must be public
+        if (!isValidOfKind(element, ElementKind.METHOD)) {
+            return false;
+        }
+
+        // must not be static
+        if (element.getModifiers().contains(Modifier.STATIC)) {
+            return false;
+        }
+
+        return true;
     }
 
     protected boolean isValidClass(Element element) {
@@ -83,11 +94,6 @@ public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProce
 
         // must not abstract
         if (element.getModifiers().contains(Modifier.ABSTRACT)) {
-            return false;
-        }
-
-        // must not be static
-        if (element.getModifiers().contains(Modifier.STATIC)) {
             return false;
         }
 

@@ -26,7 +26,7 @@ public class TraceeContextProviderProcessor extends TraceeContextLoggerAbstractP
         for (Element element : roundEnv.getElementsAnnotatedWith(TraceeContextProvider.class)) {
 
             if (!isValidClass(element)) {
-                error(element, "Class %s annotated with annotation %s must be public, not static and not abstract", element.getSimpleName(),
+                error(element, "Class %s annotated with annotation %s must be public and not abstract", element.getSimpleName(),
                         TraceeContextProvider.class.getSimpleName());
                 continue;
             }
