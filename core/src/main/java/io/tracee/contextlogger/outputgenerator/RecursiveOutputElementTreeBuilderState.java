@@ -1,12 +1,12 @@
 package io.tracee.contextlogger.outputgenerator;
 
 /**
- * Creates instance that holds the recursive state of the recusive output element tree creation.
+ * Creates instance that holds the recursive state of the recursive output element tree creation.
  * Used to limit depth of Output Element tree.
  */
 public class RecursiveOutputElementTreeBuilderState {
 
-    private static final int DEFAULT_MAX_DEPTH = 7;
+    private static final int DEFAULT_MAX_DEPTH = 10;
 
     private final int maxDepth;
     private final int currentDepth;

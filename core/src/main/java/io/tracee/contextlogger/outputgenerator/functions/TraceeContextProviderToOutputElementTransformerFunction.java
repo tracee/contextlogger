@@ -66,7 +66,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
                         // returnValue is single NameStringValuePair
                         final NameValuePair nameValuePair = (NameValuePair)returnValue;
-                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, nameValuePair.getName(),
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state, complexOutputElement, nameValuePair.getName(),
                                 nameValuePair.getValue());
 
                     }
@@ -77,14 +77,14 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
                         final List<NameValuePair> list = (List<NameValuePair>)returnValue;
 
                         for (NameValuePair nameValuePair : list) {
-                            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, nameValuePair.getName(),
+                            addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state, complexOutputElement, nameValuePair.getName(),
                                     nameValuePair.getValue());
                         }
 
                     }
                     else {
 
-                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state.next(), complexOutputElement, singleEntry.getAnnotation()
+                        addChildToComplexOutputElement(recursiveOutputElementTreeBuilder, state, complexOutputElement, singleEntry.getAnnotation()
                                 .displayName(), returnValue);
 
                     }
