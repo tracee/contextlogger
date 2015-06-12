@@ -59,6 +59,12 @@
 			<artifactId>contextprovider-api</artifactId>
 		</dependency>
 
+		<!-- dependency for annotation processing at compile time -->
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-test</artifactId>
+		</dependency>
+
 		<!-- supported framework dependencies-->
         <dependency>
             <groupId>org.aspectj</groupId>

@@ -1,0 +1,2 @@
+io.tracee.contextlogger.contextprovider.api.FlattenProcessor
+io.tracee.contextlogger.contextprovider.api.TraceeContextProviderProcessor

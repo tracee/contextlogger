@@ -64,6 +64,12 @@
             <artifactId>tracee-api</artifactId>
         </dependency>
 
+		<!-- dependency for annotation processing at compile time -->
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-test</artifactId>
+		</dependency>
+
         <!-- dependecies for unittests -->
         <dependency>
             <groupId>io.tracee.backend</groupId>

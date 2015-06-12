@@ -31,6 +31,12 @@
 			<artifactId>contextlogger-core</artifactId>
 		</dependency>
 
+		<!-- dependency for annotation processing at compile time -->
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-test</artifactId>
+		</dependency>
+
 
 		<!-- external provided dependencies -->
         <dependency>

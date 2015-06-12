@@ -23,17 +23,14 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
         this.cookie = cookie;
     }
 
-    @Override
     public void setContextData(Object instance) throws ClassCastException {
         this.cookie = (Cookie)instance;
     }
 
-    @Override
     public Cookie getContextData() {
         return this.cookie;
     }
 
-    @Override
     public Class<Cookie> getWrappedType() {
         return Cookie.class;
     }

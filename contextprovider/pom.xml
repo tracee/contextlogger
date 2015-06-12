@@ -26,5 +26,8 @@
 		<module>servlet</module>
 		<module>springmvc</module>
 
+		<!-- module for constraint checks of annotations -->
+		<module>test</module>
+
 	</modules>
 </project>
