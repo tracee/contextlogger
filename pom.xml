@@ -79,8 +79,7 @@
 		<powermock.version>1.6.2</powermock.version>
 
 		<!-- dependency versions -->
-		<tracee.version>0.10.0</tracee.version>
-		<slf4j.version>1.6.6</slf4j.version>
+		<slf4j.version>1.7.11</slf4j.version>
 		<log4j.version>1.2.4</log4j.version>
 		<log4j2.version>2.0.2</log4j2.version>
 		<logback.version>0.9.30</logback.version>
@@ -140,10 +139,10 @@
 									<includes>
 										<include>*:*:*:*:test:*</include>
 										<include>*:*:*:*:provided:*</include>
-										<include>io.tracee:*</include>
 										<include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.contextprovider:*</include>
 										<include>io.tracee.contextlogger.connector:*</include>
+										<include>org.slf4j:slf4j-api</include>
 									</includes>
 								</bannedDependencies>
 							</rules>
@@ -345,23 +344,11 @@
 				<scope>provided</scope>
 			</dependency>
 
-			<!-- Tracee Dependencies -->
+			<!-- log abstraction -->
 			<dependency>
-				<groupId>io.tracee</groupId>
-				<artifactId>tracee-api</artifactId>
-				<version>${tracee.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.tracee</groupId>
-				<artifactId>tracee-testhelper</artifactId>
-				<version>${tracee.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>io.tracee.backend</groupId>
-				<artifactId>tracee-slf4j</artifactId>
-				<version>${tracee.version}</version>
-				<scope>test</scope>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 
 
@@ -375,12 +362,6 @@
 
 
 			<!-- external provided dependencies -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-				<scope>provided</scope>
-			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>

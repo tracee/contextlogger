@@ -3,7 +3,10 @@ package io.tracee.contextlogger.connector.http;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,8 +22,6 @@ import com.ning.http.client.AsyncHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.ListenableFuture;
-
-import io.tracee.NoopTraceeLoggerFactory;
 import io.tracee.contextlogger.util.test.ConnectorOutputProviderBuilder;
 
 /**
@@ -41,7 +42,7 @@ public class HttpConnectorTest {
                 }
             }));
 
-    private final HttpConnector unit = new HttpConnector(new NoopTraceeLoggerFactory(), asyncHttpClientProvider);
+    private final HttpConnector unit = new HttpConnector(asyncHttpClientProvider);
 
     @Before
     public void setUp() throws IOException {

@@ -7,37 +7,25 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
-import io.tracee.TraceeLogger;
-import io.tracee.TraceeLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.api.internal.MessageLogLevel}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Tracee.class)
+@PrepareForTest(LoggerFactory.class)
 public class MessageLogLevelTest {
 
     private final static String LOG_MESSAGE = "log message";
 
-    private TraceeBackend traceeBackend = Mockito.mock(TraceeBackend.class);
-    private TraceeLoggerFactory traceeLoggerFactory = Mockito.mock(TraceeLoggerFactory.class);
-    private TraceeLogger traceeLogger = Mockito.mock(TraceeLogger.class);
+    private Logger logger = Mockito.mock(Logger.class);
 
     @Before
     public void init() {
 
-        PowerMockito.mockStatic(Tracee.class);
-
-        traceeBackend = Mockito.mock(TraceeBackend.class);
-        traceeLoggerFactory = Mockito.mock(TraceeLoggerFactory.class);
-        traceeLogger = Mockito.mock(TraceeLogger.class);
-
-        PowerMockito.when(Tracee.getBackend()).thenReturn(traceeBackend);
-        Mockito.when(traceeBackend.getLoggerFactory()).thenReturn(traceeLoggerFactory);
-        Mockito.when(traceeLoggerFactory.getLogger(Mockito.any(Class.class))).thenReturn(traceeLogger);
+        PowerMockito.mockStatic(LoggerFactory.class);
+        PowerMockito.when(LoggerFactory.getLogger(Mockito.any(Class.class))).thenReturn(logger);
 
     }
 
@@ -45,7 +33,7 @@ public class MessageLogLevelTest {
     public void shouldLogWithDebugLevel() {
 
         MessageLogLevel.DEBUG.writeLogMessage(LOG_MESSAGE);
-        Mockito.verify(traceeLogger).debug(LOG_MESSAGE);
+        Mockito.verify(logger).debug(LOG_MESSAGE);
 
     }
 
@@ -53,7 +41,7 @@ public class MessageLogLevelTest {
     public void shouldLogWithWarnLevel() {
 
         MessageLogLevel.WARNING.writeLogMessage(LOG_MESSAGE);
-        Mockito.verify(traceeLogger).warn(LOG_MESSAGE);
+        Mockito.verify(logger).warn(LOG_MESSAGE);
 
     }
 
@@ -61,7 +49,7 @@ public class MessageLogLevelTest {
     public void shouldLogWithInfoLevel() {
 
         MessageLogLevel.INFO.writeLogMessage(LOG_MESSAGE);
-        Mockito.verify(traceeLogger).info(LOG_MESSAGE);
+        Mockito.verify(logger).info(LOG_MESSAGE);
 
     }
 
@@ -69,17 +57,18 @@ public class MessageLogLevelTest {
     public void shouldLogWithErrorLevel() {
 
         MessageLogLevel.ERROR.writeLogMessage(LOG_MESSAGE);
-        Mockito.verify(traceeLogger).error(LOG_MESSAGE);
+        Mockito.verify(logger).error(LOG_MESSAGE);
 
     }
 
     @Test
     public void shouldUsePassedClassForLogging() {
 
-        MessageLogLevel.DEBUG.writeLogMessage(MessageLogLevelTest.class, LOG_MESSAGE);
+        PowerMockito.when(LoggerFactory.getLogger(MessageLogLevelTest.class)).thenReturn(logger);
 
-        Mockito.verify(traceeLoggerFactory).getLogger(MessageLogLevelTest.class);
-        Mockito.verify(traceeLogger).debug(LOG_MESSAGE);
+		MessageLogLevel.DEBUG.writeLogMessage(this.getClass(), LOG_MESSAGE);
+
+        Mockito.verify(logger).debug(LOG_MESSAGE);
 
     }
 

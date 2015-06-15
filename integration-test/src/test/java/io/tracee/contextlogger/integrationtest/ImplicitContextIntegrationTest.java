@@ -25,6 +25,7 @@ public class ImplicitContextIntegrationTest {
 
     @Test
     public void shouldOutputSingleEmptyImplicitContextCorrectly() {
+
         String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
                 .enforceProfile(Profile.BASIC).apply().toString(ImplicitContext.TRACEE);
 

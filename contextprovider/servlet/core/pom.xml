@@ -35,11 +35,6 @@
 
 		<!-- unit test dependencies -->
 		<dependency>
-			<groupId>io.tracee</groupId>
-			<artifactId>tracee-testhelper</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
 		</dependency>

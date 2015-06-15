@@ -1,12 +1,13 @@
 package io.tracee.contextlogger.profile;
 
-import io.tracee.Tracee;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
@@ -20,6 +21,8 @@ public enum Profile {
 
     private final String resourceFileName;
     private final String externalResourceFileName;
+
+    private static final Logger logger = LoggerFactory.getLogger(Profile.class);
 
     private Profile(final String resourceFileName, final String externalResourceFileName) {
         this.resourceFileName = resourceFileName;
@@ -43,7 +46,8 @@ public enum Profile {
             if (externalProperties != null) {
                 properties.add(externalProperties);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // ignore
         }
 
@@ -54,7 +58,6 @@ public enum Profile {
 
         return properties;
     }
-
 
     /**
      * Gets the current profile.
@@ -103,16 +106,15 @@ public enum Profile {
         // try to get system property
         String systemPropertyProfileName = System.getProperty(ProfilePropertyNames.PROFILE_SET_GLOBALLY_VIA_SYSTEM_PROPERTIES);
 
-
         if (systemPropertyProfileName != null) {
 
             // try to convert String to enum value
             try {
                 result = Profile.valueOf(systemPropertyProfileName);
-            } catch (IllegalArgumentException e) {
-                Tracee.getBackend().getLoggerFactory().getLogger(Profile.class).warn("Tracee ContextLoggerBuilder profile property ('"
-                        + ProfilePropertyNames.PROFILE_SET_GLOBALLY_VIA_SYSTEM_PROPERTIES + "') is set to the invalid value '"
-                        + systemPropertyProfileName + "' ==> Use default profile");
+            }
+            catch (IllegalArgumentException e) {
+                logger.warn("Tracee ContextLoggerBuilder profile property ('" + ProfilePropertyNames.PROFILE_SET_GLOBALLY_VIA_SYSTEM_PROPERTIES
+                        + "') is set to the invalid value '" + systemPropertyProfileName + "' ==> Use default profile");
             }
         }
 
@@ -136,17 +138,16 @@ public enum Profile {
                     // try to convert String to enum value
                     try {
                         result = Profile.valueOf(profileFromProperties);
-                    } catch (IllegalArgumentException e) {
-                        Tracee.getBackend().getLoggerFactory().getLogger(Profile.class).warn(
-                                "Tracee custom ContextLoggerBuilder profile property ('"
-                                        + ProfilePropertyNames.PROFILE_SET_BY_FILE_IN_CLASSPATH_PROPERTY
-                                        + "') is set to the invalid value '"
-                                        + profileFromProperties + "' and will be ignored"
-                        );
+                    }
+                    catch (IllegalArgumentException e) {
+                        logger.warn("Tracee custom ContextLoggerBuilder profile property ('"
+                                + ProfilePropertyNames.PROFILE_SET_BY_FILE_IN_CLASSPATH_PROPERTY + "') is set to the invalid value '"
+                                + profileFromProperties + "' and will be ignored");
                     }
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // ignore it
         }
 
@@ -168,7 +169,8 @@ public enum Profile {
             if (properties != null && properties.size() > 0) {
                 result = true;
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // ignore
         }
 
@@ -197,16 +199,17 @@ public enum Profile {
                 Properties properties = new Properties();
                 properties.load(inputStream);
                 return properties;
-            } else {
+            }
+            else {
                 // file doesn't exist
                 return null;
             }
-        } finally {
+        }
+        finally {
             if (inputStream != null) {
                 inputStream.close();
             }
         }
     }
-
 
 }

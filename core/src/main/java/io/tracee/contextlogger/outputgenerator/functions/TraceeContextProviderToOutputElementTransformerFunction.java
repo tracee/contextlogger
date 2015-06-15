@@ -3,8 +3,9 @@ package io.tracee.contextlogger.outputgenerator.functions;
 import java.util.Collections;
 import java.util.List;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
@@ -24,8 +25,7 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
 
     private static final TraceeContextProviderToOutputElementTransformerFunction instance = new TraceeContextProviderToOutputElementTransformerFunction();
 
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory()
-            .getLogger(TraceeContextProviderToOutputElementTransformerFunction.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraceeContextProviderToOutputElementTransformerFunction.class);
 
     public static TraceeContextProviderToOutputElementTransformerFunction getInstance() {
         return instance;

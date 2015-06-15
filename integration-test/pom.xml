@@ -26,29 +26,25 @@
 	</build>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
 			<artifactId>contextprovider-api</artifactId>
 		</dependency>
+
         <dependency>
             <groupId>io.tracee.contextlogger</groupId>
             <artifactId>contextlogger-core</artifactId>
         </dependency>
+
 		<dependency>
 			<groupId>io.tracee.contextlogger</groupId>
 			<artifactId>testhelper</artifactId>
 		</dependency>
 
-        <!-- dependecies for unittests -->
-        <dependency>
-            <groupId>io.tracee.backend</groupId>
-            <artifactId>tracee-slf4j</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

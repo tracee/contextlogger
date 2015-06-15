@@ -2,7 +2,10 @@ package io.tracee.contextlogger.contextprovider.servlet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import java.io.IOException;
@@ -20,7 +23,6 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import io.tracee.TraceeException;
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ConfigBuilder;
@@ -62,9 +64,9 @@ public class TraceeErrorLoggingFilterTest {
         verify(filterChain).doFilter(request, response);
     }
 
-    @Test(expected = TraceeException.class)
+    @Test(expected = ServletException.class)
     public void logWholeContextOnException() throws Exception {
-        final TraceeException expectedException = new TraceeException("test");
+        final ServletException expectedException = new ServletException("test");
         try {
             doThrow(expectedException).when(filterChain).doFilter(request, response);
             unit.doFilter(request, response, filterChain);
@@ -76,15 +78,15 @@ public class TraceeErrorLoggingFilterTest {
         }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ServletException.class)
     public void rethrowRuntimeException() throws Exception {
         final RuntimeException expectedException = new RuntimeException();
         try {
             doThrow(expectedException).when(filterChain).doFilter(request, response);
             unit.doFilter(request, response, filterChain);
         }
-        catch (RuntimeException e) {
-            assertThat(e, sameInstance(expectedException));
+        catch (ServletException e) {
+            assertThat(e.getRootCause(), sameInstance((Throwable)expectedException));
             throw e;
         }
     }

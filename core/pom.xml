@@ -31,10 +31,10 @@
                                     <includes>
                                         <include>*:*:*:*:test:*</include>
                                         <include>*:*:*:*:provided:*</include>
-                                        <include>io.tracee:*</include>
                                         <include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.connector:*</include>
 										<include>io.tracee.contextlogger.contextprovider:*</include>
+										<include>org.slf4j:slf4j-api</include>
                                     </includes>
                                 </bannedDependencies>
                             </rules>
@@ -59,11 +59,6 @@
             <artifactId>contextprovider-api</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>io.tracee</groupId>
-            <artifactId>tracee-api</artifactId>
-        </dependency>
-
 		<!-- dependency for annotation processing at compile time -->
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
@@ -72,14 +67,8 @@
 
         <!-- dependecies for unittests -->
         <dependency>
-            <groupId>io.tracee.backend</groupId>
-            <artifactId>tracee-slf4j</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-			<scope>test</scope>
         </dependency>
 
         <dependency>

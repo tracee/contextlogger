@@ -2,8 +2,6 @@ package io.tracee.contextlogger.outputgenerator.functions;
 
 import java.util.Collection;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
@@ -16,8 +14,6 @@ import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 public class CollectionToOutputElementTransformerFunction implements ToOutputElementTransformerFunction<Collection> {
 
     private static final CollectionToOutputElementTransformerFunction instance = new CollectionToOutputElementTransformerFunction();
-
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(CollectionToOutputElementTransformerFunction.class);
 
     public static CollectionToOutputElementTransformerFunction getInstance() {
         return instance;

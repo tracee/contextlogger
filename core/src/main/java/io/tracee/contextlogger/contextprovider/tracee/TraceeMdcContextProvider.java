@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
+import org.slf4j.MDC;
+
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.Order;
@@ -22,10 +22,8 @@ import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
 @TraceeContextProvider(displayName = "tracee", order = Order.TRACEE)
 public final class TraceeMdcContextProvider implements ImplicitContextData {
 
-    private final TraceeBackend traceeBackend;
-
     public TraceeMdcContextProvider() {
-        this.traceeBackend = Tracee.getBackend();
+
     }
 
     @Override
@@ -40,9 +38,11 @@ public final class TraceeMdcContextProvider implements ImplicitContextData {
 
         final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
-        final Map<String, String> keys = traceeBackend.copyToMap();
-        for (Map.Entry<String, String> entry : keys.entrySet()) {
-            list.add(new NameValuePair<String>(entry.getKey(), entry.getValue()));
+        final Map<String, String> keys = MDC.getCopyOfContextMap();
+        if (keys != null) {
+            for (Map.Entry<String, String> entry : keys.entrySet()) {
+                list.add(new NameValuePair<String>(entry.getKey(), entry.getValue()));
+            }
         }
         return !list.isEmpty() ? list : null;
     }

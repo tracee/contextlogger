@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.api.internal;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Enum for defining log level for log output.
@@ -11,28 +11,28 @@ public enum MessageLogLevel {
     ERROR() {
 
         @Override
-        public void log(final TraceeLogger logger, final String logMessage) {
+        public void log(final Logger logger, final String logMessage) {
             logger.error(logMessage);
         }
     },
     WARNING() {
 
         @Override
-        public void log(final TraceeLogger logger, final String logMessage) {
+        public void log(final Logger logger, final String logMessage) {
             logger.warn(logMessage);
         }
     },
     INFO() {
 
         @Override
-        public void log(final TraceeLogger logger, final String logMessage) {
+        public void log(final Logger logger, final String logMessage) {
             logger.info(logMessage);
         }
     },
     DEBUG() {
 
         @Override
-        public void log(final TraceeLogger logger, final String logMessage) {
+        public void log(final Logger logger, final String logMessage) {
             logger.debug(logMessage);
         }
     };
@@ -57,7 +57,7 @@ public enum MessageLogLevel {
      * @param logMessage the log message to write
      */
     public void writeLogMessage(final Class clazz, final String logMessage) {
-        TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(clazz);
+        Logger logger = LoggerFactory.getLogger(clazz);
         this.log(logger, logMessage);
     }
 
@@ -67,6 +67,6 @@ public enum MessageLogLevel {
      * @param logger the TraceeLogger to use
      * @param logMessage the log message to write
      */
-    public abstract void log(TraceeLogger logger, final String logMessage);
+    public abstract void log(Logger logger, final String logMessage);
 
 }

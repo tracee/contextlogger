@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.contextprovider.jaxws;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
 
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
@@ -11,20 +11,15 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import io.tracee.NoopTraceeLoggerFactory;
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
 import io.tracee.contextlogger.TraceeContextLogger;
 
 /**
  * Test class for {@link TraceeClientErrorLoggingHandler}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ TraceeContextLogger.class, Tracee.class })
+@PrepareForTest({ TraceeContextLogger.class })
 public class TraceeClientErrorLoggingHandlerTest {
 
-    private final TraceeBackend mockedBackend = mock(TraceeBackend.class);
-    private NoopTraceeLoggerFactory loggerFactory = spy(NoopTraceeLoggerFactory.INSTANCE);
     private TraceeContextLogger contextLogger;
     private TraceeClientErrorLoggingHandler unit;
 
@@ -34,10 +29,9 @@ public class TraceeClientErrorLoggingHandlerTest {
     @Before
     public void setup() {
 
-        when(mockedBackend.getLoggerFactory()).thenReturn(loggerFactory);
-        unit = new TraceeClientErrorLoggingHandler(mockedBackend);
         AbstractTraceeErrorLoggingHandler.THREAD_LOCAL_SOAP_MESSAGE_STR.remove();
 
+        unit = new TraceeClientErrorLoggingHandler();
         contextMock = Mockito.mock(SOAPMessageContext.class);
         handlerSpy = Mockito.spy(unit);
 

@@ -4,9 +4,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
@@ -25,6 +25,8 @@ import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
 
 @Aspect
 public class WatchdogAspect {
+
+    private static final Logger logger = LoggerFactory.getLogger(WatchdogAspect.class);
 
     private final boolean active;
 
@@ -65,9 +67,6 @@ public class WatchdogAspect {
             // check if watchdog processing is flagged as active
             if (active) {
 
-                // Now create toJson output
-                final TraceeBackend traceeBackend = Tracee.getBackend();
-
                 // make sure that original exception will be passed through
                 try {
 
@@ -78,14 +77,14 @@ public class WatchdogAspect {
                     if (WatchdogUtils.checkProcessWatchdog(watchdog, proceedingJoinPoint, e)) {
 
                         String annotatedId = watchdog.id().isEmpty() ? null : watchdog.id();
-                        sendErrorReportToConnectors(traceeBackend, proceedingJoinPoint, annotatedId, e);
+                        sendErrorReportToConnectors(proceedingJoinPoint, annotatedId, e);
 
                     }
 
                 }
                 catch (Throwable error) {
                     // will be ignored
-                    traceeBackend.getLoggerFactory().getLogger(WatchdogAspect.class).error("error", error);
+                    logger.error("error", error);
                 }
             }
             // rethrow exception
@@ -97,11 +96,10 @@ public class WatchdogAspect {
     /**
      * Sends the error reports to all connectors.
      *
-     * @param traceeBackend the tracee backend
      * @param proceedingJoinPoint the aspectj calling context
      * @param annotatedId the id defined in the watchdog annotation
      */
-    void sendErrorReportToConnectors(TraceeBackend traceeBackend, ProceedingJoinPoint proceedingJoinPoint, String annotatedId, Throwable e) {
+    void sendErrorReportToConnectors(ProceedingJoinPoint proceedingJoinPoint, String annotatedId, Throwable e) {
 
         // try to get error message annotation
         ErrorMessage errorMessage = WatchdogUtils.getErrorMessageAnnotation(proceedingJoinPoint);

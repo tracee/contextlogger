@@ -25,10 +25,7 @@
             <artifactId>contextlogger-core</artifactId>
         </dependency>
 
-        <dependency>
-            <artifactId>tracee-api</artifactId>
-            <groupId>io.tracee</groupId>
-        </dependency>
+
 
 		<!-- dependency for annotation processing at compile time -->
 		<dependency>
@@ -48,11 +45,6 @@
         </dependency>
 
 		<!-- unit test dependencies-->
-		<dependency>
-			<groupId>io.tracee</groupId>
-			<artifactId>tracee-testhelper</artifactId>
-		</dependency>
-
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>

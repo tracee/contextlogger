@@ -45,11 +45,6 @@
 
 		<!-- unit test dependencies -->
 		<dependency>
-			<groupId>io.tracee</groupId>
-			<artifactId>tracee-testhelper</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>io.tracee.contextlogger.connector</groupId>
 			<artifactId>connector-api</artifactId>
 			<scope>provided</scope>

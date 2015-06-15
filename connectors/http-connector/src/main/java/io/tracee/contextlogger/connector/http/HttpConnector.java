@@ -3,13 +3,18 @@ package io.tracee.contextlogger.connector.http;
 import java.io.IOException;
 import java.util.Map;
 
-import com.ning.http.client.*;
-import com.ning.http.client.AsyncHttpClientConfig.Builder;
-import com.ning.http.client.Realm.AuthScheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
-import io.tracee.TraceeLoggerFactory;
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.AsyncHttpClientConfig;
+import com.ning.http.client.AsyncHttpClientConfig.Builder;
+import com.ning.http.client.ProxyServer;
+import com.ning.http.client.Realm;
+import com.ning.http.client.Realm.AuthScheme;
+import com.ning.http.client.Response;
+
 import io.tracee.contextlogger.connector.Connector;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 
@@ -31,16 +36,15 @@ public class HttpConnector implements Connector {
     public static final int DEFAULT_REQUEST_TIMEOUT = 10000;
     public static final int DEFAULT_REQUEST_IDLE_TIMEOUT = 500;
 
-    private final TraceeLogger logger;
+    private final static Logger logger = LoggerFactory.getLogger(HttpConnector.class);
     private final AsyncHttpClientProvider asyncHttpClientProvider;
 
     public HttpConnector() {
-        this(Tracee.getBackend().getLoggerFactory(), new SimpleAsyncHttpProvider());
+        this(new SimpleAsyncHttpProvider());
     }
 
-    HttpConnector(TraceeLoggerFactory loggerFactory, AsyncHttpClientProvider asyncHttpClientProvider) {
+    HttpConnector(AsyncHttpClientProvider asyncHttpClientProvider) {
         this.asyncHttpClientProvider = asyncHttpClientProvider;
-        logger = loggerFactory.getLogger(HttpConnector.class);
     }
 
     private String url;

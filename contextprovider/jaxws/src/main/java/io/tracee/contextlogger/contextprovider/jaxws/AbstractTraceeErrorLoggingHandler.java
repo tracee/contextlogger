@@ -10,9 +10,9 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
-import io.tracee.TraceeLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ImplicitContext;
@@ -24,27 +24,14 @@ import io.tracee.contextlogger.contextprovider.jaxws.contextprovider.JaxWsWrappe
  */
 public abstract class AbstractTraceeErrorLoggingHandler implements SOAPHandler<SOAPMessageContext> {
 
-    protected final TraceeBackend traceeBackend;
-
-    private final TraceeLogger logger;
+    private static final Logger logger = LoggerFactory.getLogger(AbstractTraceeErrorLoggingHandler.class);
 
     protected static final ThreadLocal<String> THREAD_LOCAL_SOAP_MESSAGE_STR = new ThreadLocal<String>();
 
     /**
      * The constructor.
-     *
-     * @param traceeBackend the tracee backend to use
      */
-    AbstractTraceeErrorLoggingHandler(TraceeBackend traceeBackend) {
-        this.traceeBackend = traceeBackend;
-        logger = traceeBackend.getLoggerFactory().getLogger(AbstractTraceeErrorLoggingHandler.class);
-    }
-
-    /**
-     * No-Arg Constructor
-     */
-    public AbstractTraceeErrorLoggingHandler() {
-        this(Tracee.getBackend());
+    AbstractTraceeErrorLoggingHandler() {
     }
 
     @Override
