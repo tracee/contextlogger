@@ -1,11 +1,17 @@
 package io.tracee.contextlogger;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.tracee.contextlogger.connector.Connector;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 import io.tracee.contextlogger.connector.LogConnector;
@@ -21,7 +27,7 @@ class ConnectorFactory {
     private static final Pattern KEY_MATCHER_PATTERN = Pattern.compile(TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONTEXT_LOGGER_CONNECTOR_KEY_PATTERN);
     private static final String CONNECTOR_PROPERTY_GRABBER_PATTERN = TraceeContextLoggerConstants.SYSTEM_PROPERTY_CONNECTOR_PREFIX.replaceAll("\\.", "\\.")
             + "%s\\.(.*)";
-    private static final TraceeLogger LOGGER = Tracee.getBackend().getLoggerFactory().getLogger(TraceeContextLogger.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TraceeContextLogger.class);
     private static final Map<String, String> WELL_KNOW_CONNECTOR_MAPPINGS = new HashMap<String, String>();
 
     static {

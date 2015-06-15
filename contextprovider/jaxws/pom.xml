@@ -15,12 +15,6 @@
 
     <dependencies>
 
-		<!-- tracee dependencies -->
-        <dependency>
-            <artifactId>tracee-api</artifactId>
-            <groupId>io.tracee</groupId>
-        </dependency>
-
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
 			<artifactId>contextprovider-api</artifactId>
@@ -45,16 +39,10 @@
         </dependency>
 
 
-		<!-- unit test dependencies -->
-		<dependency>
-			<groupId>io.tracee.backend</groupId>
-			<artifactId>tracee-slf4j</artifactId>
-		</dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -62,10 +50,6 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
 
-		<dependency>
-			<groupId>io.tracee</groupId>
-			<artifactId>tracee-testhelper</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.powermock</groupId>

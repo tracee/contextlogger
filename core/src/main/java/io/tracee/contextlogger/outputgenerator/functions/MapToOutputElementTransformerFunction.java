@@ -2,10 +2,8 @@ package io.tracee.contextlogger.outputgenerator.functions;
 
 import java.util.Map;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
@@ -16,8 +14,6 @@ import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 public class MapToOutputElementTransformerFunction extends ToComplexOutputElementTransformerFunction<Map> {
 
     private static final MapToOutputElementTransformerFunction instance = new MapToOutputElementTransformerFunction();
-
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(MapToOutputElementTransformerFunction.class);
 
     public static MapToOutputElementTransformerFunction getInstance() {
         return instance;

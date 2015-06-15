@@ -1,15 +1,16 @@
 package io.tracee.contextlogger.contextprovider.jaxws;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A client handler resolver that provides the {@link TraceeClientErrorLoggingHandler}.
@@ -17,20 +18,18 @@ import java.util.List;
  */
 public class TraceeClientHandlerResolver implements HandlerResolver, TraceeClientHandlerResolverBuilder {
 
-    private final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(
-            TraceeClientHandlerResolver.class);
+    private final Logger logger = LoggerFactory.getLogger(TraceeClientHandlerResolver.class);
 
     private final List<Handler> handlerList = new ArrayList<Handler>();
 
     public TraceeClientHandlerResolver() {
-        //handlerList.add(new ClientHandler();
+        // handlerList.add(new ClientHandler();
     }
 
     @Override
     public final List<Handler> getHandlerChain(final PortInfo portInfo) {
         return handlerList;
     }
-
 
     @Override
     public HandlerResolver build() {
@@ -55,7 +54,8 @@ public class TraceeClientHandlerResolver implements HandlerResolver, TraceeClien
             try {
                 SOAPHandler<SOAPMessageContext> handler = handlerType.newInstance();
                 this.handlerList.add(handler);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 logger.error("HandlerResolver of type '" + handlerType.getCanonicalName() + "' couldn't be added to HandlerResolver", e);
             }
         }

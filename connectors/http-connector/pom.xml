@@ -34,6 +34,7 @@
                                         <include>io.tracee:*</include>
                                         <include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.connector:*</include>
+										<include>org.slf4j:slf4j-api</include>
                                         <include>com.ning:async-http-client</include>
                                     </includes>
                                 </bannedDependencies>
@@ -49,11 +50,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>io.tracee</groupId>
-            <artifactId>tracee-api</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>io.tracee.contextlogger.connector</groupId>
             <artifactId>connector-api</artifactId>
         </dependency>
@@ -64,26 +60,16 @@
             <version>1.8.2</version>
         </dependency>
 
-        <!-- dependecies for unittests -->
-        <dependency>
-            <groupId>io.tracee.backend</groupId>
-            <artifactId>tracee-slf4j</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-		<dependency>
-			<groupId>io.tracee</groupId>
-			<artifactId>tracee-testhelper</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>io.tracee.contextlogger</groupId>
 			<artifactId>testhelper</artifactId>

@@ -3,8 +3,6 @@ package io.tracee.contextlogger.outputgenerator.functions;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
@@ -19,8 +17,6 @@ import io.tracee.contextlogger.utility.GetterUtilities;
 public class BeanToOutputElementTransformerFunction extends ToComplexOutputElementTransformerFunction<Object> {
 
     private static final BeanToOutputElementTransformerFunction instance = new BeanToOutputElementTransformerFunction();
-
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(BeanToOutputElementTransformerFunction.class);
 
     public static BeanToOutputElementTransformerFunction getInstance() {
         return instance;

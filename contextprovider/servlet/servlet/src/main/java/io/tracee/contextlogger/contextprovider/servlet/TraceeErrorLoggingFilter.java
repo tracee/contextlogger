@@ -2,7 +2,12 @@ package io.tracee.contextlogger.contextprovider.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,24 +34,26 @@ public class TraceeErrorLoggingFilter implements Filter {
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         }
-        catch (Exception e) {
+        catch (Throwable e) {
+
             if (servletRequest instanceof HttpServletRequest) {
                 handleHttpServletRequest((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse, e);
             }
 
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException)e;
-            }
-            else if (e instanceof ServletException) {
-                throw (ServletException)e;
-            }
-            else if (e instanceof IOException) {
+            // now rethrow error
+            if (e instanceof IOException) {
                 throw (IOException)e;
             }
+            if (e instanceof ServletException) {
+                throw (ServletException)e;
+            }
+
+            // wrap all other kinds of exceptions ...
+            throw new ServletException(e);
         }
     }
 
-    private void handleHttpServletRequest(HttpServletRequest servletRequest, HttpServletResponse servletResponse, Exception e) {
+    private void handleHttpServletRequest(HttpServletRequest servletRequest, HttpServletResponse servletResponse, Throwable e) {
 
         TraceeContextLogger
                 .create()

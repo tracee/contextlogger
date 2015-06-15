@@ -1,9 +1,7 @@
 package io.tracee.contextlogger.outputgenerator.functions;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
@@ -14,8 +12,6 @@ import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 public class AtomicToOutputElementTransformerFunction implements ToOutputElementTransformerFunction<Object> {
 
     private static final AtomicToOutputElementTransformerFunction instance = new AtomicToOutputElementTransformerFunction();
-
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(AtomicToOutputElementTransformerFunction.class);
 
     public static AtomicToOutputElementTransformerFunction getInstance() {
         return instance;

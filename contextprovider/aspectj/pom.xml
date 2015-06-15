@@ -31,9 +31,9 @@
 									<includes>
 										<include>*:*:*:*:test:*</include>
 										<include>*:*:*:*:provided:*</include>
-										<include>io.tracee:*</include>
-                                        <include>io.tracee.contextlogger:*</include>
+										<include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.contextprovider:*</include>
+										<include>org.slf4j:slf4j-api</include>
                                         <include>org.aspectj:*</include>
 									</includes>
 								</bannedDependencies>
@@ -78,17 +78,9 @@
             <version>${aspectj.version}</version>
         </dependency>
 
-
-        <!-- dependecies for unittests -->
-        <dependency>
-            <groupId>io.tracee.backend</groupId>
-            <artifactId>tracee-slf4j</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

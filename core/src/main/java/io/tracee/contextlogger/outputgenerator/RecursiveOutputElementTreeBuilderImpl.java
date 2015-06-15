@@ -3,10 +3,17 @@ package io.tracee.contextlogger.outputgenerator;
 import java.util.Collection;
 import java.util.Map;
 
-import io.tracee.Tracee;
-import io.tracee.TraceeLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
-import io.tracee.contextlogger.outputgenerator.functions.*;
+import io.tracee.contextlogger.outputgenerator.functions.ArrayToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.AtomicToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.BeanToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.CollectionToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.MapToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.TraceeContextProviderToOutputElementTransformerFunction;
+import io.tracee.contextlogger.outputgenerator.functions.TraceeContextProviderWrapperFunction;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.predicates.IsBeanTypePredicate;
@@ -20,7 +27,7 @@ import io.tracee.contextlogger.profile.ProfileSettings;
  */
 public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputElementTreeBuilder {
 
-    private static final TraceeLogger logger = Tracee.getBackend().getLoggerFactory().getLogger(RecursiveOutputElementTreeBuilderImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecursiveOutputElementTreeBuilderImpl.class);
 
     private final InstanceToOutputElementPool instanceToOutputElementPool;
     private final ContextLoggerConfiguration contextLoggerConfiguration;

@@ -1,8 +1,18 @@
 package io.tracee.contextlogger.contextprovider.jaxws;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
@@ -25,9 +35,6 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import io.tracee.NoopTraceeLoggerFactory;
-import io.tracee.Tracee;
-import io.tracee.TraceeBackend;
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ConfigBuilder;
@@ -40,14 +47,10 @@ import io.tracee.contextlogger.contextprovider.jaxws.contextprovider.JaxWsWrappe
  * Test class for {@link AbstractTraceeErrorLoggingHandler} and {@link TraceeServerErrorLoggingHandler}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ TraceeContextLogger.class, Tracee.class, MessagePrefixProvider.class })
+@PrepareForTest({ TraceeContextLogger.class, MessagePrefixProvider.class })
 public class TraceeServerErrorLoggingHandlerTest {
 
     private final static String LOG_MESSAGE_PREFIX = "XX";
-
-    private final TraceeBackend mockedBackend = mock(TraceeBackend.class);
-
-    private NoopTraceeLoggerFactory loggerFactory = spy(NoopTraceeLoggerFactory.INSTANCE);
 
     private TraceeServerErrorLoggingHandler unit;
     private TraceeContextLogger contextLogger;
@@ -55,8 +58,7 @@ public class TraceeServerErrorLoggingHandlerTest {
 
     @Before
     public void setup() {
-        when(mockedBackend.getLoggerFactory()).thenReturn(loggerFactory);
-        unit = new TraceeServerErrorLoggingHandler(mockedBackend);
+        unit = new TraceeServerErrorLoggingHandler();
         THREAD_LOCAL_SOAP_MESSAGE_STR.remove();
 
         // Stuff for TraceeServerErrorLoggingHandler.handleFault()
@@ -74,12 +76,9 @@ public class TraceeServerErrorLoggingHandlerTest {
 
     @Test
     public void defaultConstructorShouldUseTraceeBackend() {
-        mockStatic(Tracee.class);
-        when(Tracee.getBackend()).thenReturn(mockedBackend);
         new TraceeServerErrorLoggingHandler();
         // Verification of call Tracee.getBackend:
         verifyStatic();
-        Tracee.getBackend();
     }
 
     @Test
@@ -173,7 +172,7 @@ public class TraceeServerErrorLoggingHandlerTest {
     @Test
     public void outgoingMessageShouldNotBeProcessed() {
         final SOAPMessageContext messageContext = mock(SOAPMessageContext.class);
-        verifyNoMoreInteractions(messageContext, loggerFactory);
+        verifyNoMoreInteractions(messageContext);
         unit.handleOutgoing(messageContext);
         assertThat(THREAD_LOCAL_SOAP_MESSAGE_STR.get(), is(nullValue()));
     }

@@ -11,7 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import io.tracee.Tracee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.tracee.contextlogger.TraceeContextLoggerConstants;
 import io.tracee.contextlogger.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
@@ -27,6 +29,7 @@ public final class TypeToWrapper {
             TraceeContextLoggerConstants.WRAPPER_CONTEXT_PROVIDER_CUSTOM_RESOURCE_URL));
 
     private static List<TypeToWrapper> typeToWrapperList;
+    private static final Logger logger = LoggerFactory.getLogger(TypeToWrapper.class);
 
     private final Class wrappedInstanceType;
     private final Class wrapperType;
@@ -231,10 +234,10 @@ public final class TypeToWrapper {
     }
 
     private static void logError(final String message, final Throwable e) {
-        Tracee.getBackend().getLoggerFactory().getLogger(TypeToWrapper.class).error(message, e);
+        logger.error(message, e);
     }
 
     private static void logWarn(final String message) {
-        Tracee.getBackend().getLoggerFactory().getLogger(TypeToWrapper.class).warn(message);
+        logger.warn(message);
     }
 }
