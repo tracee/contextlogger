@@ -3,7 +3,6 @@ package io.tracee.contextlogger.impl;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.tracee.contextlogger.api.ImplicitContext;
@@ -57,7 +56,6 @@ public class ContextLoggerConfigurationTest {
     }
 
     @Test
-    @Ignore
     public void should_get_profile_of_context_logger_configuration() {
 
         ContextLoggerConfiguration contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();

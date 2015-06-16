@@ -62,7 +62,7 @@
 		<!-- dependency for annotation processing at compile time -->
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
-			<artifactId>contextprovider-test</artifactId>
+			<artifactId>contextprovider-annotationprocessor</artifactId>
 		</dependency>
 
         <!-- dependecies for unittests -->

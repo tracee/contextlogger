@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.tracee;
 
 /**
- * Created by TGI on 16.10.2014.
+ * Class used to provide custom message at context logger output.
  */
 public class TraceeMessage {
 
