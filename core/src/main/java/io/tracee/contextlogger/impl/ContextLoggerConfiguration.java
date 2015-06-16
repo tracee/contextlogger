@@ -1,16 +1,15 @@
 package io.tracee.contextlogger.impl;
 
-import io.tracee.contextlogger.contextprovider.api.CustomImplicitContextData;
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.api.ImplicitContextData;
-import io.tracee.contextlogger.contextprovider.TypeToWrapper;
-import io.tracee.contextlogger.profile.Profile;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.api.ImplicitContextData;
+import io.tracee.contextlogger.contextprovider.TypeToWrapper;
+import io.tracee.contextlogger.profile.Profile;
 
 /**
  * A Singleton that holds the static configuration data.
@@ -25,7 +24,6 @@ public class ContextLoggerConfiguration {
     private final List<TypeToWrapper> wrapperList;
     private final Set<Class> wrapperClasses;
     private final Profile profile;
-
 
     /**
      * Does the initialization stuff like Creating the lookup map and bind the wrapper classes.
@@ -44,13 +42,9 @@ public class ContextLoggerConfiguration {
         Set<Class> tmpWrapperClasses = TypeToWrapper.findWrapperClasses();
         Set<ImplicitContextData> implicitContextWrapperClasses = TypeToWrapper.getImplicitContextDataProviders();
         for (ImplicitContextData instance : implicitContextWrapperClasses) {
-            tmpImplicitContextClassMap.put(instance.getImplicitContext(), instance.getClass());
-            tmpWrapperClasses.add(instance.getClass());
-        }
-
-        // must register custom data provider classes
-        Set<CustomImplicitContextData> customImplicitContextDataProviderClasses = TypeToWrapper.getCustomImplicitDataProviders();
-        for (CustomImplicitContextData instance : customImplicitContextDataProviderClasses) {
+            if (instance.getImplicitContext() != null) {
+                tmpImplicitContextClassMap.put(instance.getImplicitContext(), instance.getClass());
+            }
             tmpWrapperClasses.add(instance.getClass());
         }
 
@@ -62,7 +56,6 @@ public class ContextLoggerConfiguration {
 
         profile = Profile.getCurrentProfile();
     }
-
 
     public static ContextLoggerConfiguration getOrCreateContextLoggerConfiguration() {
         if (contextLoggerConfiguration == null) {
@@ -110,6 +103,5 @@ public class ContextLoggerConfiguration {
     public Profile getProfile() {
         return profile;
     }
-
 
 }

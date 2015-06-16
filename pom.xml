@@ -339,7 +339,7 @@
 			<!-- needed to check contextprovider annotations at compile time -->
 			<dependency>
 				<groupId>io.tracee.contextlogger.contextprovider</groupId>
-				<artifactId>contextprovider-test</artifactId>
+				<artifactId>contextprovider-annotationprocessor</artifactId>
 				<version>${project.version}</version>
 				<scope>provided</scope>
 			</dependency>
