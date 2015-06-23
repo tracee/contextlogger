@@ -3,12 +3,12 @@ package io.tracee.contextlogger.outputgenerator.functions;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
-import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**

@@ -1,10 +1,10 @@
 package io.tracee.contextlogger.profile;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.contextprovider.ContextProviderServiceLoader;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 
 /**
  * This class mixes profile settings with system.property overrides.
@@ -12,7 +12,7 @@ import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
  */
 public class ProfileSettings {
 
-    private List<Properties> profileProperties = null;
+    Properties profileProperties = null;
 
     private TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder = null;
 
@@ -23,7 +23,7 @@ public class ProfileSettings {
      */
     public ProfileSettings(TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder) {
         this(toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getProfile() != null
-                ? toTraceeContextStringRepresentationBuilder.getProfile() : Profile.getCurrentProfile());
+                ? toTraceeContextStringRepresentationBuilder.getProfile() : ProfileLookup.getCurrentProfile());
 
         this.toTraceeContextStringRepresentationBuilder = toTraceeContextStringRepresentationBuilder;
 
@@ -35,12 +35,7 @@ public class ProfileSettings {
      * @param profile the profile to use
      */
     public ProfileSettings(Profile profile) {
-        try {
-            this.profileProperties = profile.getProperties();
-        }
-        catch (IOException e) {
-            // shouldn't occur for non CUSTOM profiles
-        }
+        this.profileProperties = ContextProviderServiceLoader.getServiceLocator().getProfile(profile);
     }
 
     public TraceeContextStringRepresentationBuilder getToTraceeContextStringRepresentationBuilder() {
@@ -69,12 +64,11 @@ public class ProfileSettings {
 
         // check profile properties
         if (profileProperties != null) {
-            for (final Properties properties : profileProperties) {
-                String value = properties.getProperty(propertyKey);
-                if (value != null) {
-                    return Boolean.valueOf(value);
-                }
+            String value = profileProperties.getProperty(propertyKey);
+            if (value != null) {
+                return Boolean.valueOf(value);
             }
+
         }
 
         return null;

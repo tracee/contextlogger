@@ -1,5 +1,6 @@
 package io.tracee.contextlogger.impl;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -7,7 +8,6 @@ import org.junit.Test;
 
 import io.tracee.contextlogger.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
-import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfilePropertyNames;
 
 /**

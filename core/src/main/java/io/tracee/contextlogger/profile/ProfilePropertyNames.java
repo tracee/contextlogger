@@ -1,5 +1,7 @@
 package io.tracee.contextlogger.profile;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
+
 /**
  * This is a class that holds all property names handled used by profiles.
  * <p/>

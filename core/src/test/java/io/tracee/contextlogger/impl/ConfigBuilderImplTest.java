@@ -13,7 +13,7 @@ import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.internal.Configuration;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
-import io.tracee.contextlogger.profile.Profile;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 
 /**
  * Test class for {@link ConfigBuilderImpl}.

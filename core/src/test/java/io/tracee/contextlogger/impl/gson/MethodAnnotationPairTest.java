@@ -9,9 +9,9 @@ import java.util.Map;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
-import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfileSettings;
 import io.tracee.contextlogger.testdata.ProfileSettingsBuilder;
 

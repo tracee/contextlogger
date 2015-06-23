@@ -4,8 +4,8 @@ import java.util.Map;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ToStringBuilder;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Interface for getting configuration from ConfigBuilder.

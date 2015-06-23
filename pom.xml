@@ -336,6 +336,38 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-springmvc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-aspectj</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-servlet</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-jaxws</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-javaee</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+
 			<!-- needed to check contextprovider annotations at compile time -->
 			<dependency>
 				<groupId>io.tracee.contextlogger.contextprovider</groupId>

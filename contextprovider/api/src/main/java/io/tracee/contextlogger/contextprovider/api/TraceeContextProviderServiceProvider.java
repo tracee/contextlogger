@@ -1,5 +1,7 @@
 package io.tracee.contextlogger.contextprovider.api;
 
+import java.util.Properties;
+
 /**
  * Service provider interface for loading all available service providers
  */
@@ -18,5 +20,13 @@ public interface TraceeContextProviderServiceProvider {
      * @return a list that contains all provided context providers
      */
     Class[] getContextProvider();
+
+    /**
+     * Gets the basic profile settings.
+     *
+     * @param profile the profile level to get
+     * @return the profile settings
+     */
+    Properties getProfile(Profile profile);
 
 }

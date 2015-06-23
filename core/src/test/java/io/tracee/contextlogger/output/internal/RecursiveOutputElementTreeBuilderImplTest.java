@@ -1,14 +1,14 @@
 package io.tracee.contextlogger.output.internal;
 
-import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderImpl;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderImpl;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
-import io.tracee.contextlogger.profile.Profile;
 import io.tracee.contextlogger.profile.ProfileSettings;
 
 /**
@@ -39,7 +39,8 @@ public class RecursiveOutputElementTreeBuilderImplTest {
         boolean resultShouldInitiallyNotBeRegistered = unit.checkIfInstanceIsAlreadyRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldInitiallyNotBeRegistered, Matchers.is(false));
 
-        OutputElement resultShouldInitiallyNotBeRegisteredOutputElement = unit.getRegisteredOutputElementAndMarkItAsMultipleRegistered(ATOMIC_OUTPUT_ELEMENT);
+        OutputElement resultShouldInitiallyNotBeRegisteredOutputElement = unit
+                .getRegisteredOutputElementAndMarkItAsMultipleRegistered(ATOMIC_OUTPUT_ELEMENT);
         MatcherAssert.assertThat(resultShouldInitiallyNotBeRegisteredOutputElement, Matchers.nullValue());
 
         // register
