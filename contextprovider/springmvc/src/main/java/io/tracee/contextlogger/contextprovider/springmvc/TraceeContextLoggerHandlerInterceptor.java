@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.tracee.contextlogger.MessagePrefixProvider;
 import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
 
 public class TraceeContextLoggerHandlerInterceptor implements HandlerInterceptor {

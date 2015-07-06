@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Abstract base class for all context toJson builder implementations.

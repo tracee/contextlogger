@@ -1,62 +1,111 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>contextlogger-core</artifactId>
-    <packaging>bundle</packaging>
+	<artifactId>contextlogger-core</artifactId>
+	<packaging>bundle</packaging>
 
-    <parent>
-        <groupId>io.tracee.contextlogger</groupId>
-        <artifactId>contextlogger-parent</artifactId>
-        <version>0.9.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>io.tracee.contextlogger</groupId>
+		<artifactId>contextlogger-parent</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+	</parent>
 
-    <name>contextlogger-core</name>
-    <description>Please refer to https://github.com/tracee/contextlogger.</description>
+	<name>contextlogger-core</name>
+	<description>Please refer to https://github.com/tracee/contextlogger.</description>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>enforce</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedDependencies>
-                                    <searchTransitive>false</searchTransitive>
-                                    <excludes><exclude>*</exclude></excludes>
-                                    <includes>
-                                        <include>*:*:*:*:test:*</include>
-                                        <include>*:*:*:*:provided:*</include>
-                                        <include>io.tracee.contextlogger:*</include>
+	<build>
+
+		<resources>
+			<resource>
+				<directory>target/generated-sources/apt</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<searchTransitive>false</searchTransitive>
+									<excludes>
+										<exclude>*</exclude>
+									</excludes>
+									<includes>
+										<include>*:*:*:*:test:*</include>
+										<include>*:*:*:*:provided:*</include>
+										<include>io.tracee.contextlogger:*</include>
 										<include>io.tracee.contextlogger.connector:*</include>
 										<include>io.tracee.contextlogger.contextprovider:*</include>
 										<include>org.slf4j:slf4j-api</include>
-                                    </includes>
-                                </bannedDependencies>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+									</includes>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-    </build>
+			<!-- Run annotation processors on src/main/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Run annotation processors on src/test/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process-test</id>
+						<goals>
+							<goal>process-test</goal>
+						</goals>
+						<phase>generate-test-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
 
-    <dependencies>
+		</plugins>
 
-        <dependency>
+	</build>
+
+	<dependencies>
+
+		<dependency>
 			<groupId>io.tracee.contextlogger.connector</groupId>
 			<artifactId>connector-api</artifactId>
-			<version>0.9.0-SNAPSHOT</version>
 		</dependency>
 
-        <dependency>
-            <groupId>io.tracee.contextlogger.contextprovider</groupId>
-            <artifactId>contextprovider-api</artifactId>
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.tracee.contextlogger.contextprovider</groupId>
+			<artifactId>contextprovider-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.tracee.contextlogger</groupId>
+			<artifactId>contextlogger-utility</artifactId>
 		</dependency>
 
 		<!-- dependency for annotation processing at compile time -->
@@ -65,31 +114,31 @@
 			<artifactId>contextprovider-annotationprocessor</artifactId>
 		</dependency>
 
-        <!-- dependecies for unittests -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
+		<!-- dependecies for unittests -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 
 
 		<dependency>

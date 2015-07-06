@@ -1,10 +1,10 @@
 package io.tracee.contextlogger.profile;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
-
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.contextprovider.ContextProviderServiceLoader;
+import io.tracee.contextlogger.contextprovider.api.Profile;
+
+import java.util.Properties;
 
 /**
  * This class mixes profile settings with system.property overrides.
@@ -12,72 +12,66 @@ import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
  */
 public class ProfileSettings {
 
-    private List<Properties> profileProperties = null;
+	Properties profileProperties = null;
 
-    private TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder = null;
+	private TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder = null;
 
-    /**
-     * Main Constructor.
-     *
-     * @param toTraceeContextStringRepresentationBuilder a map that defines manual overrides for profile settings.
-     */
-    public ProfileSettings(TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder) {
-        this(toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getProfile() != null
-                ? toTraceeContextStringRepresentationBuilder.getProfile() : Profile.getCurrentProfile());
+	/**
+	 * Main Constructor.
+	 *
+	 * @param toTraceeContextStringRepresentationBuilder a map that defines manual overrides for profile settings.
+	 */
+	public ProfileSettings(TraceeContextStringRepresentationBuilder toTraceeContextStringRepresentationBuilder) {
+		this(toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getProfile() != null
+				? toTraceeContextStringRepresentationBuilder.getProfile() : ProfileLookup.getCurrentProfile());
 
-        this.toTraceeContextStringRepresentationBuilder = toTraceeContextStringRepresentationBuilder;
+		this.toTraceeContextStringRepresentationBuilder = toTraceeContextStringRepresentationBuilder;
 
-    }
+	}
 
-    /**
-     * Constructor without manual overrides for convenience.
-     *
-     * @param profile the profile to use
-     */
-    public ProfileSettings(Profile profile) {
-        try {
-            this.profileProperties = profile.getProperties();
-        }
-        catch (IOException e) {
-            // shouldn't occur for non CUSTOM profiles
-        }
-    }
+	/**
+	 * Constructor without manual overrides for convenience.
+	 *
+	 * @param profile the profile to use
+	 */
+	public ProfileSettings(Profile profile) {
+		this.profileProperties = ContextProviderServiceLoader.getProfileSettings(profile);
+	}
 
-    public TraceeContextStringRepresentationBuilder getToTraceeContextStringRepresentationBuilder() {
-        return toTraceeContextStringRepresentationBuilder;
-    }
+	public TraceeContextStringRepresentationBuilder getToTraceeContextStringRepresentationBuilder() {
+		return toTraceeContextStringRepresentationBuilder;
+	}
 
-    /**
-     * Checks whether the property for the passed key is enabled or not.
-     *
-     * @param propertyKey the property key to check
-     * @return true, if the property is enabled in profile or manual overrides and not disabled in manual overrides, otherwise false
-     */
-    public Boolean getPropertyValue(final String propertyKey) {
+	/**
+	 * Checks whether the property for the passed key is enabled or not.
+	 *
+	 * @param propertyKey the property key to check
+	 * @return true, if the property is enabled in profile or manual overrides and not disabled in manual overrides, otherwise false
+	 */
+	public Boolean getPropertyValue(final String propertyKey) {
 
-        if (propertyKey == null) {
-            return null;
-        }
+		if (propertyKey == null) {
+			return null;
+		}
 
-        // check system property override
-        if (toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getManualContextOverrides() != null) {
-            Boolean manualOverrideCheck = toTraceeContextStringRepresentationBuilder.getManualContextOverrides().get(propertyKey);
-            if (manualOverrideCheck != null) {
-                return manualOverrideCheck;
-            }
-        }
+		// check system property override
+		if (toTraceeContextStringRepresentationBuilder != null && toTraceeContextStringRepresentationBuilder.getManualContextOverrides() != null) {
+			Boolean manualOverrideCheck = toTraceeContextStringRepresentationBuilder.getManualContextOverrides().get(propertyKey);
+			if (manualOverrideCheck != null) {
+				return manualOverrideCheck;
+			}
+		}
 
-        // check profile properties
-        if (profileProperties != null) {
-            for (final Properties properties : profileProperties) {
-                String value = properties.getProperty(propertyKey);
-                if (value != null) {
-                    return Boolean.valueOf(value);
-                }
-            }
-        }
+		// check profile properties
+		if (profileProperties != null) {
+			String value = profileProperties.getProperty(propertyKey);
+			if (value != null) {
+				return Boolean.valueOf(value);
+			}
 
-        return null;
-    }
+		}
+
+		return null;
+	}
 
 }

@@ -1,6 +1,6 @@
 package io.tracee.contextlogger;
 
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 
 /**
  * Created by TGI on 30.01.2015.

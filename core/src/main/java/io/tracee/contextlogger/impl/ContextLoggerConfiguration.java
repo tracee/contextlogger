@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.api.ImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;
-import io.tracee.contextlogger.profile.Profile;
+import io.tracee.contextlogger.contextprovider.api.Profile;
+import io.tracee.contextlogger.profile.ProfileLookup;
 
 /**
  * A Singleton that holds the static configuration data.
@@ -54,7 +55,7 @@ public class ContextLoggerConfiguration {
         classToWrapperMap = Collections.unmodifiableMap(tmpClassToWrapperMap);
         wrapperClasses = Collections.unmodifiableSet(tmpWrapperClasses);
 
-        profile = Profile.getCurrentProfile();
+        profile = ProfileLookup.getCurrentProfile();
     }
 
     public static ContextLoggerConfiguration getOrCreateContextLoggerConfiguration() {

@@ -3,8 +3,8 @@ package io.tracee.contextlogger.api;
 import java.util.Map;
 import java.util.Set;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Annotation to mark class as toJson builder implementations.
@@ -30,8 +30,8 @@ public interface TraceeContextStringRepresentationBuilder {
 
     TraceeContextStringRepresentationBuilder cloneStringRepresentationBuilder();
 
-	 void setProfile(final Profile profile);
+    void setProfile(final Profile profile);
 
-	Profile getProfile();
+    Profile getProfile();
 
 }

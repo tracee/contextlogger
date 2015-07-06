@@ -9,10 +9,10 @@ import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
 import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.TraceeContextStringRepresentationBuilderImpl;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Implementation class to create a configuration by using the fluent api.

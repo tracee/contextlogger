@@ -16,9 +16,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.CommonDataContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMdcContextProvider;
+import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.CommonDataContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMdcContextProvider;
 import io.tracee.contextlogger.util.test.ConnectorOutputProviderBuilder;
 
 @RunWith(PowerMockRunner.class)

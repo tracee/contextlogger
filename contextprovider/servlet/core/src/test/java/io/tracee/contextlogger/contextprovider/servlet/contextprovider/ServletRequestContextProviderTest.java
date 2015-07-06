@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
+import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 
 /**
  * Test class for {@link ServletRequestContextProvider} Created by Tobias Gindler, holisticon AG on 01.04.14.

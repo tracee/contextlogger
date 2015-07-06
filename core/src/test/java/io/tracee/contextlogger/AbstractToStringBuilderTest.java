@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Unit test for {@link AbstractToStringBuilder}.

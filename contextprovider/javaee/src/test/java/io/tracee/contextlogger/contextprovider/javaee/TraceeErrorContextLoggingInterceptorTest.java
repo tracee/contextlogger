@@ -21,9 +21,9 @@ import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.ErrorMessage;
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.api.internal.MessageLogLevel;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMessage;
 
 /**
  * Test class for {@link TraceeErrorContextLoggingInterceptor}.

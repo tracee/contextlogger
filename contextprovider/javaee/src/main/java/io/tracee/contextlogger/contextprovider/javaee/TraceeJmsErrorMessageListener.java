@@ -7,7 +7,7 @@ import javax.interceptor.InvocationContext;
 import javax.jms.Message;
 
 import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 
 /**
  * Message listener to detect exceptions that happened during javaee message processing.

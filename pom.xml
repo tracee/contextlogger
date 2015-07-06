@@ -1,14 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.tracee.contextlogger</groupId>
+	<groupId>io.tracee.contextlogger</groupId>
 	<artifactId>contextlogger-parent</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<version>0.9.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <name>tracee-contextlogger</name>
-    <description>Please refer to https://github.com/tracee/contextlogger.</description>
-    <url>https://github.com/tracee/contextlogger</url>
+	<name>tracee-contextlogger</name>
+	<description>Please refer to https://github.com/tracee/contextlogger.</description>
+	<url>https://github.com/tracee/contextlogger</url>
 
 	<modules>
 
@@ -16,6 +17,7 @@
 		<module>connectors</module>
 		<module>contextprovider</module>
 		<module>core</module>
+		<module>utility</module>
 
 		<!-- tests and test related -->
 		<module>integration-test</module>
@@ -23,37 +25,37 @@
 
 	</modules>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
 
-    </parent>
+	</parent>
 
-    <organization>
-        <name>Holisticon AG</name>
-        <url>http://www.holisticon.de/</url>
-    </organization>
-    <developers>
-        <developer>
-            <name>Daniel Wegener</name>
-            <email>daniel.wegener@holisticon.de</email>
-            <organization>Holisticon AG</organization>
-            <organizationUrl>http://holisticon.de/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Tobias Gindler</name>
-            <email>tobias.gindler@holisticon.de</email>
-            <organization>Holisticon AG</organization>
-            <organizationUrl>http://holisticon.de/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Sven Bunge</name>
-            <email>sven.bunge@holisticon.de</email>
-            <organization>Holisticon AG</organization>
-            <organizationUrl>http://holisticon.de/</organizationUrl>
-        </developer>
-    </developers>
+	<organization>
+		<name>Holisticon AG</name>
+		<url>http://www.holisticon.de/</url>
+	</organization>
+	<developers>
+		<developer>
+			<name>Daniel Wegener</name>
+			<email>daniel.wegener@holisticon.de</email>
+			<organization>Holisticon AG</organization>
+			<organizationUrl>http://holisticon.de/</organizationUrl>
+		</developer>
+		<developer>
+			<name>Tobias Gindler</name>
+			<email>tobias.gindler@holisticon.de</email>
+			<organization>Holisticon AG</organization>
+			<organizationUrl>http://holisticon.de/</organizationUrl>
+		</developer>
+		<developer>
+			<name>Sven Bunge</name>
+			<email>sven.bunge@holisticon.de</email>
+			<organization>Holisticon AG</organization>
+			<organizationUrl>http://holisticon.de/</organizationUrl>
+		</developer>
+	</developers>
 
 	<issueManagement>
 		<url>https://github.com/tracee/contextlogger/issues</url>
@@ -135,7 +137,9 @@
 							<rules>
 								<bannedDependencies>
 									<searchTransitive>false</searchTransitive>
-									<excludes><exclude>*</exclude></excludes>
+									<excludes>
+										<exclude>*</exclude>
+									</excludes>
 									<includes>
 										<include>*:*:*:*:test:*</include>
 										<include>*:*:*:*:provided:*</include>
@@ -175,6 +179,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -195,9 +201,12 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<verbose>true</verbose>
 						<source>1.6</source>
 						<target>1.6</target>
+						<verbose>true</verbose>
+
+						<!-- <compilerArgument>-proc:none</compilerArgument> -->
+
 					</configuration>
 				</plugin>
 				<plugin>
@@ -270,6 +279,11 @@
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>8.1.15.v20140411</version>
 				</plugin>
+				<plugin>
+					<groupId>org.bsc.maven</groupId>
+					<artifactId>maven-processor-plugin</artifactId>
+					<version>2.2.4</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -298,7 +312,6 @@
 		</dependency>
 
 
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -312,8 +325,20 @@
 			</dependency>
 
 			<dependency>
+				<groupId>io.tracee.contextlogger</groupId>
+				<artifactId>contextlogger-utility</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>io.tracee.contextlogger.contextprovider</groupId>
 				<artifactId>contextprovider-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -335,6 +360,37 @@
 				<artifactId>contextprovider-servlet-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-springmvc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-aspectj</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-servlet</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-jaxws</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.contextprovider</groupId>
+				<artifactId>contextprovider-javaee</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 			<!-- needed to check contextprovider annotations at compile time -->
 			<dependency>

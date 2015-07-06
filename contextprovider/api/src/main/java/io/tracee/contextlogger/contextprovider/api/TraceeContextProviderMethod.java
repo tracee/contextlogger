@@ -16,10 +16,12 @@ import java.lang.annotation.Target;
 @Target(value = {ElementType.METHOD})
 public @interface TraceeContextProviderMethod {
 
-    String displayName();
+	String displayName();
 
-    boolean enabledPerDefault() default false;
+	boolean enabledPerDefault() default false;
 
-    int order() default 0;
+	int order() default 0;
+
+
 
 }

@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.api;
 
+import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
-import io.tracee.contextlogger.profile.Profile;
 
 /**
  * Interface for manual overrides. (Enabling / Disabling of certain logger context data)

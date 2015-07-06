@@ -1,8 +1,6 @@
 package io.tracee.contextlogger.contextprovider.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.tracee.contextlogger.utility.GetterUtilities;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -21,151 +19,128 @@ import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
+import javax.tools.FileObject;
+import javax.tools.StandardLocation;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base class for all Processors.
  */
 public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProcessor {
 
-    private static Map<String, DeclaredType> cachedParentTypes = new HashMap<String, DeclaredType>();
+	private static Map<String, DeclaredType> cachedParentTypes = new HashMap<String, DeclaredType>();
+	private static Map<String, FileObjectWrapper> traceeProfileProperties = new HashMap<String, FileObjectWrapper>();
 
-    protected Messager messager;
-    protected Types typeUtils;
-    protected Elements elementUtils;
-    protected Filer filer;
+	protected Messager messager;
+	protected Types typeUtils;
+	protected Elements elementUtils;
+	protected Filer filer;
 
-    protected TypeElement COLLECTION;
-    protected TypeElement MAP;
-    protected TypeElement VOID;
-    protected WildcardType WILDCARD_TYPE_NULL;
+	protected TypeElement COLLECTION;
+	protected TypeElement MAP;
+	protected TypeElement VOID;
+	protected WildcardType WILDCARD_TYPE_NULL;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
+	public static class FileObjectWrapper {
+		private final FileObject fileObject;
+		private final Writer foWriter;
 
-        // create local references
-        messager = processingEnv.getMessager();
-        typeUtils = processingEnv.getTypeUtils();
-        filer = processingEnv.getFiler();
-        elementUtils = processingEnv.getElementUtils();
+		public FileObjectWrapper(FileObject fileObject) throws IOException {
+			this.fileObject = fileObject;
+			this.foWriter = fileObject.openWriter();
+		}
 
-        COLLECTION = elementUtils.getTypeElement("java.util.Collection");
-        MAP = elementUtils.getTypeElement("java.util.Map");
-        VOID = elementUtils.getTypeElement("java.lang.Void");
-        WILDCARD_TYPE_NULL = typeUtils.getWildcardType(null, null);
+		public void append(String content) throws IOException {
+			foWriter.append(content);
+			foWriter.flush();
+		}
+	}
 
-    }
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnv) {
+		super.init(processingEnv);
 
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
+		// create local references
+		messager = processingEnv.getMessager();
+		typeUtils = processingEnv.getTypeUtils();
+		filer = processingEnv.getFiler();
+		elementUtils = processingEnv.getElementUtils();
 
-    protected boolean isValidMethod(Element element) {
+		COLLECTION = elementUtils.getTypeElement("java.util.Collection");
+		MAP = elementUtils.getTypeElement("java.util.Map");
+		VOID = elementUtils.getTypeElement("java.lang.Void");
+		WILDCARD_TYPE_NULL = typeUtils.getWildcardType(null, null);
 
-        // must not be abstract and must be public
-        if (!isValidOfKind(element, ElementKind.METHOD)) {
-            return false;
-        }
+	}
 
-        // must not be static
-        if (element.getModifiers().contains(Modifier.STATIC)) {
-            return false;
-        }
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
 
-        return true;
-    }
 
-    protected boolean isValidClass(Element element) {
-        return isValidOfKind(element, ElementKind.CLASS);
-    }
+	protected void error(Element e, String message, Object... args) {
+		messager.printMessage(Diagnostic.Kind.ERROR, String.format(message, args), e);
+	}
 
-    private boolean isValidOfKind(Element element, ElementKind elementKind) {
+	protected void info(Element e, String message, Object... args) {
+		messager.printMessage(Diagnostic.Kind.NOTE, String.format(message, args), e);
+	}
 
-        // must be of type class
-        if (element.getKind() != elementKind) {
-            return false;
-        }
+	/**
+	 * Checks if types of passed TypeMirror and Typeelement are compatible.
+	 * @param type
+	 * @param typeElement
+	 * @return
+	 */
+	protected boolean isA(TypeMirror type, TypeElement typeElement) {
 
-        // must be public
-        if (!element.getModifiers().contains(Modifier.PUBLIC)) {
-            return false;
-        }
+		// Have we used this type before?
+		DeclaredType parentType = cachedParentTypes.get(typeElement.getQualifiedName().toString());
+		if (parentType == null) {
+			// How many generic type parameters does this typeElement require?
+			int genericsCount = typeElement.getTypeParameters().size();
 
-        // must not abstract
-        if (element.getModifiers().contains(Modifier.ABSTRACT)) {
-            return false;
-        }
+			// Fill the right number of types with nulls
+			TypeMirror[] types = new TypeMirror[genericsCount];
+			for (int i = 0; i < genericsCount; i++) {
+				types[i] = WILDCARD_TYPE_NULL;
+			}
 
-        return true;
-    }
+			// Locate the correct DeclaredType to match with the type
+			parentType = typeUtils.getDeclaredType(typeElement, types);
 
-    protected boolean isMethod(Element element) {
-        return element != null && element.getKind() == ElementKind.METHOD;
-    }
+			// Remember this DeclaredType
+			cachedParentTypes.put(typeElement.getQualifiedName().toString(), parentType);
+		}
 
-    protected boolean isGetterMethod(ExecutableElement executableElement, final boolean returnTypeMustBeOfTypeCollection) {
+		// Is the given type able to be assigned as the typeElement?
+		return typeUtils.isAssignable(type, parentType);
+	}
 
-        // must have a return value
-        TypeMirror returnTypeMirror = executableElement.getReturnType();
 
-        if (returnTypeMirror.getKind().equals(TypeKind.VOID)) {
-            error(executableElement, "method %s has no return type", executableElement.getSimpleName().toString());
-            return false;
-        }
 
-        // check if method takes no parameters
-        List parameters = executableElement.getParameters();
-        if (parameters != null && parameters.size() > 0) {
-            error(executableElement, "method %s must have no parameters ", executableElement.getSimpleName().toString());
-            return false;
-        }
+	/**
+	 * Central method to get cached FileObjectWrapper. Creates new FileObjectWrapper if it can't be found
+	 */
+	protected static synchronized FileObjectWrapper getOrcreateProfileProperties(final Filer filer, String fileName) throws IOException {
 
-        /*
-         * TypeElement collectionElement = elementUtils.getTypeElement(List.class.getCanonicalName());
-         * if (!typeUtils.isAssignable(executableElement.getReturnType(), collectionElement.asType())) {
-         * error(executableElement, "method %s has a return type %s that cannot be assiged to Collection ", executableElement.getSimpleName().toString(),
-         * executableElement.getReturnType().toString());
-         * return false;
-         * }
-         */
-        return true;
-    }
+		FileObjectWrapper fileObject = traceeProfileProperties.get(fileName);
 
-    protected boolean isTypeAnnotatedWithTraceeContextProvider(TypeElement element) {
+		if (fileObject == null) {
 
-        TraceeContextProvider contextProviderAnnotation = element.getAnnotation(TraceeContextProvider.class);
-        return contextProviderAnnotation != null;
+			fileObject = new FileObjectWrapper(filer.createResource(StandardLocation.SOURCE_OUTPUT, "", fileName, null));
+			traceeProfileProperties.put(fileName, fileObject);
 
-    }
+		}
+		return fileObject;
 
-    protected void error(Element e, String message, Object... args) {
-        messager.printMessage(Diagnostic.Kind.ERROR, String.format(message, args), e);
-    }
+	}
 
-    protected boolean isA(TypeMirror type, TypeElement typeElement) {
 
-        // Have we used this type before?
-        DeclaredType parentType = cachedParentTypes.get(typeElement.getQualifiedName().toString());
-        if (parentType == null) {
-            // How many generic type parameters does this typeElement require?
-            int genericsCount = typeElement.getTypeParameters().size();
-
-            // Fill the right number of types with nulls
-            TypeMirror[] types = new TypeMirror[genericsCount];
-            for (int i = 0; i < genericsCount; i++) {
-                types[i] = WILDCARD_TYPE_NULL;
-            }
-
-            // Locate the correct DeclaredType to match with the type
-            parentType = typeUtils.getDeclaredType(typeElement, types);
-
-            // Remember this DeclaredType
-            cachedParentTypes.put(typeElement.getQualifiedName().toString(), parentType);
-        }
-
-        // Is the given type able to be assigned as the typeElement?
-        return typeUtils.isAssignable(type, parentType);
-    }
 
 }

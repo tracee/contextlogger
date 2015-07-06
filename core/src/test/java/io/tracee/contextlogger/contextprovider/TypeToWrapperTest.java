@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMessage;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMessage;
 
 /**
  * Test class for {@link TypeToWrapper}.
