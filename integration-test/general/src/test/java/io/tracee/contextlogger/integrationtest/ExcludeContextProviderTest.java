@@ -2,9 +2,9 @@ package io.tracee.contextlogger.integrationtest;
 
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.connector.LogConnector;
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.CommonDataContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMdcContextProvider;
+import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.CommonDataContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMdcContextProvider;
 import org.junit.Test;
 
 /**

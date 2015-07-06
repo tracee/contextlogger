@@ -11,13 +11,13 @@ import java.lang.annotation.Target;
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.TYPE })
+@Target(value = {ElementType.TYPE})
 public @interface TraceeContextProvider {
 
-    String displayName();
+	String displayName();
 
-    int order() default 100;
+	int order() default 100;
 
-    boolean suppressTypeInOutput() default false;
+	boolean suppressTypeInOutput() default false;
 
 }

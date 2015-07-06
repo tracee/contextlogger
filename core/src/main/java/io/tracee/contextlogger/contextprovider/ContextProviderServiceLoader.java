@@ -7,8 +7,11 @@ import io.tracee.contextlogger.profile.ProfilePropertyNames;
 import io.tracee.contextlogger.utility.GenericServiceLocator;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ public class ContextProviderServiceLoader implements TraceeContextProviderServic
 	private final Class[] immplicitContextProviders;
 	private final Class[] contextProviders;
 
-	private final Map<Profile, Properties> profilePropertiesMap = new HashMap<Profile, Properties>();
+	private static final Map<Profile, Properties> profilePropertiesMap = new HashMap<Profile, Properties>();
 
 	private ContextProviderServiceLoader() {
 
@@ -55,8 +58,8 @@ public class ContextProviderServiceLoader implements TraceeContextProviderServic
 		return this.contextProviders;
 	}
 
-	@Override
-	public Properties getProfile(final Profile profile) {
+
+	public static Properties getProfileSettings(final Profile profile) {
 
 		if (profile == null || Profile.NONE.equals(profile)) {
 			return new Properties();
@@ -68,17 +71,30 @@ public class ContextProviderServiceLoader implements TraceeContextProviderServic
 
 			properties = new Properties();
 
-			List<TraceeContextProviderServiceProvider> serviceProviders = GenericServiceLocator.locateAll(TraceeContextProviderServiceProvider.class);
+			try {
+				Enumeration<URL> resources = ContextProviderServiceLoader.class.getClassLoader().getResources(profile.getFilename());
 
-			// load all properties from service providers
-			for (TraceeContextProviderServiceProvider serviceProvider : serviceProviders) {
-				if (serviceProvider != null) {
-					properties.putAll(serviceProvider.getProfile(profile));
+				while (resources.hasMoreElements()) {
+
+					URL url = resources.nextElement();
+
+					InputStream inputStream = null;
+					try {
+						properties.load(url.openStream());
+					} finally {
+						if (inputStream != null) {
+							inputStream.close();
+						}
+					}
 				}
+
+			} catch (IOException e) {
+				// Ignore
 			}
 
-			// get custom profiles settings
+			// Add Custom Properties
 			properties.putAll(getCustomProperties());
+
 
 			profilePropertiesMap.put(profile, properties);
 		}
@@ -91,7 +107,7 @@ public class ContextProviderServiceLoader implements TraceeContextProviderServic
 		profilePropertiesMap.clear();
 	}
 
-	private Properties getCustomProperties() {
+	private static Properties getCustomProperties() {
 
 		Properties properties = null;
 
@@ -103,7 +119,7 @@ public class ContextProviderServiceLoader implements TraceeContextProviderServic
 		return properties != null ? properties : new Properties();
 	}
 
-	private String getCustomPropertyFileName() {
+	private static String getCustomPropertyFileName() {
 
 		String filename = System.getProperty(ProfilePropertyNames.CUSTOM_PROFILE_FILENAME_SET_GLOBALLY_VIA_SYSTEM_PROPERTIES);
 

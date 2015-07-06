@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>contextlogger-general-integration-test</artifactId>
-    <packaging>bundle</packaging>
+	<artifactId>contextlogger-general-integration-test</artifactId>
+	<packaging>bundle</packaging>
 
-    <parent>
-        <groupId>io.tracee.contextlogger.integrationtest</groupId>
-        <artifactId>contextlogger-integration-test-parent</artifactId>
-        <version>0.9.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>io.tracee.contextlogger.integrationtest</groupId>
+		<artifactId>contextlogger-integration-test-parent</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+	</parent>
 
-    <name>contextlogger-general-integration-test</name>
-    <description>Please refer to https://github.com/tracee/contextlogger.</description>
+	<name>contextlogger-general-integration-test</name>
+	<description>Please refer to https://github.com/tracee/contextlogger.</description>
 
 	<build>
 		<plugins>
@@ -22,7 +23,39 @@
 					<goals>install</goals>
 				</configuration>
 			</plugin>
+
+
+			<!-- Run annotation processors on src/main/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Run annotation processors on src/test/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process-test</id>
+						<goals>
+							<goal>process-test</goal>
+						</goals>
+						<phase>generate-test-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
+
 	</build>
 
 	<dependencies>
@@ -32,25 +65,33 @@
 			<artifactId>contextprovider-api</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>io.tracee.contextlogger</groupId>
-            <artifactId>contextlogger-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>io.tracee.contextlogger</groupId>
+			<artifactId>contextlogger-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.tracee.contextlogger.integrationtest</groupId>
+			<artifactId>contextlogger-testcontextprovider-for-integration-test</artifactId>
+			<version>0.9.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>io.tracee.contextlogger</groupId>
 			<artifactId>testhelper</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
 
 	</dependencies>
 

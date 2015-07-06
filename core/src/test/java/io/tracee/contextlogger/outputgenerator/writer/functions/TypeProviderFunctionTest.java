@@ -7,8 +7,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
-import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
+import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.TraceeContextProviderOutputElement;

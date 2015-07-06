@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.outputgenerator.predicates;
 
-import io.tracee.contextlogger.api.ImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
@@ -36,7 +36,7 @@ public class IsTraceeContextProviderPredicate implements OutputElementTypePredic
     }
 
     /**
-     * Checks whether the passed instance extends the {@link io.tracee.contextlogger.api.ImplicitContextData} or
+     * Checks whether the passed instance extends the {@link ImplicitContextData} or
      * {@link io.tracee.contextlogger.contextprovider.api.WrappedContextData}types.
      *
      * @param instance the instance to check

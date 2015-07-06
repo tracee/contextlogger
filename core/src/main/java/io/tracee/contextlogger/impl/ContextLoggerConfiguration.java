@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.api.ImplicitContextData;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;
 import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.profile.ProfileLookup;

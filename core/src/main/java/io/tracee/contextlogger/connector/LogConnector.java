@@ -7,8 +7,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.tracee.contextlogger.contextprovider.tracee.CommonDataContextProvider;
-import io.tracee.contextlogger.contextprovider.tracee.TraceeMdcContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.CommonDataContextProvider;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMdcContextProvider;
 
 /**
  * A Connector to send error reports to the logger.

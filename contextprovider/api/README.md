@@ -11,7 +11,7 @@ package io.tracee.contextlogger.contextprovider.servlet.contextprovider
 
 import javax.servlet.http.Cookie;
 
-import io.tracee.contextlogger.contextprovider.Order;
+import io.tracee.contextlogger.contextprovider.api.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;

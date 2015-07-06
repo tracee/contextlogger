@@ -1,30 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>contextprovider-javaee</artifactId>
-    <packaging>bundle</packaging>
+	<artifactId>contextprovider-javaee</artifactId>
+	<packaging>bundle</packaging>
 
-    <parent>
+	<parent>
 		<groupId>io.tracee.contextlogger.contextprovider</groupId>
 		<artifactId>contextprovider-parent</artifactId>
-        <version>0.9.0-SNAPSHOT</version>
-    </parent>
+		<version>0.9.0-SNAPSHOT</version>
+	</parent>
 
-    <name>contextprovider-javaee</name>
-    <description>Please refer to https://github.com/tracee/contextlogger.</description>
+	<name>contextprovider-javaee</name>
+	<description>Please refer to https://github.com/tracee/contextlogger.</description>
 
-    <dependencies>
+	<dependencies>
 
 		<dependency>
 			<groupId>io.tracee.contextlogger.contextprovider</groupId>
 			<artifactId>contextprovider-api</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>io.tracee.contextlogger</groupId>
-            <artifactId>contextlogger-core</artifactId>
-        </dependency>
-
+		<dependency>
+			<groupId>io.tracee.contextlogger</groupId>
+			<artifactId>contextlogger-core</artifactId>
+		</dependency>
 
 
 		<!-- dependency for annotation processing at compile time -->
@@ -34,24 +34,91 @@
 		</dependency>
 
 		<!-- supported frameworks dependencies -->
-        <dependency>
-            <groupId>javax.ejb</groupId>
-            <artifactId>ejb-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>jms-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>jms-api</artifactId>
+		</dependency>
 
 		<!-- unit test dependencies-->
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+
+		<resources>
+			<resource>
+				<directory>target/generated-sources/apt</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+
+			<!-- Run annotation processors on src/main/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Run annotation processors on src/test/java sources -->
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>process-test</id>
+						<goals>
+							<goal>process-test</goal>
+						</goals>
+						<phase>generate-test-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>target/generated-sources/apt</directory>
+									<targetPath></targetPath>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
 </project>

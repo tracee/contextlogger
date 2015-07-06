@@ -5,13 +5,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 import io.tracee.contextlogger.util.test.RegexMatcher;
 
 /**
- * Integration test for {@link io.tracee.contextlogger.api.ImplicitContext} wrapping.
+ * Integration test for {@link ImplicitContext} wrapping.
  */
 public class ImplicitContextIntegrationTest {
 

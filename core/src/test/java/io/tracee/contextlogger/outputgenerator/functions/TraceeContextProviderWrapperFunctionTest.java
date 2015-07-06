@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;

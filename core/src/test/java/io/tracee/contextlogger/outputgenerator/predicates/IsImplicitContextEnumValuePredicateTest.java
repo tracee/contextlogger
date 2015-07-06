@@ -4,7 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.outputgenerator.predicates.IsImplicitContextEnumValuePredicate}.

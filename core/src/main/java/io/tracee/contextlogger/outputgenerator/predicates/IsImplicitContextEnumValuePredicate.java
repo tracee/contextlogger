@@ -1,9 +1,9 @@
 package io.tracee.contextlogger.outputgenerator.predicates;
 
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 
 /**
- * Predicate to check if passed instance is {@link io.tracee.contextlogger.api.ImplicitContext} enum value.
+ * Predicate to check if passed instance is {@link ImplicitContext} enum value.
  */
 public class IsImplicitContextEnumValuePredicate {
 

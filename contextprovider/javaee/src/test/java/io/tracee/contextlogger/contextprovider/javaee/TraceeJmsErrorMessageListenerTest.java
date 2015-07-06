@@ -21,7 +21,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import io.tracee.contextlogger.TraceeContextLogger;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
-import io.tracee.contextlogger.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(TraceeContextLogger.class)

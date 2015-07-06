@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>io.tracee.contextlogger.contextprovider</groupId>
 	<artifactId>contextprovider-parent</artifactId>
-    <packaging>pom</packaging>
+	<packaging>pom</packaging>
 
-    <parent>
-        <groupId>io.tracee.contextlogger</groupId>
-        <artifactId>contextlogger-parent</artifactId>
-        <version>0.9.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>io.tracee.contextlogger</groupId>
+		<artifactId>contextlogger-parent</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+	</parent>
 
-    <name>connector-parent</name>
-    <description>Please refer to https://github.com/tracee/contextlogger.</description>
+	<name>connector-parent</name>
+	<description>Please refer to https://github.com/tracee/contextlogger.</description>
 
 	<modules>
 
@@ -20,8 +21,9 @@
 		<module>api</module>
 
 		<!-- context provider implementations modules-->
+		<module>core</module>
 		<module>aspectj</module>
-        <module>javaee</module>
+		<module>javaee</module>
 		<module>jaxws</module>
 		<module>servlet</module>
 		<module>springmvc</module>

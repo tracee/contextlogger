@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 import io.tracee.contextlogger.outputgenerator.outputelements.*;
 import io.tracee.contextlogger.profile.ProfileSettings;

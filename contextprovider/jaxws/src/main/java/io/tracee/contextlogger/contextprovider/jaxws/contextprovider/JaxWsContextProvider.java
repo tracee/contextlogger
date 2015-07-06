@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.contextprovider.jaxws.contextprovider;
 
-import io.tracee.contextlogger.contextprovider.Order;
+import io.tracee.contextlogger.contextprovider.api.Order;
+import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -9,40 +10,43 @@ import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
  * JaxWsContextProvider context provider.
  */
 @TraceeContextProvider(displayName = "jaxWs", order = Order.JAXWS)
+@ProfileSettings(basic = true, enhanced = true, full = true)
 public class JaxWsContextProvider implements WrappedContextData<JaxWsWrapper> {
 
-    private JaxWsWrapper jaxWsWrapper;
+	private JaxWsWrapper jaxWsWrapper;
 
-    @Override
-    public final void setContextData(Object instance) throws ClassCastException {
-        this.jaxWsWrapper = (JaxWsWrapper)instance;
-    }
+	@Override
+	public final void setContextData(Object instance) throws ClassCastException {
+		this.jaxWsWrapper = (JaxWsWrapper) instance;
+	}
 
-    @Override
-    public final Class<JaxWsWrapper> getWrappedType() {
-        return JaxWsWrapper.class;
-    }
+	@Override
+	public final Class<JaxWsWrapper> getWrappedType() {
+		return JaxWsWrapper.class;
+	}
 
-    @Override
-    public JaxWsWrapper getContextData() {
-        return this.jaxWsWrapper;
-    }
+	@Override
+	public JaxWsWrapper getContextData() {
+		return this.jaxWsWrapper;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "soapRequest", order = 40)
-    public final String getSoapRequest() {
-        if (jaxWsWrapper != null) {
-            return jaxWsWrapper.getSoapRequest();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "soapRequest", order = 40)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public final String getSoapRequest() {
+		if (jaxWsWrapper != null) {
+			return jaxWsWrapper.getSoapRequest();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "soapResponse", order = 50)
-    public final String getSoapResponse() {
-        if (jaxWsWrapper != null) {
-            return jaxWsWrapper.getSoapResponse();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "soapResponse", order = 50)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public final String getSoapResponse() {
+		if (jaxWsWrapper != null) {
+			return jaxWsWrapper.getSoapResponse();
+		}
+		return null;
+	}
 }

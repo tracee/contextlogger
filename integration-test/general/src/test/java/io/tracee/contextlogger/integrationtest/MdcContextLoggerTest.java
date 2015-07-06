@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.slf4j.MDC;
 
 import io.tracee.contextlogger.TraceeToStringBuilder;
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
 
 /**

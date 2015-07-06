@@ -6,8 +6,8 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.tracee.contextlogger.api.ImplicitContext;
-import io.tracee.contextlogger.contextprovider.java.JavaThrowableContextProvider;
+import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
 import io.tracee.contextlogger.profile.ProfilePropertyNames;
 
 /**

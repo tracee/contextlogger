@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
-import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
+import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
 import io.tracee.contextlogger.impl.MethodAnnotationPairComparator;
 import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder;
@@ -105,10 +105,10 @@ public class TraceeContextProviderToOutputElementTransformerFunction extends ToC
     }
 
     /**
-     * Checks if the passed instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameValuePair}.
+     * Checks if the passed instance is of type {@link NameValuePair}.
      *
      * @param instance the instance to check
-     * @return returns true if the instance is of type {@link io.tracee.contextlogger.contextprovider.utility.NameValuePair}, otherwise false
+     * @return returns true if the instance is of type {@link NameValuePair}, otherwise false
      */
     static boolean isNameValuePair(Object instance) {
 

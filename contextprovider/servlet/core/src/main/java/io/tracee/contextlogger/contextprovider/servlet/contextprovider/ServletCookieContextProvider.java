@@ -1,92 +1,100 @@
 package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
-import javax.servlet.http.Cookie;
-
-import io.tracee.contextlogger.contextprovider.Order;
+import io.tracee.contextlogger.contextprovider.api.Order;
+import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+
+import javax.servlet.http.Cookie;
 
 /**
  * Context provider for ServletCookieContextProvider.
  * Created by Tobias Gindler, holisticon AG on 24.01.14.
  */
 @TraceeContextProvider(displayName = "servletCookies", order = Order.SERVLET)
+@ProfileSettings(basic = true, enhanced = true, full = true)
 public final class ServletCookieContextProvider implements WrappedContextData<Cookie> {
 
-    private Cookie cookie;
+	private Cookie cookie;
 
-    public ServletCookieContextProvider() {
-    }
+	public ServletCookieContextProvider() {
+	}
 
-    public ServletCookieContextProvider(Cookie cookie) {
-        this.cookie = cookie;
-    }
+	public ServletCookieContextProvider(Cookie cookie) {
+		this.cookie = cookie;
+	}
 
-    public void setContextData(Object instance) throws ClassCastException {
-        this.cookie = (Cookie)instance;
-    }
+	public void setContextData(Object instance) throws ClassCastException {
+		this.cookie = (Cookie) instance;
+	}
 
-    public Cookie getContextData() {
-        return this.cookie;
-    }
+	public Cookie getContextData() {
+		return this.cookie;
+	}
 
-    public Class<Cookie> getWrappedType() {
-        return Cookie.class;
-    }
+	public Class<Cookie> getWrappedType() {
+		return Cookie.class;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "name", order = 10)
-    public String getName() {
-        if (cookie != null) {
-            return cookie.getName();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "name", order = 10)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public String getName() {
+		if (cookie != null) {
+			return cookie.getName();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "value", order = 20)
-    public String getValue() {
-        if (cookie != null) {
-            return cookie.getValue();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "value", order = 20)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public String getValue() {
+		if (cookie != null) {
+			return cookie.getValue();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "domain", order = 30)
-    public String getDomain() {
-        if (cookie != null) {
-            return cookie.getDomain();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "domain", order = 30)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public String getDomain() {
+		if (cookie != null) {
+			return cookie.getDomain();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "path", order = 40)
-    public String getPath() {
-        if (cookie != null) {
-            return cookie.getPath();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "path", order = 40)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public String getPath() {
+		if (cookie != null) {
+			return cookie.getPath();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "secure", order = 50)
-    public Boolean getSecure() {
-        if (cookie != null) {
-            return cookie.getSecure();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "secure", order = 50)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public Boolean getSecure() {
+		if (cookie != null) {
+			return cookie.getSecure();
+		}
+		return null;
+	}
 
-    @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "max-age", order = 60)
-    public Integer getMaxAge() {
-        if (cookie != null) {
-            return cookie.getMaxAge();
-        }
-        return null;
-    }
+	@SuppressWarnings("unused")
+	@TraceeContextProviderMethod(displayName = "max-age", order = 60)
+	@ProfileSettings(basic = true, enhanced = true, full = true)
+	public Integer getMaxAge() {
+		if (cookie != null) {
+			return cookie.getMaxAge();
+		}
+		return null;
+	}
 
 }

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import io.tracee.contextlogger.contextprovider.utility.NameValuePair;
+import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 
 /**
  * Test class for {@link ServletSessionContextProvider}.

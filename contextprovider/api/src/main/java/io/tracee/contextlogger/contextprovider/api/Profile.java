@@ -6,9 +6,9 @@ package io.tracee.contextlogger.contextprovider.api;
 public enum Profile {
 
 	NONE(null),
-	BASIC("_TraceeContextLoggerBasicProfile.properties"),
-	ENHANCED("_TraceeContextLoggerEnhancedProfile.properties"),
-	FULL("_TraceeContextLoggerFullProfile.properties");
+	BASIC("TraceeContextLoggerBasicProfile.properties"),
+	ENHANCED("TraceeContextLoggerEnhancedProfile.properties"),
+	FULL("TraceeContextLoggerFullProfile.properties");
 
 	private final String filename;
 
