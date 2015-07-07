@@ -13,7 +13,7 @@ import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 public class CoreContextProviderServiceProvider implements TraceeContextProviderServiceProvider {
 
 	public static final Class[] IMPLICIT_CONTEXT_PROVIDER = {CommonDataContextProvider.class, TraceeMdcContextProvider.class};
-	public static final Class[] CONTEXT_PROVIDER = {JavaThrowableContextProvider.class, TraceeMdcContextProvider.class, NameValuePair.class,
+	public static final Class[] CONTEXT_PROVIDER = {JavaThrowableContextProvider.class, NameValuePair.class,
 			TraceeMessageContextProvider.class};
 
 	@Override
