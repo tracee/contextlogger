@@ -6,6 +6,7 @@ import io.tracee.contextlogger.contextprovider.api.Order;
 import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -26,7 +27,7 @@ public class CommonDataContextProvider implements ImplicitContextData {
 
 	@Override
 	public final ImplicitContext getImplicitContext() {
-		return ImplicitContext.COMMON;
+		return CoreImplicitContextProviders.COMMON;
 	}
 
 	@SuppressWarnings("unused")

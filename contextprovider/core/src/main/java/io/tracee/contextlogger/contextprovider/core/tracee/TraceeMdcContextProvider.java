@@ -7,6 +7,7 @@ import io.tracee.contextlogger.contextprovider.api.Order;
 import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import org.slf4j.MDC;
 
@@ -29,7 +30,7 @@ public final class TraceeMdcContextProvider implements ImplicitContextData {
 
 	@Override
 	public ImplicitContext getImplicitContext() {
-		return ImplicitContext.TRACEE;
+		return CoreImplicitContextProviders.TRACEE;
 	}
 
 	@SuppressWarnings("unused")

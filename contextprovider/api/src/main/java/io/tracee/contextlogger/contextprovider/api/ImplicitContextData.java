@@ -6,9 +6,12 @@ package io.tracee.contextlogger.contextprovider.api;
  */
 public interface ImplicitContextData {
 
-    /**
-     * Gets the implict context type.
-     */
-    ImplicitContext getImplicitContext();
+	/**
+	 * Used to map enum values against implicit context providers.
+	 * This allows adding of implicit context providers to string representation builder output just by adding the corresponding enum value.
+	 *
+	 * @return an enum value that implements the ImplicitContext interface
+	 */
+	ImplicitContext getImplicitContext();
 
 }

@@ -1,10 +1,8 @@
 package io.tracee.contextlogger.contextprovider.api;
 
 /**
- * Defines all existing implicit contexts
+ * Enums can be used to add implicit context providers to string representation output.
  * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
-public enum ImplicitContext {
-	TRACEE,
-	COMMON;
+public interface ImplicitContext {
 }

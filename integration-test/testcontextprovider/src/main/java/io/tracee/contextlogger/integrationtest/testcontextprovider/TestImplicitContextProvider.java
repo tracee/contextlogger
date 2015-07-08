@@ -29,7 +29,7 @@ public class TestImplicitContextProvider implements ImplicitContextData {
 
 	@Override
 	public ImplicitContext getImplicitContext() {
-		return null;
+		return TestImplicitContextProviders.TEST;
 	}
 }
 
