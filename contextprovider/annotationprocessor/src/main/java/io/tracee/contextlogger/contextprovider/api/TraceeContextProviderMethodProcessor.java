@@ -74,7 +74,7 @@ public class TraceeContextProviderMethodProcessor extends TraceeContextLoggerAbs
 		return SUPPORTED_ANNOTATION_TYPES;
 	}
 
-	private void writeToPropertyFile(Profile profile, TypeElement parentElement, Element element, boolean value) throws IOException {
+	protected void writeToPropertyFile(Profile profile, TypeElement parentElement, Element element, boolean value) throws IOException {
 
 		FileObjectWrapper fileObject = getOrcreateProfileProperties(filer, profile.getFilename());
 

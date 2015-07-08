@@ -12,7 +12,7 @@ The main focus of the *TracEE Context-Logger* subproject lies on providing conte
 
 The first part offers a fluent api to generate human and machine readable String representations in Json format for object instances of any type.
 
-The second part offers adapters for most popular Java EE technologies that are providing contextual invocation data in case of an error(== uncaught exception).
+The second part offers adapters and bindings for most popular Java EE technologies that are providing contextual invocation data in case of an error(== uncaught exception).
 
 Like the *TracEE* project, it integrates with almost no effort - At the moment the following JavaEE technologies are supported.
 
@@ -24,7 +24,7 @@ Like the *TracEE* project, it integrates with almost no effort - At the moment t
 * AspectJ / Spring-AOP
 * Spring
 
-The TracEE core project is used as an abstraction for logging. All common log frameworks are supported (slf4j,log4j,...).
+The contextlogger uses slf4j as an abstraction for logging. Therefore all common log frameworks are supported (slf4j,log4j,...).
 
 This project is still in an experimental stage - the api is nearly in a final state, but may change slightly during further development.
 
@@ -191,7 +191,7 @@ The following table describes all available TracEE-contextlogger modules and the
 
 ### Output Profile Selection
 The output produced by the TracEE contextual logger can be configured very flexible by allowing you to choose between predefined and custom profiles or by offering you the possibility to overwrite profile settings by system properties.
-You can choose between those profiles by setting the **io.tracee.contextlogger.profile** system property in your application server or by adding a **ProfileSelector.properties** file to your webapp. The property file must define the **io.tracee.contextlogger.profile** property. 
+You can choose between those profiles by setting the **io.tracee.contextlogger.profile** system property in your application server or by adding a **ProfileSelector.properties** file to your application. The property file must define the **io.tracee.contextlogger.profile** property. 
 Possible values are: 
 
 | Value    | Description |
@@ -199,7 +199,6 @@ Possible values are:
 | BASIC    | Default profile, provides most important and secure contextual information.  |
 | ENHANCED | Provides additional contextual information not included in basic profile     |
 | FULL     | Outputs almost everything available to the handlers - even security related data, therefore this profile shouldn't be used in production environments  |
-| CUSTOM   | Allows you to use a custom profile. Custom profiles are defined by adding a file named **TraceeContextLoggerCustomProfile.properties**. Please copy and customize existing profiles offered by the context-logger-impl project |
 
 You can combine those configurations in any way you want. The settings will be applied in a specific order. Application server wide profile selection will be overwritten by application based profile selection. If no profile selection is configured, basic profile will be used as default.
 
