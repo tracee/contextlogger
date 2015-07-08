@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.contextprovider.springmvc.contextprovider;
 
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -14,7 +14,7 @@ import java.util.List;
  * Context provider for {@link HandlerMethod}.
  */
 @TraceeContextProvider(displayName = "handlerMethod")
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public class HandlerMethodContextProvider implements WrappedContextData<HandlerMethod> {
 
 	private HandlerMethod handlerMethod;
@@ -48,7 +48,7 @@ public class HandlerMethodContextProvider implements WrappedContextData<HandlerM
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "type", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final String getType() {
 		if (handlerMethod != null && handlerMethod.getBeanType() != null) {
 			return handlerMethod.getBeanType().getCanonicalName();
@@ -58,7 +58,7 @@ public class HandlerMethodContextProvider implements WrappedContextData<HandlerM
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "method", order = 30)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final String getMethod() {
 		if (handlerMethod != null && handlerMethod.getMethod() != null) {
 			return handlerMethod.getMethod().getName();
@@ -68,7 +68,7 @@ public class HandlerMethodContextProvider implements WrappedContextData<HandlerM
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "parameters", order = 40)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final List<MethodParameter> getParameters() {
 
 		if (handlerMethod != null && handlerMethod.getMethodParameters() != null) {
@@ -82,7 +82,7 @@ public class HandlerMethodContextProvider implements WrappedContextData<HandlerM
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "serialized-target-instance", order = 50)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public final Object getSerializedTargetInstance() {
 		if (handlerMethod != null) {
 			// output invoked instance

@@ -1,13 +1,12 @@
 package io.tracee.contextlogger.contextprovider.javaee;
 
-import java.lang.reflect.Method;
+import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jms.Message;
-
-import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import java.lang.reflect.Method;
 
 /**
  * Message listener to detect exceptions that happened during javaee message processing.
@@ -16,32 +15,31 @@ import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
  */
 public class TraceeJmsErrorMessageListener {
 
-    static final String JSON_PREFIXED_MESSAGE = "TRACEE JMS ERROR CONTEXT LOGGING LISTENER  : ";
+	static final String JSON_PREFIXED_MESSAGE = "TRACEE JMS ERROR CONTEXT LOGGING LISTENER  : ";
 
-    @SuppressWarnings("unused")
-    public TraceeJmsErrorMessageListener() {
+	@SuppressWarnings("unused")
+	public TraceeJmsErrorMessageListener() {
 
-    }
+	}
 
-    @AroundInvoke
-    public Object intercept(InvocationContext ctx) throws Exception {
-        try {
-            return ctx.proceed();
-        }
-        catch (Exception e) {
-            final boolean isMdbInvocation = isMessageListenerOnMessageMethod(ctx.getMethod());
+	@AroundInvoke
+	public Object intercept(InvocationContext ctx) throws Exception {
+		try {
+			return ctx.proceed();
+		} catch (Exception e) {
+			final boolean isMdbInvocation = isMessageListenerOnMessageMethod(ctx.getMethod());
 
-            if (isMdbInvocation) {
-                TraceeContextLogger.create().enforceOrder().apply()
-                        .logWithPrefixedMessage(JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON, ImplicitContext.TRACEE, ctx, e);
-            }
+			if (isMdbInvocation) {
+				TraceeContextLogger.create().enforceOrder().apply()
+						.logWithPrefixedMessage(JSON_PREFIXED_MESSAGE, CoreImplicitContextProviders.COMMON, CoreImplicitContextProviders.TRACEE, ctx, e);
+			}
 
-            throw e;
-        }
-    }
+			throw e;
+		}
+	}
 
-    boolean isMessageListenerOnMessageMethod(Method method) {
-        return "onMessage".equals(method.getName()) && method.getParameterTypes().length == 1 && method.getParameterTypes()[0] == Message.class;
-    }
+	boolean isMessageListenerOnMessageMethod(Method method) {
+		return "onMessage".equals(method.getName()) && method.getParameterTypes().length == 1 && method.getParameterTypes()[0] == Message.class;
+	}
 
 }

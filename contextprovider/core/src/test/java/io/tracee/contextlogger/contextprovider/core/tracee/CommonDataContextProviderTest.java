@@ -1,6 +1,7 @@
 package io.tracee.contextlogger.contextprovider.core.tracee;
 
 import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -18,7 +19,7 @@ import static org.hamcrest.Matchers.nullValue;
  * Test class for {@link CommonDataContextProvider}.
  * Created by Tobias Gindler, holisticon AG on 31.03.14.
  */
-public class CommonDataProviderTest {
+public class CommonDataContextProviderTest {
 
 	public static final String STAGE = "STAGE";
 	public static final String SYSTEM = "SYSTEM";
@@ -38,7 +39,7 @@ public class CommonDataProviderTest {
 		ImplicitContext implicitContext = commonDataContextProvider.getImplicitContext();
 
 		assertThat(implicitContext, notNullValue());
-		assertThat(implicitContext, equalTo(ImplicitContext.COMMON));
+		assertThat(implicitContext, equalTo((ImplicitContext) CoreImplicitContextProviders.COMMON));
 	}
 
 

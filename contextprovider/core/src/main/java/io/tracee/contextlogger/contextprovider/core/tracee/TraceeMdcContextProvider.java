@@ -4,9 +4,10 @@ import io.tracee.contextlogger.contextprovider.api.Flatten;
 import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import org.slf4j.MDC;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @SuppressWarnings("unused")
 @TraceeContextProvider(displayName = "tracee", order = Order.TRACEE)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class TraceeMdcContextProvider implements ImplicitContextData {
 
 	public TraceeMdcContextProvider() {
@@ -29,13 +30,13 @@ public final class TraceeMdcContextProvider implements ImplicitContextData {
 
 	@Override
 	public ImplicitContext getImplicitContext() {
-		return ImplicitContext.TRACEE;
+		return CoreImplicitContextProviders.TRACEE;
 	}
 
 	@SuppressWarnings("unused")
 	@Flatten
 	@TraceeContextProviderMethod(displayName = "DYNAMIC", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public List<NameValuePair<String>> getNameValuePairs() {
 
 		final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();

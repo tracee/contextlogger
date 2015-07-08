@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.core.java;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -15,7 +15,7 @@ import java.io.StringWriter;
  */
 @SuppressWarnings("unused")
 @TraceeContextProvider(displayName = "throwable", order = Order.EXCEPTION)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class JavaThrowableContextProvider implements WrappedContextData<Throwable> {
 
 	private Throwable throwable;
@@ -46,14 +46,14 @@ public final class JavaThrowableContextProvider implements WrappedContextData<Th
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "message", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getMessage() {
 		return throwable != null ? throwable.getMessage() : null;
 	}
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "stacktrace", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getStacktrace() {
 		if (this.throwable != null) {
 			StringWriter sw = new StringWriter();

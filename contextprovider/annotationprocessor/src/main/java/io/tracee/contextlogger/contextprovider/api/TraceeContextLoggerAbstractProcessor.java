@@ -6,9 +6,6 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -24,18 +21,12 @@ import java.util.Map;
  */
 public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProcessor {
 
-	private static Map<String, DeclaredType> cachedParentTypes = new HashMap<String, DeclaredType>();
 	private static Map<String, FileObjectWrapper> traceeProfileProperties = new HashMap<String, FileObjectWrapper>();
 
 	protected Messager messager;
 	protected Types typeUtils;
 	protected Elements elementUtils;
 	protected Filer filer;
-
-	protected TypeElement COLLECTION;
-	protected TypeElement MAP;
-	protected TypeElement VOID;
-	protected WildcardType WILDCARD_TYPE_NULL;
 
 	public static class FileObjectWrapper {
 		private final FileObject fileObject;
@@ -81,7 +72,7 @@ public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProce
 	/**
 	 * Central method to get cached FileObjectWrapper. Creates new FileObjectWrapper if it can't be found
 	 */
-	protected static synchronized FileObjectWrapper getOrcreateProfileProperties(final Filer filer, String fileName) throws IOException {
+	protected static synchronized FileObjectWrapper getOrCreateProfileProperties(final Filer filer, String fileName) throws IOException {
 
 		FileObjectWrapper fileObject = traceeProfileProperties.get(fileName);
 
@@ -95,5 +86,8 @@ public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProce
 
 	}
 
+	protected static void clearCache() {
+		traceeProfileProperties.clear();
+	}
 
 }

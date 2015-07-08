@@ -3,7 +3,7 @@ package io.tracee.contextlogger.contextprovider.core.tracee;
 import io.tracee.contextlogger.contextprovider.api.Order;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
@@ -12,7 +12,7 @@ import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
  */
 @SuppressWarnings("unused")
 @TraceeContextProvider(displayName = "message", order = Order.MESSAGE)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 
 public class TraceeMessageContextProvider implements WrappedContextData<TraceeMessage> {
 
@@ -51,7 +51,7 @@ public class TraceeMessageContextProvider implements WrappedContextData<TraceeMe
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "value", order = 10, enabledPerDefault = true)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getValue() {
 		if (message != null && message.getMessage() != null) {
 			return message.getMessage().toString();

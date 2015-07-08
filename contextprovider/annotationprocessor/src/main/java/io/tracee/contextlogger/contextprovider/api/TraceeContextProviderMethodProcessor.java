@@ -48,7 +48,7 @@ public class TraceeContextProviderMethodProcessor extends TraceeContextLoggerAbs
 			try {
 
 				// write entry for fields
-				ProfileSettings annotation = element.getAnnotation(ProfileSettings.class);
+				ProfileConfig annotation = element.getAnnotation(ProfileConfig.class);
 
 				boolean basicProfileSettings = annotation != null && annotation.basic();
 				boolean enhancedProfileSettings = annotation != null && annotation.enhanced();
@@ -76,7 +76,7 @@ public class TraceeContextProviderMethodProcessor extends TraceeContextLoggerAbs
 
 	protected void writeToPropertyFile(Profile profile, TypeElement parentElement, Element element, boolean value) throws IOException {
 
-		FileObjectWrapper fileObject = getOrcreateProfileProperties(filer, profile.getFilename());
+		FileObjectWrapper fileObject = getOrCreateProfileProperties(filer, profile.getFilename());
 
 		String fieldName = GetterUtilities.getFieldName(element.getSimpleName().toString());
 		if (fieldName == null) {

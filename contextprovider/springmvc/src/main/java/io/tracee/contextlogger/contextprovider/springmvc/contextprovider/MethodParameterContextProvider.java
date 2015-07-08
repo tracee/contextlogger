@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.contextprovider.springmvc.contextprovider;
 
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -10,7 +10,7 @@ import org.springframework.core.MethodParameter;
  * Context provider dor {@link MethodParameter}.
  */
 @TraceeContextProvider(displayName = "methodParameter")
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public class MethodParameterContextProvider implements WrappedContextData<MethodParameter> {
 
 	private MethodParameter methodParameter;
@@ -44,7 +44,7 @@ public class MethodParameterContextProvider implements WrappedContextData<Method
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "type", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final String getType() {
 		if (methodParameter != null && methodParameter.getParameterType() != null) {
 			return methodParameter.getParameterType().getCanonicalName();

@@ -1,16 +1,9 @@
 package io.tracee.contextlogger.contextprovider.javaee;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-
-import java.lang.reflect.Method;
-
-import javax.interceptor.InvocationContext;
-
+import io.tracee.contextlogger.TraceeContextLogger;
+import io.tracee.contextlogger.api.ConfigBuilder;
+import io.tracee.contextlogger.api.ContextLogger;
+import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +11,20 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import io.tracee.contextlogger.TraceeContextLogger;
-import io.tracee.contextlogger.api.ConfigBuilder;
-import io.tracee.contextlogger.api.ContextLogger;
-import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
+import javax.interceptor.InvocationContext;
+import java.lang.reflect.Method;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(TraceeContextLogger.class)
@@ -73,8 +76,8 @@ public class TraceeJmsErrorMessageListenerTest {
         }
         catch (Exception e) {
             verify(invocationContext).proceed();
-            verify(contextLogger).logWithPrefixedMessage(TraceeJmsErrorMessageListener.JSON_PREFIXED_MESSAGE, ImplicitContext.COMMON,
-                    ImplicitContext.TRACEE, invocationContext, exception);
+            verify(contextLogger).logWithPrefixedMessage(TraceeJmsErrorMessageListener.JSON_PREFIXED_MESSAGE, CoreImplicitContextProviders.COMMON,
+					CoreImplicitContextProviders.TRACEE, invocationContext, exception);
             throw e;
         }
     }

@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.javaee.contextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by Tobias Gindler, holisticon AG on 20.03.14.
  */
 @TraceeContextProvider(displayName = "invocationContext", order = Order.EJB)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public class InvocationContextContextProvider implements WrappedContextData<InvocationContext> {
 
 	private InvocationContext invocationContext;
@@ -45,20 +45,20 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
 	}
 
 	@TraceeContextProviderMethod(displayName = "typeName", order = 0)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final String getTypeName() {
 		return this.invocationContext != null && this.invocationContext.getTarget() != null && this.invocationContext.getTarget().getClass() != null
 				? this.invocationContext.getTarget().getClass().getCanonicalName() : null;
 	}
 
 	@TraceeContextProviderMethod(displayName = "methodName", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final String getMethodName() {
 		return this.invocationContext != null && this.invocationContext.getMethod() != null ? this.invocationContext.getMethod().getName() : null;
 	}
 
 	@TraceeContextProviderMethod(displayName = "parameters", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public final List<String> getParameters() {
 
 		List<String> result = new ArrayList<String>();
@@ -75,7 +75,7 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
 	}
 
 	@TraceeContextProviderMethod(displayName = "target-instance", order = 30)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public final Object getTargetInstance() {
 		String result = null;
 		if (this.invocationContext != null) {
@@ -87,7 +87,7 @@ public class InvocationContextContextProvider implements WrappedContextData<Invo
 	}
 
 	@TraceeContextProviderMethod(displayName = "invocationContextData", order = 40)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public final List<NameValuePair<Object>> getInvocationContextData() {
 
 		List<NameValuePair<Object>> result = new ArrayList<NameValuePair<Object>>();

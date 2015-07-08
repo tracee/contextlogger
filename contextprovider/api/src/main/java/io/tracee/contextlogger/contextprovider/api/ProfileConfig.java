@@ -5,9 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Configures if annotated class or method should be outputted in string representation builder output.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD, ElementType.TYPE})
-public @interface ProfileSettings {
+public @interface ProfileConfig {
 
 	boolean basic() default false;
 

@@ -64,11 +64,11 @@ public class TraceeContextProviderMethodProcessorTest {
 		when(element.getEnclosingElement()).thenReturn(parentElement);
 
 		// prepare profile settings
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
-		when(element.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
+		when(element.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		// provide elements annotated with Flatten annotation
 		Set<Element> set = new HashSet<Element>();
@@ -110,8 +110,8 @@ public class TraceeContextProviderMethodProcessorTest {
 		when(element.getEnclosingElement()).thenReturn(parentElement);
 
 		// prepare profile settings
-		ProfileSettings profileSettings = null;
-		when(element.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		ProfileConfig profileConfig = null;
+		when(element.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		// provide elements annotated with Flatten annotation
 		Set<Element> set = new HashSet<Element>();
@@ -154,11 +154,11 @@ public class TraceeContextProviderMethodProcessorTest {
 		when(element.getEnclosingElement()).thenReturn(parentElement);
 
 		// prepare profile settings
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
-		when(element.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
+		when(element.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		// provide elements annotated with Flatten annotation
 		Set<Element> set = new HashSet<Element>();
@@ -200,11 +200,11 @@ public class TraceeContextProviderMethodProcessorTest {
 		when(element.getEnclosingElement()).thenReturn(parentElement);
 
 		// prepare profile settings
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
-		when(element.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
+		when(element.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		// provide elements annotated with Flatten annotation
 		Set<Element> set = new HashSet<Element>();
@@ -246,11 +246,11 @@ public class TraceeContextProviderMethodProcessorTest {
 		when(element.getEnclosingElement()).thenReturn(parentElement);
 
 		// prepare profile settings
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
-		when(element.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
+		when(element.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		// provide elements annotated with Flatten annotation
 		Set<Element> set = new HashSet<Element>();
