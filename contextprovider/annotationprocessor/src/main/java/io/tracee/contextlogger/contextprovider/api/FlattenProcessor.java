@@ -39,6 +39,8 @@ public class FlattenProcessor extends TraceeContextLoggerAbstractMethodAnnotatio
 			}
 
 			if (!isParentAnnotatedWithTraceeContextProvider(element)) {
+				error(element, "Element %s annotated with annotation %s is only allowed in classes annotated with annotation %s", element.getSimpleName(), Flatten.class.getSimpleName(),
+						TraceeContextProvider.class.getSimpleName());
 				continue;
 			}
 
@@ -53,7 +55,7 @@ public class FlattenProcessor extends TraceeContextLoggerAbstractMethodAnnotatio
 		return SUPPORTED_ANNOTATION_TYPES;
 	}
 
-	private boolean isAnnotatedAsTraceeContextProviderMethod(ExecutableElement executableElement) {
+	protected boolean isAnnotatedAsTraceeContextProviderMethod(ExecutableElement executableElement) {
 		return executableElement.getAnnotation(TraceeContextProviderMethod.class) != null;
 	}
 
