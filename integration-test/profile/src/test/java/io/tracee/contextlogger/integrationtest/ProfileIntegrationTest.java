@@ -7,6 +7,7 @@ import io.tracee.contextlogger.profile.ProfilePropertyNames;
 import io.tracee.contextlogger.profile.ProfileSettings;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,11 @@ import java.util.Enumeration;
 public class ProfileIntegrationTest {
 
 	public static Logger logger = LoggerFactory.getLogger(ProfileIntegrationTest.class);
+
+	@Before
+	public void init() {
+		System.getProperties().remove(ProfilePropertyNames.CUSTOM_PROFILE_FILENAME_SET_GLOBALLY_VIA_SYSTEM_PROPERTIES);
+	}
 
 	@Test
 	public void shouldLoadCorrectDefaultProfile() {

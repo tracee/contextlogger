@@ -47,6 +47,7 @@
 
 
 			<!-- Run annotation processors on src/main/java sources -->
+			<!-- Run annotation processors on src/main/java and src/test/java sources -->
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
 				<artifactId>maven-processor-plugin</artifactId>
@@ -58,13 +59,6 @@
 						</goals>
 						<phase>generate-sources</phase>
 					</execution>
-				</executions>
-			</plugin>
-			<!-- Run annotation processors on src/test/java sources -->
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<executions>
 					<execution>
 						<id>process-test</id>
 						<goals>
