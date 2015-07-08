@@ -145,13 +145,13 @@ public class TraceeContextProviderProcessorTest {
 
 		TraceeContextProviderProcessor spy = Mockito.spy(unit);
 
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
 
 		TypeElement typeElement = mock(TypeElement.class);
-		when(typeElement.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		when(typeElement.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		Set<Element> set = new HashSet<Element>();
 		set.add(typeElement);
@@ -183,10 +183,10 @@ public class TraceeContextProviderProcessorTest {
 
 		TraceeContextProviderProcessor spy = Mockito.spy(unit);
 
-		ProfileSettings profileSettings = null;
+		ProfileConfig profileConfig = null;
 
 		TypeElement typeElement = mock(TypeElement.class);
-		when(typeElement.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		when(typeElement.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		Set<Element> set = new HashSet<Element>();
 		set.add(typeElement);
@@ -219,13 +219,13 @@ public class TraceeContextProviderProcessorTest {
 
 		TraceeContextProviderProcessor spy = Mockito.spy(unit);
 
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
 
 		TypeElement typeElement = mock(TypeElement.class);
-		when(typeElement.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		when(typeElement.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		Set<Element> set = new HashSet<Element>();
 		set.add(typeElement);
@@ -257,13 +257,13 @@ public class TraceeContextProviderProcessorTest {
 
 		TraceeContextProviderProcessor spy = Mockito.spy(unit);
 
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
 
 		TypeElement typeElement = mock(TypeElement.class);
-		when(typeElement.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		when(typeElement.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		Set<Element> set = new HashSet<Element>();
 		set.add(typeElement);
@@ -295,13 +295,13 @@ public class TraceeContextProviderProcessorTest {
 
 		TraceeContextProviderProcessor spy = Mockito.spy(unit);
 
-		ProfileSettings profileSettings = mock(ProfileSettings.class);
-		when(profileSettings.basic()).thenReturn(true);
-		when(profileSettings.enhanced()).thenReturn(true);
-		when(profileSettings.full()).thenReturn(true);
+		ProfileConfig profileConfig = mock(ProfileConfig.class);
+		when(profileConfig.basic()).thenReturn(true);
+		when(profileConfig.enhanced()).thenReturn(true);
+		when(profileConfig.full()).thenReturn(true);
 
 		TypeElement typeElement = mock(TypeElement.class);
-		when(typeElement.getAnnotation(ProfileSettings.class)).thenReturn(profileSettings);
+		when(typeElement.getAnnotation(ProfileConfig.class)).thenReturn(profileConfig);
 
 		Set<Element> set = new HashSet<Element>();
 		set.add(typeElement);

@@ -46,7 +46,7 @@ public class TraceeContextProviderProcessor extends TraceeContextLoggerAbstractT
 			// Write class profile properties
 			try {
 
-				ProfileSettings annotation = element.getAnnotation(ProfileSettings.class);
+				ProfileConfig annotation = element.getAnnotation(ProfileConfig.class);
 
 				boolean basicProfileSettings = annotation != null && annotation.basic();
 				boolean enhancedProfileSettings = annotation != null && annotation.enhanced();

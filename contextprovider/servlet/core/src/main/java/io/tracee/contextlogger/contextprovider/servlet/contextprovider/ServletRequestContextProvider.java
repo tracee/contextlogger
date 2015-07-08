@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @TraceeContextProvider(displayName = "servletRequest", order = Order.SERVLET)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class ServletRequestContextProvider implements WrappedContextData<HttpServletRequest> {
 
 	private HttpServletRequest request;
@@ -49,7 +49,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "url", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getUrl() {
 		if (this.request != null && request.getRequestURL() != null) {
 			return request.getRequestURL().toString();
@@ -59,7 +59,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-method", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getHttpMethod() {
 		if (this.request != null) {
 			return this.request.getMethod();
@@ -69,7 +69,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-parameters", order = 30)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public List<NameValuePair<String>> getHttpParameters() {
 
 		final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
@@ -96,7 +96,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-request-headers", order = 40)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public List<NameValuePair<String>> getHttpRequestHeaders() {
 
 		final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
@@ -117,7 +117,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-request-attributes", order = 45)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public List<NameValuePair<Object>> getHttpRequestAttributes() {
 
 		final List<NameValuePair<Object>> list = new ArrayList<NameValuePair<Object>>();
@@ -138,7 +138,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "cookies", order = 50)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public List<ServletCookieContextProvider> getCookies() {
 
 		List<ServletCookieContextProvider> wrappedCookies = new ArrayList<ServletCookieContextProvider>();
@@ -154,7 +154,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-remote-address", order = 150)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public String getHttpRemoteAddress() {
 		if (this.request != null) {
 			return request.getRemoteAddr();
@@ -164,7 +164,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-remote-host", order = 160)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public String getHttpRemoteHost() {
 		if (this.request != null) {
 			return this.request.getRemoteHost();
@@ -174,7 +174,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-remote-port", order = 170)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public Integer getHttpRemotePort() {
 		if (this.request != null) {
 			return this.request.getRemotePort();
@@ -184,7 +184,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "scheme", order = 200)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public String getScheme() {
 		if (this.request != null) {
 			return this.request.getScheme();
@@ -195,7 +195,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "is-secure", order = 210)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public Boolean getSecure() {
 		if (this.request != null) {
 			return this.request.isSecure();
@@ -206,7 +206,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "content-type", order = 220)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public String getContentType() {
 		if (this.request != null) {
 			return this.request.getContentType();
@@ -217,7 +217,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "content-length", order = 230)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public Integer getContentLength() {
 		if (this.request != null) {
 			return this.request.getContentLength();
@@ -227,7 +227,7 @@ public final class ServletRequestContextProvider implements WrappedContextData<H
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "locale", order = 240)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public String getLocale() {
 		if (this.request != null && this.request.getLocale() != null) {
 			return this.request.getLocale().toString();

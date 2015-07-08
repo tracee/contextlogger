@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD, ElementType.TYPE})
-public @interface ProfileSettings {
+public @interface ProfileConfig {
 
 	boolean basic() default false;
 

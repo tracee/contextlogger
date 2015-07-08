@@ -2,7 +2,7 @@ package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
 import io.tracee.contextlogger.contextprovider.api.Flatten;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Tobias Gindler, holisticon AG on 19.03.14.
  */
 @TraceeContextProvider(displayName = "servletSession", order = Order.SERVLET)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class ServletSessionContextProvider implements WrappedContextData<HttpSession> {
 
 	private HttpSession session;
@@ -48,7 +48,7 @@ public final class ServletSessionContextProvider implements WrappedContextData<H
 	@SuppressWarnings("unused")
 	@Flatten
 	@TraceeContextProviderMethod(displayName = "DYNAMIC")
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public List<NameValuePair<Object>> getSessionAttributes() {
 
 		if (session == null) {

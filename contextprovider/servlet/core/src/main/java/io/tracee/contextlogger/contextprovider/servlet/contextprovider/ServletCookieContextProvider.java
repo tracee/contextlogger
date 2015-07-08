@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -13,7 +13,7 @@ import javax.servlet.http.Cookie;
  * Created by Tobias Gindler, holisticon AG on 24.01.14.
  */
 @TraceeContextProvider(displayName = "servletCookies", order = Order.SERVLET)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class ServletCookieContextProvider implements WrappedContextData<Cookie> {
 
 	private Cookie cookie;
@@ -39,7 +39,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "name", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getName() {
 		if (cookie != null) {
 			return cookie.getName();
@@ -49,7 +49,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "value", order = 20)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getValue() {
 		if (cookie != null) {
 			return cookie.getValue();
@@ -59,7 +59,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "domain", order = 30)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getDomain() {
 		if (cookie != null) {
 			return cookie.getDomain();
@@ -69,7 +69,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "path", order = 40)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public String getPath() {
 		if (cookie != null) {
 			return cookie.getPath();
@@ -79,7 +79,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "secure", order = 50)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public Boolean getSecure() {
 		if (cookie != null) {
 			return cookie.getSecure();
@@ -89,7 +89,7 @@ public final class ServletCookieContextProvider implements WrappedContextData<Co
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "max-age", order = 60)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public Integer getMaxAge() {
 		if (cookie != null) {
 			return cookie.getMaxAge();

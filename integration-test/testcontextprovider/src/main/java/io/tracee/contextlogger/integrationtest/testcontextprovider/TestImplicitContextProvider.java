@@ -3,7 +3,7 @@ package io.tracee.contextlogger.integrationtest.testcontextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 
@@ -13,7 +13,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 
 
 @TraceeContextProvider(displayName = "testImplicitContextData", order = 200)
-@ProfileSettings(basic = false, enhanced = true)
+@ProfileConfig(basic = false, enhanced = true)
 public class TestImplicitContextProvider implements ImplicitContextData {
 
 
@@ -22,7 +22,7 @@ public class TestImplicitContextProvider implements ImplicitContextData {
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "output", order = 10)
-	@ProfileSettings(basic = false, enhanced = true)
+	@ProfileConfig(basic = false, enhanced = true)
 	public final String getOutput() {
 		return OUTPUT;
 	}

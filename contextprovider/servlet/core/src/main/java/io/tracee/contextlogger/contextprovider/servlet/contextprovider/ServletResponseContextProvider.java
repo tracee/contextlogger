@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.contextprovider.servlet.contextprovider;
 
 import io.tracee.contextlogger.contextprovider.api.Order;
-import io.tracee.contextlogger.contextprovider.api.ProfileSettings;
+import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Tobias Gindler, holisticon AG on 20.03.14.
  */
 @TraceeContextProvider(displayName = "servletResponse", order = Order.SERVLET)
-@ProfileSettings(basic = true, enhanced = true, full = true)
+@ProfileConfig(basic = true, enhanced = true, full = true)
 public final class ServletResponseContextProvider implements WrappedContextData<HttpServletResponse> {
 
 	private HttpServletResponse response;
@@ -46,7 +46,7 @@ public final class ServletResponseContextProvider implements WrappedContextData<
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-status-code", order = 10)
-	@ProfileSettings(basic = true, enhanced = true, full = true)
+	@ProfileConfig(basic = true, enhanced = true, full = true)
 	public Integer getHttpStatusCode() {
 		if (this.response != null) {
 			return this.response.getStatus();
@@ -56,7 +56,7 @@ public final class ServletResponseContextProvider implements WrappedContextData<
 
 	@SuppressWarnings("unused")
 	@TraceeContextProviderMethod(displayName = "http-header", order = 20)
-	@ProfileSettings(basic = false, enhanced = true, full = true)
+	@ProfileConfig(basic = false, enhanced = true, full = true)
 	public List<NameValuePair<String>> getHttpResponseHeaders() {
 		final List<NameValuePair<String>> list = new ArrayList<NameValuePair<String>>();
 
