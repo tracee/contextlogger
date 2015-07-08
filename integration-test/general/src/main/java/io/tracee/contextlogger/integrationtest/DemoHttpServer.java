@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * Created by TGI on 20.03.2015.
+ *  Demo service endpoint for receiving message of HttpConnector.
  */
 public class DemoHttpServer {
 

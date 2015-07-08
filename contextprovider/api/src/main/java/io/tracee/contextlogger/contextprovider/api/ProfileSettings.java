@@ -5,6 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Used to annotate classes or methods annotated with
+ *
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD, ElementType.TYPE})
 public @interface ProfileSettings {
