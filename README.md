@@ -2,9 +2,9 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.tracee.contextlogger/contextlogger-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.tracee.contextlogger/contextlogger-parent)
 [![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
-[![Coverage Status](https://img.shields.io/coveralls/tracee/contextlogger.svg)](https://coveralls.io/r/tracee/contextlogger)
+[![Coverage Status](https://coveralls.io/repos/tracee/contextlogger/badge.svg?branch=master&service=github)](https://coveralls.io/github/tracee/contextlogger?branch=master)
 
-> The TracEE Context-Logger project helps you to analyze errors in your application by collecting contextual invocation data and writing it to your log files or to other kinds of targets (for example by sending the data via HTTP).
+> The TracEE Context-Logger project helps you to detect, to analyze and to resolve errors by automatically providing contextual invocation data like Http Paramters or SOAP Requests by writing it to your applications log files or to other kinds of targets (for example by sending the data via HTTP). To save system resources, contextual information will only be provided, if an error is detected by the context logger framework.
 
 The *TracEE Context-Logger* is a side project of the *TracEE* project. The *TracEE* project helps you to aggregate log outputs of all of your log files. This will technically enable you to track user requests or sessions throughout your entire system, but does not have any influence on the content that will be written to the logs.
 
