@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>contextprovider-aspectj</artifactId>
@@ -91,7 +92,7 @@
 							<resources>
 								<resource>
 									<directory>target/generated-sources/apt</directory>
-									<targetPath />
+									<targetPath/>
 								</resource>
 							</resources>
 						</configuration>
@@ -124,24 +125,26 @@
 
 		<!-- supported framework dependencies-->
 
-		<!-- AspectJBind aspectjrt and aspectjweaver. Done by using OSGI compliant service mix bundle-->
+		<!-- AspectJ: Bind aspectjrt and aspectjweaver. Done by using OSGI compliant service mix bundle-->
 		<!--
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjrt</artifactId>
 				<version>${aspectj.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjweaver</artifactId>
 				<version>${aspectj.version}</version>
+				<scope>provided</scope>
 			</dependency>
         -->
 		<dependency>
 			<groupId>org.apache.servicemix.bundles</groupId>
 			<artifactId>org.apache.servicemix.bundles.aspectj</artifactId>
-			<version>1.8.5_1</version>
+			<version>${aspectj.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
