@@ -24,36 +24,6 @@
 				</configuration>
 			</plugin>
 
-
-			<!-- Run annotation processors on src/main/java sources -->
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>process</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<phase>generate-sources</phase>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Run annotation processors on src/test/java sources -->
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>process-test</id>
-						<goals>
-							<goal>process-test</goal>
-						</goals>
-						<phase>generate-test-sources</phase>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 
 	</build>
@@ -78,8 +48,6 @@
 		<dependency>
 			<groupId>io.tracee.contextlogger.integrationtest</groupId>
 			<artifactId>contextlogger-testcontextprovider-for-integration-test</artifactId>
-			<version>0.9.0-SNAPSHOT</version>
-			<scope>test</scope>
 		</dependency>
 
 

@@ -45,6 +45,8 @@
 										<include>io.tracee.contextlogger.contextprovider:*</include>
 										<include>org.slf4j:slf4j-api</include>
 										<include>org.aspectj:*</include>
+										<include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.aspectj
+										</include>
 									</includes>
 								</bannedDependencies>
 							</rules>
@@ -122,16 +124,26 @@
 		</dependency>
 
 		<!-- supported framework dependencies-->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
-		</dependency>
 
+		<!-- AspectJBind aspectjrt and aspectjweaver. Done by using OSGI compliant service mix bundle-->
+		<!--
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+        -->
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.aspectj</artifactId>
+			<version>1.8.5_1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

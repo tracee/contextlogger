@@ -105,7 +105,8 @@
 		<logback.version>0.9.30</logback.version>
 		<spring.version>3.1.4.RELEASE</spring.version>
 		<jodatime.version>2.3</jodatime.version>
-		<aspectj.version>1.7.4</aspectj.version>
+		<aspectj.version>1.8.6</aspectj.version>
+		<servlet.api.version>3.0.1</servlet.api.version>
 	</properties>
 
 
@@ -466,6 +467,13 @@
 				<groupId>io.tracee.contextlogger.contextprovider</groupId>
 				<artifactId>contextprovider-javaee</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.tracee.contextlogger.integrationtest</groupId>
+				<artifactId>contextlogger-testcontextprovider-for-integration-test</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
 			</dependency>
 
 
