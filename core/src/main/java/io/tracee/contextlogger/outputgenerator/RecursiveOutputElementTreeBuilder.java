@@ -1,5 +1,6 @@
 package io.tracee.contextlogger.outputgenerator;
 
+import io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilderState;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.profile.ProfileSettings;
 

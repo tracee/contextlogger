@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;

@@ -2,7 +2,7 @@ package io.tracee.contextlogger;
 
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.connector.ConnectorOutputProvider;
 import io.tracee.contextlogger.connector.LogConnectorOutputProvider;
 import io.tracee.contextlogger.impl.ConfigBuilderImpl;

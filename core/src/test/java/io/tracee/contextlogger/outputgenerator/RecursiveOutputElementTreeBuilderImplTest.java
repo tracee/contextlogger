@@ -16,7 +16,7 @@ import io.tracee.contextlogger.profile.ProfileSettings;
 import io.tracee.contextlogger.testdata.TestBeanClass;
 
 /**
- * Test class for {@link io.tracee.contextlogger.outputgenerator.RecursiveOutputElementTreeBuilder}.
+ * Test class for {@link RecursiveOutputElementTreeBuilder}.
  */
 public class RecursiveOutputElementTreeBuilderImplTest {
 

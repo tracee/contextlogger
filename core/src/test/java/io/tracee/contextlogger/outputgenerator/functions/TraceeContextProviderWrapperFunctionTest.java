@@ -1,7 +1,6 @@
 package io.tracee.contextlogger.outputgenerator.functions;
 
 import io.tracee.contextlogger.contextprovider.TypeToWrapper;
-import io.tracee.contextlogger.contextprovider.api.ImplicitContext;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
@@ -11,11 +10,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 /**
@@ -98,16 +96,12 @@ public class TraceeContextProviderWrapperFunctionTest {
 	@Before
 	public void init() {
 
-		Map<ImplicitContext, Class> implicitContextClassMap = new HashMap<ImplicitContext, Class>();
-		implicitContextClassMap.put(CoreImplicitContextProviders.COMMON, TraceeContextProviderWrapperFunctionTest.class);
 
-		when(contextLoggerConfiguration.getImplicitContextClassMap()).thenReturn(implicitContextClassMap);
+		when(contextLoggerConfiguration.getImplicitContextProviderClass(CoreImplicitContextProviders.COMMON)).thenReturn(TraceeContextProviderWrapperFunctionTest.class);
 
-		Map<Class, Class> classToWrapperMap = new HashMap<Class, Class>();
-		classToWrapperMap.put(MappedClass.class, MappedClassWrapper.class);
-		classToWrapperMap.put(IncorrectMappedClass.class, IncorrectMappedClassWrapper.class);
 
-		when(contextLoggerConfiguration.getClassToWrapperMap()).thenReturn(classToWrapperMap);
+		when(contextLoggerConfiguration.getContextProviderClass(eq(MappedClass.class))).thenReturn(MappedClassWrapper.class);
+		when(contextLoggerConfiguration.getContextProviderClass(eq(IncorrectMappedClass.class))).thenReturn(IncorrectMappedClassWrapper.class);
 
 		List<TypeToWrapper> typeToWrapperList = new ArrayList<TypeToWrapper>();
 		typeToWrapperList.add(new TypeToWrapper(WrappedTypeListType.class, WrappedTypeListTypeWrapper.class));

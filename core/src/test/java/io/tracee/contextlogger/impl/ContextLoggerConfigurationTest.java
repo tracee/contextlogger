@@ -35,9 +35,8 @@ public class ContextLoggerConfigurationTest {
 		ContextLoggerConfiguration contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
 
 		MatcherAssert.assertThat(contextLoggerConfiguration, Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getImplicitContextClassMap(), Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getImplicitContextClassMap().containsKey(CoreImplicitContextProviders.COMMON), Matchers.equalTo(true));
-		MatcherAssert.assertThat(contextLoggerConfiguration.getImplicitContextClassMap().containsKey(CoreImplicitContextProviders.TRACEE), Matchers.equalTo(true));
+		MatcherAssert.assertThat(contextLoggerConfiguration.getImplicitContextProviderClass(CoreImplicitContextProviders.COMMON), Matchers.notNullValue());
+		MatcherAssert.assertThat(contextLoggerConfiguration.getImplicitContextProviderClass(CoreImplicitContextProviders.TRACEE), Matchers.notNullValue());
 
 	}
 
@@ -47,34 +46,12 @@ public class ContextLoggerConfigurationTest {
 		ContextLoggerConfiguration contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
 
 		MatcherAssert.assertThat(contextLoggerConfiguration, Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getClassToWrapperMap(), Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getClassToWrapperMap().containsKey(Throwable.class), Matchers.equalTo(true));
-		MatcherAssert.assertThat(contextLoggerConfiguration.getClassToWrapperMap().get(Throwable.class).equals(JavaThrowableContextProvider.class),
+		MatcherAssert.assertThat(contextLoggerConfiguration.getContextProviderClass(Throwable.class), Matchers.notNullValue());
+		MatcherAssert.assertThat(contextLoggerConfiguration.getContextProviderClass(Throwable.class).equals(JavaThrowableContextProvider.class),
 				Matchers.equalTo(true));
 
 	}
 
-	@Test
-	public void should_get_profile_of_context_logger_configuration() {
-
-		ContextLoggerConfiguration contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
-
-		MatcherAssert.assertThat(contextLoggerConfiguration, Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getProfile(), Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getProfile(), Matchers.equalTo(Profile.BASIC));
-
-	}
-
-	@Test
-	public void should_get_wrapper_classes_of_context_logger_configuration() {
-
-		ContextLoggerConfiguration contextLoggerConfiguration = ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration();
-
-		MatcherAssert.assertThat(contextLoggerConfiguration, Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getWrapperClasses(), Matchers.notNullValue());
-		MatcherAssert.assertThat(contextLoggerConfiguration.getWrapperClasses().contains(JavaThrowableContextProvider.class), Matchers.equalTo(true));
-
-	}
 
 	@Test
 	public void should_get_wrappers_of_context_logger_configuration() {

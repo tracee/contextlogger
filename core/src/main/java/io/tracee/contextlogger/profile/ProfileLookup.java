@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Class that offeres helper methods for getting the configured Profile
+ * Class that offers helper methods for getting the configured Profile
  */
 public class ProfileLookup {
 

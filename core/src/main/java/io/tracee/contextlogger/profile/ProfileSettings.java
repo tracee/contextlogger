@@ -1,14 +1,13 @@
 package io.tracee.contextlogger.profile;
 
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.contextprovider.ContextProviderServiceLoader;
 import io.tracee.contextlogger.contextprovider.api.Profile;
+import io.tracee.contextlogger.outputgenerator.api.TraceeContextStringRepresentationBuilder;
 
 import java.util.Properties;
 
 /**
- * This class mixes profile settings with system.property overrides.
- * Created by Tobias Gindler, holisticon AG on 25.03.14.
+ * This class combines profile settings with manual overrides. Manual overrides supersede profile settings.
  */
 public class ProfileSettings {
 

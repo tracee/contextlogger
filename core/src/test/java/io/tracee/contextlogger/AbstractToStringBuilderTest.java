@@ -1,132 +1,120 @@
 package io.tracee.contextlogger;
 
-import java.util.Map;
-import java.util.Set;
-
+import io.tracee.contextlogger.contextprovider.api.Profile;
+import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
+import io.tracee.contextlogger.outputgenerator.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
-import io.tracee.contextlogger.contextprovider.api.Profile;
-import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
-import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
+import java.util.Map;
 
 /**
  * Unit test for {@link AbstractToStringBuilder}.
  */
 public class AbstractToStringBuilderTest {
 
-    public static class TestToStringBuilder extends AbstractToStringBuilder<TestToStringBuilder> {
+	public static class TestToStringBuilder extends AbstractToStringBuilder<TestToStringBuilder> {
 
-        protected TestToStringBuilder() {
-            super((ContextLoggerConfiguration)null);
-        }
+		protected TestToStringBuilder() {
+			super((ContextLoggerConfiguration) null);
+		}
 
-        protected TestToStringBuilder(final AbstractToStringBuilder instanceToClone) {
-            super(instanceToClone);
-        }
+		protected TestToStringBuilder(final AbstractToStringBuilder instanceToClone) {
+			super(instanceToClone);
+		}
 
-        @Override
-        public void log(final Object... instancesToLog) {
+		@Override
+		public void log(final Object... instancesToLog) {
 
-        }
+		}
 
-        @Override
-        public void logWithPrefixedMessage(final String prefixedMessage, final Object... instancesToLog) {
+		@Override
+		public void logWithPrefixedMessage(final String prefixedMessage, final Object... instancesToLog) {
 
-        }
-    }
+		}
+	}
 
-    public TraceeContextStringRepresentationBuilder traceeContextLogBuilder = new TraceeContextStringRepresentationBuilder() {
+	public TraceeContextStringRepresentationBuilder traceeContextLogBuilder = new TraceeContextStringRepresentationBuilder() {
 
-        @Override
-        public Set<Class> getWrapperClasses() {
-            return null;
-        }
+		@Override
+		public boolean getEnforceOrder() {
+			return false;
+		}
 
-        @Override
-        public void setWrapperClasses(final Set<Class> wrapperClasses) {
+		@Override
+		public void setEnforceOrder(final boolean keepOrder) {
 
-        }
+		}
 
-        @Override
-        public boolean getEnforceOrder() {
-            return false;
-        }
+		@Override
+		public String createStringRepresentation(final Object... instancesToProcess) {
+			return null;
+		}
 
-        @Override
-        public void setEnforceOrder(final boolean keepOrder) {
+		@Override
+		public void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
 
-        }
+		}
 
-        @Override
-        public String createStringRepresentation(final Object... instancesToLog) {
-            return null;
-        }
+		@Override
+		public void setManualContextOverrides(final Map<String, Boolean> manualContextOverrides) {
 
-        @Override
-        public void setOutputWriterConfiguration(final OutputWriterConfiguration outputWriterConfiguration) {
+		}
 
-        }
+		@Override
+		public Map<String, Boolean> getManualContextOverrides() {
+			return null;
+		}
 
-        @Override
-        public void setManualContextOverrides(final Map<String, Boolean> manualContextOverrides) {
+		@Override
+		public TraceeContextStringRepresentationBuilder cloneStringRepresentationBuilder() {
+			return null;
+		}
 
-        }
+		@Override
+		public void setProfile(final Profile profile) {
 
-        @Override
-        public Map<String, Boolean> getManualContextOverrides() {
-            return null;
-        }
+		}
 
-        @Override
-        public TraceeContextStringRepresentationBuilder cloneStringRepresentationBuilder() {
-            return null;
-        }
+		@Override
+		public Profile getProfile() {
+			return null;
+		}
+	};
 
-        @Override
-        public void setProfile(final Profile profile) {
+	@Test
+	public void should_use_constructor_correctly() {
 
-        }
+		TestToStringBuilder source = new TestToStringBuilder();
+		source.setStringRepresentationBuilder(traceeContextLogBuilder);
 
-        @Override
-        public Profile getProfile() {
-            return null;
-        }
-    };
+		final Object[] objArray = {"ABC", "DEF"};
+		source.setObjectsToProcess(objArray);
 
-    @Test
-    public void should_use_constructor_correctly() {
+		TestToStringBuilder unit = new TestToStringBuilder(source);
 
-        TestToStringBuilder source = new TestToStringBuilder();
-        source.setStringRepresentationBuilder(traceeContextLogBuilder);
+		MatcherAssert.assertThat(unit.getStringRepresentationBuilder(), Matchers.equalTo(source.getStringRepresentationBuilder()));
+		MatcherAssert.assertThat(unit.getObjectsToProcess(), Matchers.equalTo(objArray));
+		MatcherAssert.assertThat(unit.getContextLoggerConfiguration(), Matchers.nullValue());
 
-        final Object[] objArray = { "ABC", "DEF" };
-        source.setObjectsToProcess(objArray);
+	}
 
-        TestToStringBuilder unit = new TestToStringBuilder(source);
+	@Test
+	public void toString_should_be_forwarded_to_tracee_context_log_builder_correctly() {
 
-        MatcherAssert.assertThat(unit.getStringRepresentationBuilder(), Matchers.equalTo(source.getStringRepresentationBuilder()));
-        MatcherAssert.assertThat(unit.getObjectsToProcess(), Matchers.equalTo(objArray));
-        MatcherAssert.assertThat(unit.getContextLoggerConfiguration(), Matchers.nullValue());
+		TestToStringBuilder unit = new TestToStringBuilder();
 
-    }
+		TraceeContextStringRepresentationBuilder spy = Mockito.spy(traceeContextLogBuilder);
 
-    @Test
-    public void toString_should_be_forwarded_to_tracee_context_log_builder_correctly() {
+		unit.setStringRepresentationBuilder(spy);
 
-        TestToStringBuilder unit = new TestToStringBuilder();
+		unit.toString("ABC", "DEF");
+		Mockito.verify(spy).createStringRepresentation("ABC", "DEF");
 
-        TraceeContextStringRepresentationBuilder spy = Mockito.spy(traceeContextLogBuilder);
-
-        unit.setStringRepresentationBuilder(spy);
-
-        unit.toString("ABC", "DEF");
-        Mockito.verify(spy).createStringRepresentation("ABC", "DEF");
-
-        unit.create("DEF", "GHI");
-        Mockito.verify(spy).createStringRepresentation("DEF", "GHI");
-    }
+		unit.create("DEF", "GHI");
+		Mockito.verify(spy).createStringRepresentation("DEF", "GHI");
+	}
 }

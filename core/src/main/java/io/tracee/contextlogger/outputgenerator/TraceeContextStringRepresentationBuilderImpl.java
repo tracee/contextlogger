@@ -1,6 +1,6 @@
 package io.tracee.contextlogger.outputgenerator;
 
-import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
+import io.tracee.contextlogger.outputgenerator.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.writer.OutputWriterToOutputTransformer;
 import io.tracee.contextlogger.profile.ProfileSettings;
@@ -14,8 +14,8 @@ public class TraceeContextStringRepresentationBuilderImpl extends AbstractContex
     }
 
     @Override
-    public String createStringRepresentation(final Object... instancesToLog) {
-        OutputElement tmp = RootOutputElementTreeBuilder.buildOutputElementTree(new ProfileSettings(this), instancesToLog);
+    public String createStringRepresentation(final Object... instancesToProcess) {
+        OutputElement tmp = RootOutputElementTreeBuilder.buildOutputElementTree(new ProfileSettings(this), instancesToProcess);
 
         return OutputWriterToOutputTransformer.produceOutput(this.getOutputWriterConfiguration(), tmp);
     }
