@@ -9,8 +9,6 @@ import java.lang.reflect.Method;
 /**
  * Wrapper class for methods and their {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod} annotations.
  * Used for sorting (by {@link MethodAnnotationPairComparator}) and other tasks.
- * <p/>
- * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 public class MethodAnnotationPair {
 

@@ -12,7 +12,7 @@ import io.tracee.contextlogger.contextprovider.api.ImplicitContextData;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 /**
- * Class to store class to wrapper mapppings.
+ * Class to store class to wrapper mappings.
  */
 public final class TypeToWrapper {
 

@@ -14,7 +14,6 @@ import io.tracee.contextlogger.profile.ProfileLookup;
 
 /**
  * A Singleton that holds the static configuration data.
- * Created by Tobias Gindler, holisticon AG on 28.03.14.
  */
 public class ContextLoggerConfiguration {
 

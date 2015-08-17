@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ContextLogger;
 import io.tracee.contextlogger.api.internal.Configuration;
-import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessible;
 import io.tracee.contextlogger.contextprovider.api.Profile;
 
 /**
@@ -21,13 +21,13 @@ import io.tracee.contextlogger.contextprovider.api.Profile;
  */
 public class ConfigBuilderImplTest {
 
-    ContextLoggerBuilderAccessable contextLogger;
+    ContextLoggerBuilderAccessible contextLogger;
     ConfigBuilder<ContextLogger> configBuilder;
 
     @Before
     public void init() {
 
-        contextLogger = Mockito.mock(ContextLoggerBuilderAccessable.class);
+        contextLogger = Mockito.mock(ContextLoggerBuilderAccessible.class);
         Mockito.when(contextLogger.getContextLoggerConfiguration()).thenReturn(ContextLoggerConfiguration.getOrCreateContextLoggerConfiguration());
 
         configBuilder = new ConfigBuilderImpl(contextLogger);

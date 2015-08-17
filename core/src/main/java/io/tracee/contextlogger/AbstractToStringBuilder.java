@@ -3,13 +3,13 @@ package io.tracee.contextlogger;
 import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.api.TraceeContextStringRepresentationBuilder;
 import io.tracee.contextlogger.api.WrappedContextLoggerOutput;
-import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessible;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 
 /**
  * Abstract to String Builder class.
  */
-public abstract class AbstractToStringBuilder<T extends ToStringBuilder> implements ContextLoggerBuilderAccessable {
+public abstract class AbstractToStringBuilder<T extends ToStringBuilder> implements ContextLoggerBuilderAccessible {
 
     private final ContextLoggerConfiguration contextLoggerConfiguration;
     private TraceeContextStringRepresentationBuilder traceeContextLogBuilder;

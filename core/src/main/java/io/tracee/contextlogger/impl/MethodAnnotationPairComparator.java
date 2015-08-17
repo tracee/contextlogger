@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 /**
  * Comparator to sort {@link MethodAnnotationPair} instances.
- * Created by Tobias Gindler, holisticon AG on 14.03.14.
  */
 public final class MethodAnnotationPairComparator implements Comparator<MethodAnnotationPair> {
 

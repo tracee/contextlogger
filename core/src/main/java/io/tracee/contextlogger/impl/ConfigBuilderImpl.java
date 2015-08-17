@@ -8,7 +8,7 @@ import java.util.Map;
 import io.tracee.contextlogger.api.ConfigBuilder;
 import io.tracee.contextlogger.api.ToStringBuilder;
 import io.tracee.contextlogger.api.internal.Configuration;
-import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessable;
+import io.tracee.contextlogger.api.internal.ContextLoggerBuilderAccessible;
 import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.outputgenerator.TraceeContextStringRepresentationBuilderImpl;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
@@ -19,7 +19,7 @@ import io.tracee.contextlogger.outputgenerator.writer.OutputWriterConfiguration;
  */
 public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configuration<T> {
 
-    private final ContextLoggerBuilderAccessable contextLogger;
+    private final ContextLoggerBuilderAccessible contextLogger;
     private final ContextLoggerConfiguration contextLoggerConfiguration;
 
     private Profile profile = null;
@@ -30,10 +30,10 @@ public class ConfigBuilderImpl<T extends ToStringBuilder> implements Configurati
 
     private OutputWriterConfiguration outputWriterConfiguration = BasicOutputWriterConfiguration.JSON_INTENDED;
 
-    public ConfigBuilderImpl(ContextLoggerBuilderAccessable traceeContextLoggerBuilderAccessable) {
+    public ConfigBuilderImpl(ContextLoggerBuilderAccessible traceeContextLoggerBuilderAccessible) {
 
-        this.contextLogger = traceeContextLoggerBuilderAccessable;
-        this.contextLoggerConfiguration = traceeContextLoggerBuilderAccessable.getContextLoggerConfiguration();
+        this.contextLogger = traceeContextLoggerBuilderAccessible;
+        this.contextLoggerConfiguration = traceeContextLoggerBuilderAccessible.getContextLoggerConfiguration();
 
     }
 
