@@ -1,7 +1,7 @@
 package io.tracee.contextlogger.api;
 
 /**
- * Interface for gernerating string representations.
+ * Interface for generating string representations.
  */
 public interface ToStringBuilder {
 
