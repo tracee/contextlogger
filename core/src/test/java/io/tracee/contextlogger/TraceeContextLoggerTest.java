@@ -19,7 +19,7 @@ public class TraceeContextLoggerTest {
 
 		String result = unit.toString("ABC", 1L);
 
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"Long['1']\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"Long<1>\"]"));
 
 	}
 
@@ -30,12 +30,12 @@ public class TraceeContextLoggerTest {
 				.enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE).apply();
 
 		String result = unit.toString("ABC", 1L);
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String['ABC']\",\"Long['1']\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'ABC'>\",\"Long<1>\"]"));
 
 		Object[] objectsToBeProcessed = {"DEF", 2L};
 		unit.setObjectsToProcess(objectsToBeProcessed);
 		result = unit.provideOutput();
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String['DEF']\",\"Long['2']\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'DEF'>\",\"Long<2>\"]"));
 
 	}
 
@@ -52,7 +52,7 @@ public class TraceeContextLoggerTest {
 
 		result = unit.toString(new NullPointerException(), "ABC");
 
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String['ABC']\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'ABC'>\"]"));
 
 	}
 

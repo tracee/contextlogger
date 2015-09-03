@@ -46,14 +46,14 @@ public class ImplicitContextIntegrationTest {
 	public void should_write_instance_for_multiple_referenced_instances() {
 		String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString("ABC");
 
-		MatcherAssert.assertThat(result, Matchers.is("\"String['ABC']\""));
+		MatcherAssert.assertThat(result, Matchers.is("\"String<'ABC'>\""));
 	}
 
 	@Test
 	public void should_write_this_instance_without_tostring_overwrite_correctly() {
 		String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString(this);
 
-		MatcherAssert.assertThat(result, Matchers.is("\"ImplicitContextIntegrationTest[]\""));
+		MatcherAssert.assertThat(result, Matchers.is("\"ImplicitContextIntegrationTest<>\""));
 	}
 
 	@Test

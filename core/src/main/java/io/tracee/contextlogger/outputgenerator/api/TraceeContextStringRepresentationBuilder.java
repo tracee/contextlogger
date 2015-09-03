@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public interface TraceeContextStringRepresentationBuilder {
 
-
 	boolean getEnforceOrder();
 
 	void setEnforceOrder(final boolean keepOrder);

@@ -6,7 +6,6 @@ import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 
 /**
  * Marks a class that a {@link TraceeContextStringRepresentationBuilder} can be added.
- * Created by Tobias Gindler on 19.06.14.
  */
 public interface ContextLoggerBuilderAccessible extends ContextLogger {
 

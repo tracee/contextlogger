@@ -1,9 +1,6 @@
 package io.tracee.contextlogger.outputgenerator.writer.complex;
 
-import java.util.Map;
-
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
-import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.writer.api.ComplexOutputElementWriter;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputStyle;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputWriter;
@@ -14,36 +11,35 @@ import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunct
  */
 public class SimpleComplexOutputElementWriter implements ComplexOutputElementWriter {
 
-    @Override
-    public void produceOutput(final OutputWriter outputWriterInstance, final StringBuilder stringBuilder, final OutputStyle outputStyle,
-            final ComplexOutputElement nodeOutputElement) {
-        stringBuilder.append(outputStyle.openingComplexType());
+	@Override
+	public void produceOutput(final OutputWriter outputWriterInstance, final StringBuilder stringBuilder, final OutputStyle outputStyle,
+							  final ComplexOutputElement nodeOutputElement) {
+		stringBuilder.append(outputStyle.openingComplexType());
 
-        // Prepend type
-        boolean shouldWriteSeparator = TypeProviderFunction.getInstance().apply(stringBuilder, outputStyle, nodeOutputElement);
+		// Prepend type
+		boolean shouldWriteSeparator = TypeProviderFunction.getInstance().apply(stringBuilder, outputStyle, nodeOutputElement);
 
-        // create style for children
-        OutputStyle childrenOutputStyle = outputStyle.getChildConfiguration();
+		// create style for children
+		OutputStyle childrenOutputStyle = outputStyle.getChildConfiguration();
 
-        for (Map.Entry<String, OutputElement> child : nodeOutputElement.getOutputElements().entrySet()) {
+		for (ComplexOutputElement.Entry child : nodeOutputElement.getOutputElements()) {
 
-            if (!shouldWriteSeparator) {
-                shouldWriteSeparator = true;
-            }
-            else {
-                stringBuilder.append(outputStyle.complexTypeElementSeparator());
-            }
+			if (!shouldWriteSeparator) {
+				shouldWriteSeparator = true;
+			} else {
+				stringBuilder.append(outputStyle.complexTypeElementSeparator());
+			}
 
-            stringBuilder.append(outputStyle.complexTypeOpeningName());
-            stringBuilder.append(outputStyle.escapeString(child.getKey()));
-            stringBuilder.append(outputStyle.complexTypeClosingName());
+			stringBuilder.append(outputStyle.complexTypeOpeningName());
+			stringBuilder.append(outputStyle.escapeString(child.getKey()));
+			stringBuilder.append(outputStyle.complexTypeClosingName());
 
-            stringBuilder.append(outputStyle.complexTypeNameValueSeparator());
+			stringBuilder.append(outputStyle.complexTypeNameValueSeparator());
 
-            outputWriterInstance.produceOutputRecursively(stringBuilder, childrenOutputStyle, child.getValue());
+			outputWriterInstance.produceOutputRecursively(stringBuilder, childrenOutputStyle, child.getChildOutputElement());
 
-        }
+		}
 
-        stringBuilder.append(outputStyle.closingComplexType());
-    }
+		stringBuilder.append(outputStyle.closingComplexType());
+	}
 }

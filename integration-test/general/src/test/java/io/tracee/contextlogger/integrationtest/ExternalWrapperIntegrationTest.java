@@ -27,7 +27,7 @@ public class ExternalWrapperIntegrationTest {
 		String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
 				.enforceProfile(Profile.ENHANCED).apply().toString(new WrappedTestContextData());
 
-		MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testdata\",\"testoutput\":\"String['IT WORKS !!!']\"}"));
+		MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testdata\",\"testoutput\":\"String<'IT WORKS !!!'>\"}"));
 
 	}
 
@@ -56,7 +56,7 @@ public class ExternalWrapperIntegrationTest {
 		String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
 				.enforceProfile(Profile.ENHANCED).apply().toString(new TestImplicitContextProvider());
 
-		MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testImplicitContextData\",\"output\":\"String['IT WORKS TOO!!!']\"}"));
+		MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"testImplicitContextData\",\"output\":\"String<'IT WORKS TOO!!!'>\"}"));
 
 	}
 

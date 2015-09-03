@@ -43,6 +43,14 @@ public class ProfileIntegrationTest {
 
 		// MatcherAssert.assertThat(profileSettings.getPropertyValue(), Matchers.is());
 
+		// CORE
+		MatcherAssert
+				.assertThat(
+						profileSettings
+								.getPropertyValue("io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider.message"),
+						Matchers.is(true));
+
+
 		// ASPECTJ
 		MatcherAssert
 				.assertThat(
@@ -53,6 +61,34 @@ public class ProfileIntegrationTest {
 				.getPropertyValue("io.tracee.contextlogger.contextprovider.aspectj.contextprovider.WatchdogContextProvider.proceedingJoinPoint"), Matchers
 				.is(true));
 
+		// JAVAEE
+		MatcherAssert
+				.assertThat(
+						profileSettings
+								.getPropertyValue("io.tracee.contextlogger.contextprovider.javaee.contextprovider.InvocationContextContextProvider.methodName"),
+						Matchers.is(true));
+
+		// JAXWS
+		MatcherAssert
+				.assertThat(
+						profileSettings
+								.getPropertyValue("io.tracee.contextlogger.contextprovider.jaxws.contextprovider.JaxWsContextProvider.soapRequest"),
+						Matchers.is(true));
+
+		// SERVLET
+		MatcherAssert
+				.assertThat(
+						profileSettings
+								.getPropertyValue("io.tracee.contextlogger.contextprovider.servlet.contextprovider.ServletRequestContextProvider.httpParameters"),
+						Matchers.is(true));
+
+
+		// SPRING-MVC
+		MatcherAssert
+				.assertThat(
+						profileSettings
+								.getPropertyValue("io.tracee.contextlogger.contextprovider.springmvc.contextprovider.HandlerMethodContextProvider.method"),
+						Matchers.is(true));
 	}
 
 

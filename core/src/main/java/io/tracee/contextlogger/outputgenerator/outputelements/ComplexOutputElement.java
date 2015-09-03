@@ -1,38 +1,57 @@
 package io.tracee.contextlogger.outputgenerator.outputelements;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for processing complex element types that are defined by a single value.
  */
 public class ComplexOutputElement extends AbstractOutputElement {
 
-    private Map<String, OutputElement> outputElements = new HashMap<String, OutputElement>();
+	public static class Entry {
 
-    /**
-     * Constructor.
-     */
-    public ComplexOutputElement(Class type, Object instance) {
-        super(type, instance);
-    }
+		private final String key;
+		private final OutputElement childOutputElement;
 
-    @Override
-    public boolean isEmpty() {
-        return outputElements.size() == 0;
-    }
+		public Entry(String key, OutputElement childOutputElement) {
+			this.key = key;
+			this.childOutputElement = childOutputElement;
+		}
 
-    @Override
-    public OutputElementType getOutputElementType() {
-        return OutputElementType.COMPLEX;
-    }
+		public String getKey() {
+			return key;
+		}
 
-    public void addOutputElement(String name, OutputElement outputElement) {
-        this.outputElements.put(name, outputElement);
-    }
+		public OutputElement getChildOutputElement() {
+			return childOutputElement;
+		}
+	}
 
-    public Map<String, OutputElement> getOutputElements() {
-        return outputElements;
-    }
+	private List<ComplexOutputElement.Entry> outputElements = new ArrayList<Entry>();
+
+	/**
+	 * Constructor.
+	 */
+	public ComplexOutputElement(Class type, Object instance) {
+		super(type, instance);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return outputElements.size() == 0;
+	}
+
+	@Override
+	public OutputElementType getOutputElementType() {
+		return OutputElementType.COMPLEX;
+	}
+
+	public void addOutputElement(String name, OutputElement outputElement) {
+		this.outputElements.add(new Entry(name, outputElement));
+	}
+
+	public List<Entry> getOutputElements() {
+		return outputElements;
+	}
 
 }
