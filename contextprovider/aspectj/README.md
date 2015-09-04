@@ -26,14 +26,14 @@ The watchdog aspect execution is triggered by the Watchdog annotation. Therefore
     public class ExampleClass() {
     
         @Watchdog
-        public void exampleMethod1() {
+        public void exampleMethod1(...) {
             ...
         }
         
         // ...
         
         @Watchdog
-        private void exampleMethodN() {
+        private void exampleMethodN(...) {
             ...
         }
     
@@ -48,16 +48,10 @@ Depending on the selected context logger profile the output consists of invoked 
 ## Maven artifacts
 You have to add the following Maven dependencies to your project:
 
-    <dependency>
-        <groupId>io.tracee</groupId>
-        <artifactId>tracee-api</artifactId>
-        <version>${tracee.version}</version>
-    </dependency>
     
-    <!-- tracee log framework provider - depending on your project log configuration -->
     <dependency>
-        <groupId>io.tracee.backend</groupId>
-        <artifactId>tracee-slf4j</artifactId>
+        <groupId>io.tracee.contextlogger</groupId>
+        <artifactId>contextlogger-core</artifactId>
         <version>${tracee.version}</version>
     </dependency>
 
