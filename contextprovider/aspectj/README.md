@@ -41,6 +41,7 @@ The watchdog aspect execution is triggered by the Watchdog annotation. Therefore
     
 ## Example output
 Depending on the selected context logger profile the output consists of invoked method name, deserialized invocation parameters, deserialized target instance and thrown exception.
+For example the provided output for the method invacation of method ExampleClass1.exampleMethod1 could look like this:
 
 	2015-09-04 13:58:18,245 ERROR [AYGIYAWBNVI295OBIPXDH5HQO4Z25767] i.t.c.connector.LogConnector:[50] TRACEE_CL_ERROR[Watchdog]  : [
 	  "TYPE:Object[]",
