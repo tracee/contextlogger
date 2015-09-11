@@ -33,7 +33,7 @@ The HTTP connector can be configured by using system properties.
 
 It's possible to configure multiple http connectors by changing the name of the in the property configuration prefix. 
 
-### Configuration example - HTTP Connector
+### Configuration example
 Here is a small example that configures two Http connectors:
 
 	// example 1 : with basic authentication
