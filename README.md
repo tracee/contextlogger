@@ -4,17 +4,19 @@
 [![Build Status](https://api.travis-ci.org/tracee/contextlogger.svg)](https://travis-ci.org/tracee/contextlogger)
 [![Coverage Status](https://coveralls.io/repos/tracee/contextlogger/badge.svg?branch=master&service=github)](https://coveralls.io/github/tracee/contextlogger?branch=master)
 
-> The TracEE Context-Logger project helps you to detect, to analyze and to resolve errors by automatically providing contextual invocation data like Http Paramters or SOAP Requests by writing it to your applications log files or to other kinds of targets (for example by sending the data via HTTP). To save system resources, contextual information will only be provided, if an error is detected by the context logger framework.
+> The TracEE Context-Logger is a java framework for providing contextual information in log files (or other kind of targets - for example by sending the data via HTTP). The contextual information is provided in a human and machine readable format (JSON).
 
-The *TracEE Context-Logger* is a side project of the *TracEE* project. The *TracEE* project helps you to aggregate log outputs of all of your log files. This will technically enable you to track user requests or sessions throughout your entire system, but does not have any influence on the content that will be written to the logs.
-
-The main focus of the *TracEE Context-Logger* subproject lies on providing contextual data by outputting them to log files (or to other targets). It consist of two parts.
-
-The first part offers a fluent api to generate human and machine readable String representations in Json format for object instances of any type.
-
-The second part offers adapters and bindings for most popular Java EE technologies that are providing contextual invocation data in case of an error(== uncaught exception).
-
-Like the *TracEE* project, it integrates with almost no effort - At the moment the following JavaEE technologies are supported.
+It does the following things:
+- offers handlers for most popular java frameworks that are used to detect errors (uncaught exceptions) automatically  and to provide information about the invocation context that lead to the error.
+- offers a fluent API that is helping you to create human and machine readable string representations for any kind of instances. This can be used to provide in manual log statements. 
+- offers pre-defined and customized profiles to configure the output
+- offers a plugin mechanism that allows you to use customized output builders for specific types
+- offers a plugin mechanism to allow writing of contextual information to other kinds of targets than log files (for example: to send invocation context via HTTP to another server)
+- offers a fixed output format that eases automatic detection of errors ( no more customer driven bug detection ;) ). 
+- integration is very easy with low impact on production code
+- uses slf4j as a log abstraction. Therefore most log frameworks are supported.
+ 
+At the moment the following Java technologies / frameworks are supported:
 
 * servlet 2.5+
 * jax-ws
@@ -24,27 +26,18 @@ Like the *TracEE* project, it integrates with almost no effort - At the moment t
 * AspectJ / Spring-AOP
 * Spring
 
-The contextlogger uses slf4j as an abstraction for logging. Therefore all common log frameworks are supported (slf4j,log4j,...).
 
-This project is still in an experimental stage - the api is nearly in a final state, but may change slightly during further development.
+# Motivation
+Think about getting a call of a customer who informs you about an error that has happened in your application.
+In most cases the only information you get is the name of the user, the time of the error and in which part of the application the error has occurred.
+All other information must be gathered from the log files of the applications servers or the connected databases.
+Success and speed of analyzing the error hardly depends on what has been written to the logs. Most of the useful output is provided manually by log statements implemented by the developer or in worst case not even at all.
+And databases aren't a reliable source of information, because data could have changed since the error has occurred.
 
-# Getting started
+That is where the TracEE Context Logger is going to help you. It automatically detects errors and writes the invocation context to the logs. It offers handlers for the most commonly used Java Frameworks (Java EE, Spring and others).
+For example it is possible to output requests parameters in Servlet container or to output soap request of JAX-WS webservices.
 
-## The contextual information data
-
-### So what is this all about?
-
-An example:
-- A user is using your JavaEE application. After a short time an exception was thrown on the application server. This could happen due to a lot of reasons (corrupt data, error in software, infrastructure problems).
-- Usually exceptions and custom log output are going to be written to your logfiles. You will be able to detect the error, if you are monitoring your logfiles. Otherwise the only chance to detect the error is to wait for a call of an user.
-- Now your operations employees or developers are going to try to analyze the cause of the error. This can be a very difficult and time consuming task. Success and speed are directly affected by the information you are able to gather from your log files. And this "context" data is usually provided by custom log statements provided by the developers.
-
-The TracEE Context-Logger project automates the gathering and outputting of contextual invocation data.
-Therefore it offers technolgy dependant adapters/handlers/interceptors that are detecting exceptions and automatically provide the invocation context data by writing it to the log files (or to other kind of connectors).
-It also offers a fluent api to build human and machine-readable string representation for any kind of object instances.
-
-### But how does it look like ?
-
+# Example
 The following output was generated by the tracee-examples applications after an uncaught exception in a JaxWs was thrown. The output was written by a JaxWS service handler and a servlet filter provided by the TracEE Context-Logger. 
 
 	13:51:36.929 [http-bio-9080-exec-5] ERROR i.t.c.connector.LogConnector - [08f0d3700af5309b0ee3d140dd740cf4|6P22I7Z28VWEFMBV6U1HH5GITO8PTZ3M] - TRACEE_CL_ERROR[JAX-WS]  : [
@@ -97,20 +90,21 @@ The following output was generated by the tracee-examples applications after an 
 	  }
 	]
 
-As you can see the context data needed to analyze the error has been written to the logs. But that's not everything - The output can be easily configured via pre defined or custom profiles.
-In that way it's possible to enable output for additional context information like cookies, session or request attributes just by changing the default profile by setting a system property.
+As you can see the context data needed to analyze the error has been written to the logs. 
+The output can be configured easily via predefined or customized profiles.
 
-### Detecting errors
+# Integrating TracEE Context-Logger into your application 
 
-Detecting errors using in logfiles is a difficult task. A common approach is to search for known errors like NullPointerExceptions, TimeoutExceptions or other error types you have encountered in the past.  
+There are two possibilties on how to use the TracEE Context-Logger:
+* manually driven : by using the fluent API to generate string representations for instances
+* automatically driven : by using handlers and inteceptors provided by the technolgy dependant context provider artifacts
 
-The TracEE Context-Logger project allows you to easily detect errors by using a fix log statement structure:
 
-	<LOG STATEMENT HEADER PROVIDED BY LOG FRAMEWORK> TRACEE_CL_ERROR[<SOURCE>]  : <CONTEXUAL DATA> 
+## Write log statements manually by using the Fluent API
+String representaions of contextual information can be added manually to the logs by using the Fluent API.
+Building of the string representation is done via reflection. 
+Multiple referenced instances and loops are detected and handled gently.
 
-The TracEE Context-Logger uses a fix log statement prefix. So it's easy to detect all errors just by searching for the log statement prefix string  "TRACEE_CL_ERROR" on your log server. 
-
-## Building of string representations for object instances
 The TraceeToStringBuilder is very easy to use:
 
 	// generates a string representation for passed instance using default profiles
@@ -132,34 +126,9 @@ The TraceeToStringBuilder is very easy to use:
 		.toString(instance1,instance2,...);
     		
 
-### How to generate String representations
-
-### How is it done ? 
-The creation of string representation is done in two phases.
-The first phase is used to recursively create an output element tree which will be processed in the second phase to build the string representation.
-
-#### First phase : building output element tree
-The TraceeToStringBuilder fluent api supports object instances of any kind of types. 
-Given input types are classified in the following categories:
-
-| Output Element Type    | Description |
-| --------------------:  |:-----------:|
-|Tracee Context Provider | Tracee offers the possibility to define context providers which handle the output element tree creation for a specific type. Passed object instances will automatically wrapped by context provider.Context provider output can be directly configure by using profiles. Will be handled as COMPLEX output element at second phase|
-|COLLECTION              | Used if passed object instance is either an array or an collection. Child elements will be processed recursively|
-|COMPLEX                 | Used If passed object instances type is a bean (must have at least one field with matching getter) or a Map. Child elements will be processed recursively |
-|ATOMIC                  | Used as the default fallback output element. | 
-
-Output element tree depth is limited to keep output and processing time small. Cycles or multiple usage of instances will be detected and handled by an internal references to output element caching mechanism.  
-
-#### Second phase : building the string representation
-The output element tree are processed recursively. It is possible to use different kind of output styles(for example inline/formatted Json). 
 
 
-# Integrating TracEE into your application
-
-The steps to get TracEE contextual logging up and running pretty much depend on your application scenario. The most common use case would be to provide contextual invocation data from a servlet container based frontend or an ejb based backend.
-
-## Integration scenarios
+## Detect errors and provide log statements automatically by using technology dependant context providers.
 
 | Framework    | Adapter |
 | ----------:  |:------:|
@@ -168,8 +137,18 @@ The steps to get TracEE contextual logging up and running pretty much depend on 
 | JAX-RS       | Use [contextprovider-servlet](contextprovider/servlet) as a servlet filter. |
 | JAX-RS2      | TODO |
 | JAX-WS       | Use [contextprovider-jaxws](contextprovider/jaxws) as a message listener. |
+| SPRING-MVC   | Use [contextprovider-springmvc](contextprovider/springmvc) as a handler interceptor.
 | SPRING-AOP   | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
 | ASPECTJ      | Use [contextprovider-aspectj] (contextprovider/aspectj) by offering an aspect triggered by a simple java annotation|
+
+### Automatic detection of errors
+Automatic detection of errors in logfiles is a difficult task. A common approach is to search for known errors like NullPointerExceptions, TimeoutExceptions or other error types you have encountered in the past.  
+
+The TracEE Context-Logger project is helping you to detect errors easily by using a fix log statement structure:
+
+	<LOG STATEMENT HEADER PROVIDED BY LOG FRAMEWORK> TRACEE_CL_ERROR[<SOURCE>]  : <CONTEXUAL DATA> 
+
+The TracEE Context-Logger uses a static log statement prefix. So it's easy to detect all errors just by searching for the log statement prefix string  "TRACEE_CL_ERROR" on your log server. 
 
 ## Modules
 
@@ -186,6 +165,7 @@ The following table describes all available TracEE-contextlogger modules and the
 | [contextprovider-provider-api](contextprovider/api)          | Provides support for Servlets via ServletFilter |
 | [contextprovider-servlet](contextprovider/servlet)                    | Provides support for Servlets via ServletFilter |
 | [contextprovider-aspectj](contextprovider/aspectj)                  | AspectJ / Spring-AOP powered contextual logging |
+| [contextprovider-springmvc](contextprovider/springmvc)                  | Spring-MVC powered contextual logging |
 
 ## Configuration
 
@@ -209,3 +189,7 @@ You can add the following optional system properties to your application server 
 | -------------:|:-----------:|:-------:|
 | io.tracee.contextlogger.tracee-standard-stage | Defines the stage of the system - for example DEV, INT, TEST,... | won't be used if not set explicitly |
 | io.tracee.contextlogger.tracee-standard-system | Defines the name of the system | system name will be determined automatically by calling InetAddress.getLocalHost().getHostName() |
+
+
+
+
