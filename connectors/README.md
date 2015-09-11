@@ -1,4 +1,4 @@
-> This document contains documentation for the contextlogger-connectors module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the contextlogger-connectors module. Click [here](/README.md) to get an overview about the TracEE Context-Logger.
 
 # contextlogger-connectors
 
