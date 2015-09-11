@@ -36,10 +36,12 @@ It's possible to configure multiple http connectors by changing the name of the 
 ### Configuration example - HTTP Connector
 Here is a small example that configures two Http connectors:
 
+	// example 1 : with basic authentication
     io.tracee.contextlogger.connector.httpConnector1.class=io.tracee.contextlogger.connector.http.HttpConnector
     io.tracee.contextlogger.connector.httpConnector1.url=http://localhost:8080/target
     io.tracee.contextlogger.connector.httpConnector1.basicAuth.user=user
     io.tracee.contextlogger.connector.httpConnector1.basicAuth.password=passwd
     
+    // example 2 : without authentication
     io.tracee.contextlogger.connector.httpConnector2.class=io.tracee.contextlogger.connector.http.HttpConnector
     io.tracee.contextlogger.connector.httpConnector2.url=http://localhost:8090/anotherTarget 
