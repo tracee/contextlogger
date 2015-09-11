@@ -8,11 +8,11 @@
 
 It does the following things:
 - offers handlers for most popular java frameworks that are used to detect errors (uncaught exceptions) automatically  and to provide information about the invocation context that lead to the error.
-- offers a fluent API that is helping you to create human and machine readable string representations for any kind of instances. This can be used to provide in manual log statements. 
-- offers pre-defined and customized profiles to configure the output
+- offers a fluent API that is helping you to create human and machine readable string representations for any kind of instances. This is very handy if you want to provide complex contextual information in manual log statements. 
 - offers a plugin mechanism that allows you to use customized output builders for specific types
 - offers a plugin mechanism to allow writing of contextual information to other kinds of targets than log files (for example: to send invocation context via HTTP to another server)
-- offers a fixed output format that eases automatic detection of errors ( no more customer driven bug detection ;) ). 
+- offers predefined and customized profiles to configure the output
+- offers a static output format that eases automatic detection of errors ( no more customer driven bug detection ;) ). 
 - integration is very easy with low impact on production code
 - uses slf4j as a log abstraction. Therefore most log frameworks are supported.
  
@@ -28,10 +28,11 @@ At the moment the following Java technologies / frameworks are supported:
 
 
 # Motivation
-Think about getting a call of a customer who informs you about an error that has happened in your application.
+Think about getting a call from a customer who informs you about an error that has happened in your application.
 In most cases the only information you get is the name of the user, the time of the error and in which part of the application the error has occurred.
 All other information must be gathered from the log files of the applications servers or the connected databases.
-Success and speed of analyzing the error hardly depends on what has been written to the logs. Most of the useful output is provided manually by log statements implemented by the developer or in worst case not even at all.
+Success and speed of analyzing the error hardly depends on what has been written to the logs. 
+Most of the useful output is provided manually by log statements implemented by the developer or in worst case not even at all.
 And databases aren't a reliable source of information, because data could have changed since the error has occurred.
 
 That is where the TracEE Context Logger is going to help you. It automatically detects errors and writes the invocation context to the logs. It offers handlers for the most commonly used Java Frameworks (Java EE, Spring and others).
@@ -99,6 +100,14 @@ There are two possibilties on how to use the TracEE Context-Logger:
 * manually driven : by using the fluent API to generate string representations for instances
 * automatically driven : by using handlers and inteceptors provided by the technolgy dependant context provider artifacts
 
+Basically you just have to add the following dependency to your pom.xml to get started
+
+        <dependency>
+            <groupId>io.tracee.contextlogger</groupId>
+            <artifactId>contextlogger-core</artifactId>
+        </dependency>
+
+Additionally - depending on your technolgy stack - you have to add some context provider artifacts. Please take a look at the modules section for further information.
 
 ## Write log statements manually by using the Fluent API
 String representaions of contextual information can be added manually to the logs by using the Fluent API.
