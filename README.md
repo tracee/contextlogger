@@ -174,7 +174,7 @@ The following table describes all available TracEE-contextlogger modules and the
 | [contextlogger-connectors](connectors)              | Provides support for writing contextual data to other target as log files (f.e. send error via Http) |
 | [contextlogger-core](core)                          | The core of the context logger |
 | [contextlogger-integration-test](integration-test)  | Does some integration test for custom data providers |
-| [contextlprovider-javaee](contextprovider/javaee)                      | Provides support for EJB / CDI /JMS by offering interceptors |
+| [contextprovider-javaee](contextprovider/javaee)                      | Provides support for EJB / CDI /JMS by offering interceptors |
 | [contextprovider-jaxws](contextprovider/jaxws)                        | Provides support for JAXWS via Message handlers. |
 | [contextprovider-provider-api](contextprovider/api)          | Provides support for Servlets via ServletFilter |
 | [contextprovider-servlet](contextprovider/servlet)                    | Provides support for Servlets via ServletFilter |
