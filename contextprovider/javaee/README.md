@@ -1,10 +1,10 @@
-> This document contains documentation for the contextprovider-javaee module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the contextprovider-javaee module. Click [here](/README.md) to get an overview about the TracEE Context-Logger.
 
 # contextprovider-javaee
 
-> The TracEE contextprovider-javaee project offers support for acquiring contextual information in JMS and for EJB / CDI calls, if an exception is thrown during the execution of the invoked bean. 
+> The TracEE contextprovider-javaee project offers support for acquiring contextual information in environments that are based on JMS and  EJB / CDI. Contextual information will be provided, if an exception is thrown during the execution of the invoked bean. 
 
-Therefore the contextprovider-javaee module provides an Interceptors / message listeners for gathering contextual information of ejb/cdi calls and a jms message processing.
+Therefore the contextprovider-javaee module provides interceptors and message listeners for gathering contextual information during ejb/cdi calls and jms message processing.
 
 ## Example output
 Depending on the selected context logger profile the output of the ejb interceptor consists of method invocation parameters, exception data and jms message related data in case of JMS.
@@ -15,20 +15,14 @@ Depending on the selected context logger profile the output of the ejb intercept
 You need to add the following Dependencies to your projects pom.xml:
 
 ```xml
-<!-- Binds the TracEE api -->
+<!-- Binds the core  -->
 <dependency>
-    <groupId>io.tracee</groupId>
-    <artifactId>tracee-api</artifactId>
+    <groupId>io.tracee.contextlogger</groupId>
+    <artifactId>tracee-core</artifactId>
     <version>RELEASE</version>
 </dependency>
 
-<!-- Log Backend depending on your logging configuration-->
-<dependency>
-    <groupId>io.tracee.backend</groupId>
-    <artifactId>tracee-slf4j</artifactId>
-    <version>RELEASE</version>
-</dependency>
-    
+
 <!-- Binds context logging -->
 <dependency>
     <groupId>io.tracee.contextlogger.contextprovider</groupId>
