@@ -15,7 +15,7 @@ Depending on the selected context logger profile the output of the ejb intercept
 You need to add the following Dependencies to your projects pom.xml:
 
 ```xml
-<!-- Binds the core  -->
+<!-- Binds the core  artifact-->
 <dependency>
     <groupId>io.tracee.contextlogger</groupId>
     <artifactId>tracee-core</artifactId>
@@ -23,7 +23,7 @@ You need to add the following Dependencies to your projects pom.xml:
 </dependency>
 
 
-<!-- Binds context logging -->
+<!-- Adds context provider support for java ee -->
 <dependency>
     <groupId>io.tracee.contextlogger.contextprovider</groupId>
     <artifactId>contextprovider-javaee</artifactId>
