@@ -1,4 +1,4 @@
-> This document contains documentation for the connector-http module. Click [here](/README.md) to get an overview that TracEE is about.
+> This document contains documentation for the connector-http module. Click [here](../README.md) to get an overview about available TracEE connectors.
 
 # connector-http
 
