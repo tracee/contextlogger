@@ -103,7 +103,7 @@ The output can be configured easily via predefined or customized profiles.
 
 There are two possibilties on how to use the TracEE Context-Logger:
 * manually driven : by using the fluent API to generate string representations for instances
-* automatically driven : by using handlers and inteceptors provided by the technolgy dependant context provider artifacts
+* automatically driven : by using handlers and inteceptors provided by the technolgy dependent context provider artifacts
 
 Basically you just have to add the following dependency to your pom.xml to get started
 
@@ -142,7 +142,7 @@ The TraceeToStringBuilder is very easy to use:
 
 
 
-## Detect errors and provide log statements automatically by using technology dependant context providers.
+## Detect errors and provide log statements automatically by using technology dependent context providers.
 
 | Framework    | Adapter |
 | ----------:  |:------:|
