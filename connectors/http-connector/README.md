@@ -32,4 +32,14 @@ The HTTP connector can be configured by using system properties.
 
 
 It's possible to configure multiple http connectors by changing the name of the in the property configuration prefix. 
- 
+
+### Configuration example - HTTP Connector
+Here is a small example that configures two Http connectors:
+
+    io.tracee.contextlogger.connector.httpConnector1.class=io.tracee.contextlogger.connector.http.HttpConnector
+    io.tracee.contextlogger.connector.httpConnector1.url=http://localhost:8080/target
+    io.tracee.contextlogger.connector.httpConnector1.basicAuth.user=user
+    io.tracee.contextlogger.connector.httpConnector1.basicAuth.password=passwd
+    
+    io.tracee.contextlogger.connector.httpConnector2.class=io.tracee.contextlogger.connector.http.HttpConnector
+    io.tracee.contextlogger.connector.httpConnector2.url=http://localhost:8090/anotherTarget 
