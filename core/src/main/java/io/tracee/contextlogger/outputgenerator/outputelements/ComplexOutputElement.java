@@ -47,7 +47,9 @@ public class ComplexOutputElement extends AbstractOutputElement {
 	}
 
 	public void addOutputElement(String name, OutputElement outputElement) {
-		this.outputElements.add(new Entry(name, outputElement));
+		if (name != null && outputElement != null) {
+			this.outputElements.add(new Entry(name, outputElement));
+		}
 	}
 
 	public List<Entry> getOutputElements() {
