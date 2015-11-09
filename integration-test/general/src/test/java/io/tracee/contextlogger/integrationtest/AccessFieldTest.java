@@ -70,7 +70,9 @@ public class AccessFieldTest {
 
 		String stringRepresentation = TraceeToStringBuilder.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE).apply().toString(new TestBaseClass());
 
-		MatcherAssert.assertThat(stringRepresentation, Matchers.is("{\"TYPE\":\"TestBaseClass\",\"baseField\":\"String<'BASE'>\",\"parentField\":\"String<'PARENT'>\",\"linkedClass\":{\"TYPE\":\"TestLinkedClass\",\"linkedField\":\"String<'LINKED'>\"}}"));
+		MatcherAssert.assertThat(stringRepresentation, Matchers.containsString("String<'BASE'>"));
+		MatcherAssert.assertThat(stringRepresentation, Matchers.containsString("String<'LINKED'>"));
+		MatcherAssert.assertThat(stringRepresentation, Matchers.containsString("String<'PARENT'>"));
 
 	}
 
@@ -79,8 +81,9 @@ public class AccessFieldTest {
 
 		String stringRepresentation = TraceeToStringBuilder.create().disableTypes(TestLinkedClass.class).enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE).apply().toString(new TestBaseClass());
 
-		MatcherAssert.assertThat(stringRepresentation, Matchers.is("{\"TYPE\":\"TestBaseClass\",\"baseField\":\"String<'BASE'>\",\"parentField\":\"String<'PARENT'>\"}"));
-
+		MatcherAssert.assertThat(stringRepresentation, Matchers.containsString("String<'BASE'>"));
+		MatcherAssert.assertThat(stringRepresentation, Matchers.not(Matchers.containsString("String<'LINKED'>")));
+		MatcherAssert.assertThat(stringRepresentation, Matchers.containsString("String<'PARENT'>"));
 	}
 
 }
