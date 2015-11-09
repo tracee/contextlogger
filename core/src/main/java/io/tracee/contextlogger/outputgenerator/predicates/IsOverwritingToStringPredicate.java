@@ -5,31 +5,33 @@ package io.tracee.contextlogger.outputgenerator.predicates;
  */
 public class IsOverwritingToStringPredicate {
 
-    private static final IsOverwritingToStringPredicate INSTANCE = new IsOverwritingToStringPredicate();
+	private static final IsOverwritingToStringPredicate INSTANCE = new IsOverwritingToStringPredicate();
 
-    public boolean apply(final Object instance) {
-        return instance != null ? isTypeOverwritingToString(instance.getClass()) : false;
-    }
+	public boolean apply(final Object instance) {
+		return instance != null ? isTypeOverwritingToString(instance.getClass()) : false;
+	}
 
-    boolean isTypeOverwritingToString(final Class type) {
+	boolean isTypeOverwritingToString(final Class type) {
 
-        if (!type.equals(Object.class)) {
+		if (!type.equals(Object.class)) {
 
-            try {
-                type.getDeclaredMethod("toString");
-                return true;
-            }
-            catch (NoSuchMethodException e) {
-                // just ignore
-            }
+			try {
+				type.getDeclaredMethod("toString");
+				return true;
+			} catch (NoSuchMethodException e) {
+				// try to find toString method in superclass
 
-        }
+				return isTypeOverwritingToString(type.getSuperclass());
 
-        return false;
-    }
+			}
 
-    public static IsOverwritingToStringPredicate getInstance() {
-        return INSTANCE;
-    }
+		}
+
+		return false;
+	}
+
+	public static IsOverwritingToStringPredicate getInstance() {
+		return INSTANCE;
+	}
 
 }
