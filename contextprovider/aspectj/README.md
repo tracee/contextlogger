@@ -152,3 +152,29 @@ You must add the following to your dispatcher servlets configuration xml:
         <bean id="watchdog" class="WatchdogAspect"/>
         
     </beans>
+
+or if you want to use java configuration:
+
+    @Configuration
+    @EnableLoadTimeWeaving
+    @Profile(value = {Profiles.ASPECTS})
+    public class AspectjConfiguration {
+
+        @Bean
+        public WatchdogAspect watchdogAspect() {
+            return new WatchdogAspect();
+        }
+    
+    }
+    
+Additionally you must provide a /META-INF/aop.xml file in your classpath:
+
+    <!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+    <aspectj>
+    
+        <weaver options="-XlazyTjp">
+            <!-- only weave classes in our application-specific packages -->
+            <include within="your.package.*"/>
+        </weaver>
+    
+    </aspectj>
