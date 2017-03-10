@@ -5,7 +5,6 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import javax.xml.bind.DatatypeConverter;
-import java.util.Base64;
 
 /**
  * Test class for {@link ByteArrayContextProvider}.

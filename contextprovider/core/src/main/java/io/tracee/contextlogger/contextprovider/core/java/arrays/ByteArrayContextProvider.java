@@ -6,7 +6,6 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
 import javax.xml.bind.DatatypeConverter;
-import java.util.Base64;
 
 @SuppressWarnings("unused")
 @TraceeContextProvider(displayName = "byte[]")
