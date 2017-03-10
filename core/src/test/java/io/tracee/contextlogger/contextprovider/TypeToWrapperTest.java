@@ -33,7 +33,18 @@ public class TypeToWrapperTest {
 
         assertThat(wrappedClassesSet, notNullValue());
         assertThat(wrappedClassesSet.size(), greaterThan(0));
-        assertThat(wrappedClassesSet, containsInAnyOrder((Class) TraceeMessage.class, (Class) Throwable.class, (Class) char[].class));
+        assertThat(wrappedClassesSet, containsInAnyOrder(
+                (Class) TraceeMessage.class,
+                (Class) Throwable.class,
+                (Class) char[].class,
+                (Class) byte[].class,
+                (Class) boolean[].class,
+                (Class) short[].class,
+                (Class) int[].class,
+                (Class) long[].class,
+                (Class) float[].class,
+                (Class) double[].class)
+        );
 
     }
 

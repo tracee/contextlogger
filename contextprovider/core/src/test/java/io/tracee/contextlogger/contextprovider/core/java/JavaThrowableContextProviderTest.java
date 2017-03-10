@@ -7,7 +7,6 @@ import org.junit.Test;
 
 /**
  * Test class for {@link JavaThrowableContextProvider}.
- * Created by Tobias Gindler, holisticon AG on 31.03.14.
  */
 public class JavaThrowableContextProviderTest {
 
