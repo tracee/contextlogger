@@ -6,6 +6,7 @@ import io.tracee.contextlogger.contextprovider.api.Profile;
 import io.tracee.contextlogger.contextprovider.core.CoreImplicitContextProviders;
 import io.tracee.contextlogger.integrationtest.testcontextprovider.TestImplicitContextProviders;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
 import io.tracee.contextlogger.util.test.RegexMatcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -18,51 +19,51 @@ import org.slf4j.MDC;
  */
 public class ImplicitContextIntegrationTest {
 
-	@Before
-	public void init() {
-		// clean MDC
-		MDC.clear();
-	}
+    @Before
+    public void init() {
+        // clean MDC
+        MDC.clear();
+    }
 
-	@Test
-	public void shouldOutputImplicitContextCorrectly() {
-		String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
-				.enforceProfile(Profile.BASIC).apply().toString(CoreImplicitContextProviders.COMMON, CoreImplicitContextProviders.TRACEE);
+    @Test
+    public void shouldOutputImplicitContextCorrectly() {
+        String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
+                .enforceProfile(Profile.BASIC).apply().toString(CoreImplicitContextProviders.COMMON, CoreImplicitContextProviders.TRACEE);
 
-		MatcherAssert.assertThat(result, RegexMatcher.matches("\\[\"TYPE:Object\\[]\",\\{\"TYPE\":\"common\".*"));
-	}
+        MatcherAssert.assertThat(result, RegexMatcher.matches("\\[\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + ":Object\\[]\",\\{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"common\".*"));
+    }
 
-	@Test
-	public void shouldOutputSingleEmptyImplicitContextCorrectly() {
+    @Test
+    public void shouldOutputSingleEmptyImplicitContextCorrectly() {
 
 
-		String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
-				.enforceProfile(Profile.BASIC).apply().toString(CoreImplicitContextProviders.TRACEE);
+        String result = TraceeContextLogger.create().enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE)
+                .enforceProfile(Profile.BASIC).apply().toString(CoreImplicitContextProviders.TRACEE);
 
-		MatcherAssert.assertThat(result, Matchers.is("{\"TYPE\":\"tracee\",\"DYNAMIC\":null}"));
-	}
+        MatcherAssert.assertThat(result, Matchers.is("{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"tracee\",\"DYNAMIC\":null}"));
+    }
 
-	@Test
-	public void should_write_instance_for_multiple_referenced_instances() {
-		String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString("ABC");
+    @Test
+    public void should_write_instance_for_multiple_referenced_instances() {
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString("ABC");
 
-		MatcherAssert.assertThat(result, Matchers.is("\"String<'ABC'>\""));
-	}
+        MatcherAssert.assertThat(result, Matchers.is("\"String<'ABC'>\""));
+    }
 
-	@Test
-	public void should_write_this_instance_without_tostring_overwrite_correctly() {
-		String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString(this);
+    @Test
+    public void should_write_this_instance_without_tostring_overwrite_correctly() {
+        String result = TraceeContextLogger.create().enforceProfile(Profile.BASIC).apply().toString(this);
 
-		MatcherAssert.assertThat(result, Matchers.is("\"ImplicitContextIntegrationTest<>\""));
-	}
+        MatcherAssert.assertThat(result, Matchers.is("\"ImplicitContextIntegrationTest<>\""));
+    }
 
-	@Test
-	public void should_write_test_and_core_implicit_context_providers() {
+    @Test
+    public void should_write_test_and_core_implicit_context_providers() {
 
-		String result = TraceeContextLogger.create().enforceProfile(Profile.FULL).apply().toString(CoreImplicitContextProviders.TRACEE, TestImplicitContextProviders.TEST);
+        String result = TraceeContextLogger.create().enforceProfile(Profile.FULL).apply().toString(CoreImplicitContextProviders.TRACEE, TestImplicitContextProviders.TEST);
 
-		MatcherAssert.assertThat(result, Matchers.containsString("tracee"));
-		MatcherAssert.assertThat(result, Matchers.containsString("testImplicitContextData"));
-	}
+        MatcherAssert.assertThat(result, Matchers.containsString("tracee"));
+        MatcherAssert.assertThat(result, Matchers.containsString("testImplicitContextData"));
+    }
 
 }

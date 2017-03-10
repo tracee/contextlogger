@@ -11,7 +11,7 @@ import io.tracee.contextlogger.utility.TraceeContextLogAnnotationUtilities;
  */
 public class TypeProviderFunction {
 
-    private static final String OUTPUT_STRING_TYPE = "TYPE";
+    public static final String OUTPUT_STRING_TYPE = "<TYPE>";
 
     private static final TypeProviderFunction INSTANCE = new TypeProviderFunction();
 
@@ -19,7 +19,7 @@ public class TypeProviderFunction {
      * Write the type string to the Stringbuilder
      *
      * @param stringBuilder the stringbuilder to write to
-     * @param outputStyle the output style to use
+     * @param outputStyle   the output style to use
      * @param outputElement the output element to write the type string for.
      * @return true, if any output was written to the stringbuilder, otherwise false.
      */
@@ -31,13 +31,11 @@ public class TypeProviderFunction {
 
             if (OutputElementType.COLLECTION.equals(outputElement.getOutputElementType())) {
                 result = handleCollectionType(stringBuilder, outputStyle, outputElement);
-            }
-            else if (OutputElementType.COMPLEX.equals(outputElement.getOutputElementType())) {
+            } else if (OutputElementType.COMPLEX.equals(outputElement.getOutputElementType())) {
 
                 if (TraceeContextLogAnnotationUtilities.getAnnotationFromType(outputElement.getEncapsulatedInstance()) != null) {
                     result = handleTraceeContextprovider(stringBuilder, outputStyle, outputElement);
-                }
-                else {
+                } else {
                     result = handleComplexType(stringBuilder, outputStyle, outputElement);
                 }
 

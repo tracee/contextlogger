@@ -1,18 +1,17 @@
 package io.tracee.contextlogger.outputgenerator.writer.collection;
 
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.outputgenerator.writer.TestOutputElementWriter;
+import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
+import io.tracee.contextlogger.outputgenerator.writer.styles.json.SimpleJsonOutputStyle;
+import io.tracee.contextlogger.util.test.RegexMatcher;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
-
-import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
-import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
-import io.tracee.contextlogger.outputgenerator.writer.TestOutputElementWriter;
-import io.tracee.contextlogger.outputgenerator.writer.styles.json.SimpleJsonOutputStyle;
-import io.tracee.contextlogger.util.test.RegexMatcher;
+import java.util.List;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.outputgenerator.writer.collection.SimpleCollectionOutputElementWriter}.
@@ -40,7 +39,7 @@ public class SimpleCollectionOutputElementWriterTest {
 
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenCollectionOutputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\[\"TYPE:ArrayList\",ABC]"));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\[\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + ":ArrayList\",ABC]"));
 
     }
 
@@ -56,7 +55,7 @@ public class SimpleCollectionOutputElementWriterTest {
 
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenCollectionOutputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\[\"TYPE:ArrayList@\\d+\",ABC]"));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\[\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + ":ArrayList@\\d+\",ABC]"));
 
     }
 }

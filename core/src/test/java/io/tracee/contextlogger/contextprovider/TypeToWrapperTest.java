@@ -1,16 +1,15 @@
 package io.tracee.contextlogger.contextprovider;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMessage;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
-
-import io.tracee.contextlogger.contextprovider.core.tracee.TraceeMessage;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test class for {@link TypeToWrapper}.
@@ -34,7 +33,8 @@ public class TypeToWrapperTest {
 
         assertThat(wrappedClassesSet, notNullValue());
         assertThat(wrappedClassesSet.size(), greaterThan(0));
-        assertThat(wrappedClassesSet, containsInAnyOrder((Class)TraceeMessage.class, (Class)Throwable.class));
+        assertThat(wrappedClassesSet, containsInAnyOrder((Class) TraceeMessage.class, (Class) Throwable.class, (Class) char[].class));
+
     }
 
 }

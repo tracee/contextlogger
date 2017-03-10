@@ -1,17 +1,17 @@
 package io.tracee.contextlogger.outputgenerator.writer.complex;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Before;
-import org.junit.Test;
-
 import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
 import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
 import io.tracee.contextlogger.outputgenerator.outputelements.TraceeContextProviderOutputElement;
 import io.tracee.contextlogger.outputgenerator.writer.TestOutputElementWriter;
+import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
 import io.tracee.contextlogger.outputgenerator.writer.styles.json.SimpleJsonOutputStyle;
 import io.tracee.contextlogger.util.test.RegexMatcher;
+import org.hamcrest.MatcherAssert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.outputgenerator.writer.complex.SimpleComplexOutputElementWriter}
@@ -49,7 +49,7 @@ public class SimplexComplexOutputElementWriterTest {
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenComplexOutputElement);
 
         MatcherAssert.assertThat(stringBuilder.toString(),
-                RegexMatcher.matches("\\{\"TYPE\":\"SimplexComplexOutputElementWriterTest\",\"field1\":(ABC)\\}"));
+                RegexMatcher.matches("\\{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"SimplexComplexOutputElementWriterTest\",\"field1\":(ABC)\\}"));
 
     }
 
@@ -65,7 +65,7 @@ public class SimplexComplexOutputElementWriterTest {
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenComplexOutputElement);
 
         MatcherAssert.assertThat(stringBuilder.toString(),
-                RegexMatcher.matches("\\{\"TYPE\":\"SimplexComplexOutputElementWriterTest@\\d+\",\"field1\":(ABC)\\}"));
+                RegexMatcher.matches("\\{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"SimplexComplexOutputElementWriterTest@\\d+\",\"field1\":(ABC)\\}"));
 
     }
 
@@ -80,7 +80,7 @@ public class SimplexComplexOutputElementWriterTest {
 
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenComplexOutputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\{\"TYPE\":\"throwable\",\"field1\":(ABC)\\}"));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"throwable\",\"field1\":(ABC)\\}"));
 
     }
 
@@ -96,7 +96,7 @@ public class SimplexComplexOutputElementWriterTest {
 
         unit.produceOutput(outputWriter, stringBuilder, new SimpleJsonOutputStyle(), givenComplexOutputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\{\"TYPE\":\"throwable@\\d+\",\"field1\":(ABC)\\}"));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\\{\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"throwable@\\d+\",\"field1\":(ABC)\\}"));
 
     }
 

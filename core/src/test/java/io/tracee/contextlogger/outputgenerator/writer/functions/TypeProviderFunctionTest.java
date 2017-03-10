@@ -1,12 +1,5 @@
 package io.tracee.contextlogger.outputgenerator.writer.functions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
 import io.tracee.contextlogger.contextprovider.core.utility.NameValuePair;
 import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
@@ -15,6 +8,12 @@ import io.tracee.contextlogger.outputgenerator.outputelements.TraceeContextProvi
 import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
 import io.tracee.contextlogger.outputgenerator.writer.styles.json.SimpleJsonOutputStyle;
 import io.tracee.contextlogger.util.test.RegexMatcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Unit test for {@link io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction}.
@@ -30,7 +29,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"TYPE:ArrayList\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + ":ArrayList\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 
@@ -44,7 +43,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"TYPE:ArrayList@\\d+\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + ":ArrayList@\\d+\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 
@@ -57,7 +56,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"TYPE\":\"HashMap\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"HashMap\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 
@@ -71,7 +70,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"TYPE\":\"HashMap@\\d+\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"HashMap@\\d+\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 
@@ -85,7 +84,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"TYPE\":\"throwable\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), Matchers.is("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"throwable\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 
@@ -101,7 +100,7 @@ public class TypeProviderFunctionTest {
 
         boolean result = TypeProviderFunction.getInstance().apply(stringBuilder, new SimpleJsonOutputStyle(), outputElement);
 
-        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"TYPE\":\"throwable@\\d+\""));
+        MatcherAssert.assertThat(stringBuilder.toString(), RegexMatcher.matches("\"" + TypeProviderFunction.OUTPUT_STRING_TYPE + "\":\"throwable@\\d+\""));
         MatcherAssert.assertThat(result, Matchers.is(true));
     }
 

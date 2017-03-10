@@ -89,7 +89,7 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
                 // handle arrays and collections
 
-                if (instanceToDeserialize.getClass().isArray()) {
+                if (instanceToDeserialize.getClass().isArray() ) {
                     outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Object[])instanceToDeserialize);
                 }
                 else {

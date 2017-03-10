@@ -2,6 +2,7 @@ package io.tracee.contextlogger;
 
 import io.tracee.contextlogger.contextprovider.core.java.JavaThrowableContextProvider;
 import io.tracee.contextlogger.outputgenerator.writer.BasicOutputWriterConfiguration;
+import io.tracee.contextlogger.outputgenerator.writer.function.TypeProviderFunction;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.junit.Test;
  */
 public class TraceeContextLoggerTest {
 
+    private final static String TYPE_STRING = TypeProviderFunction.OUTPUT_STRING_TYPE;
+
 	@Test
 	public void should_detect_suppress_passed_instance_to_be_excluded() {
 
@@ -19,7 +22,7 @@ public class TraceeContextLoggerTest {
 
 		String result = unit.toString("ABC", 1L);
 
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"Long<1>\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"" + TYPE_STRING + ":Object[]\",\"Long<1>\"]"));
 
 	}
 
@@ -30,12 +33,12 @@ public class TraceeContextLoggerTest {
 				.enforceOutputWriterConfiguration(BasicOutputWriterConfiguration.JSON_INLINE).apply();
 
 		String result = unit.toString("ABC", 1L);
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'ABC'>\",\"Long<1>\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"" + TYPE_STRING + ":Object[]\",\"String<'ABC'>\",\"Long<1>\"]"));
 
 		Object[] objectsToBeProcessed = {"DEF", 2L};
 		unit.setObjectsToProcess(objectsToBeProcessed);
 		result = unit.provideOutput();
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'DEF'>\",\"Long<2>\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"" + TYPE_STRING + ":Object[]\",\"String<'DEF'>\",\"Long<2>\"]"));
 
 	}
 
@@ -52,7 +55,7 @@ public class TraceeContextLoggerTest {
 
 		result = unit.toString(new NullPointerException(), "ABC");
 
-		MatcherAssert.assertThat(result, Matchers.equalTo("[\"TYPE:Object[]\",\"String<'ABC'>\"]"));
+		MatcherAssert.assertThat(result, Matchers.equalTo("[\"" + TYPE_STRING + ":Object[]\",\"String<'ABC'>\"]"));
 
 	}
 
