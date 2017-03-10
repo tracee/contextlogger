@@ -5,6 +5,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.Base64;
 
 @SuppressWarnings("unused")
@@ -43,7 +44,7 @@ public class ByteArrayContextProvider implements WrappedContextData<byte[]> {
     public String getArrayStringRepresentation() {
 
         if (array != null) {
-            return Base64.getEncoder().encodeToString(array);
+            return DatatypeConverter.printBase64Binary(array);
         } else {
             return null;
         }

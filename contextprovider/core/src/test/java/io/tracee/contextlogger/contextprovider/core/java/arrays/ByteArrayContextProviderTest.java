@@ -4,6 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.Base64;
 
 /**
@@ -47,7 +48,7 @@ public class ByteArrayContextProviderTest {
 
         String result = unit.getArrayStringRepresentation();
 
-        MatcherAssert.assertThat(result, Matchers.is(Base64.getEncoder().encodeToString(FILLED_ARRAY)));
+        MatcherAssert.assertThat(result, Matchers.is(DatatypeConverter.printBase64Binary(FILLED_ARRAY)));
 
     }
 }
