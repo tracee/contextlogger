@@ -1,6 +1,10 @@
 package io.tracee.contextlogger.outputgenerator.writer;
 
-import io.tracee.contextlogger.outputgenerator.outputelements.*;
+import io.tracee.contextlogger.outputgenerator.outputelements.AtomicOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.CollectionOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.ComplexOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.NullValueOutputElement;
+import io.tracee.contextlogger.outputgenerator.outputelements.OutputElement;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputStyle;
 import io.tracee.contextlogger.outputgenerator.writer.api.OutputWriter;
 
@@ -27,8 +31,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
     @Override
     public void produceOutputRecursively(final StringBuilder stringBuilder, final OutputStyle outputStyle, OutputElement outputElement) {
 
-        if ((!OutputElementType.ATOMIC.equals(outputElement.getOutputElementType()) && !OutputElementType.NULL.equals(outputElement.getOutputElementType()))
-                && outputElementPool.isInstanceInPool(outputElement)) {
+        if (outputElement.useReferencesIfMarkedAsMultipleReferenced() && outputElementPool.isInstanceInPool(outputElement)) {
             stringBuilder.append(outputStyle.openingAtomicType());
             stringBuilder.append(outputStyle.escapeString(outputWriterConfiguration.getAlreadyProcessedReferenceOutputElementWriter().produceOutput(
                     outputElement)));
@@ -42,7 +45,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
 
             case COMPLEX: {
 
-                ComplexOutputElement complexOutputElement = (ComplexOutputElement)outputElement;
+                ComplexOutputElement complexOutputElement = (ComplexOutputElement) outputElement;
 
                 outputWriterConfiguration.getComplexOutputElementWriter().produceOutput(this, stringBuilder, outputStyle, complexOutputElement);
 
@@ -50,7 +53,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
             }
             case COLLECTION: {
 
-                CollectionOutputElement collectionOutputElement = (CollectionOutputElement)outputElement;
+                CollectionOutputElement collectionOutputElement = (CollectionOutputElement) outputElement;
 
                 this.outputWriterConfiguration.getCollectionOutputElementWriter().produceOutput(this, stringBuilder, outputStyle, collectionOutputElement);
 
@@ -58,7 +61,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
             }
             case NULL: {
 
-                NullValueOutputElement nullValueOutputElement = (NullValueOutputElement)outputElement;
+                NullValueOutputElement nullValueOutputElement = (NullValueOutputElement) outputElement;
 
                 stringBuilder.append(this.outputWriterConfiguration.getNullValueOutputElementWriter().produceOutput(nullValueOutputElement));
 
@@ -66,7 +69,7 @@ public class OutputWriterToOutputTransformer implements OutputWriter {
             }
 
             case ATOMIC: {
-                AtomicOutputElement atomicOutputElement = (AtomicOutputElement)outputElement;
+                AtomicOutputElement atomicOutputElement = (AtomicOutputElement) outputElement;
 
                 stringBuilder.append(outputStyle.openingAtomicType());
                 stringBuilder.append(outputStyle.escapeString(this.outputWriterConfiguration.getAtomicOutputElementWriter().produceOutput(

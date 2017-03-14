@@ -50,4 +50,8 @@ public class NullValueOutputElement implements OutputElement {
         return false;
     }
 
+    public boolean useReferencesIfMarkedAsMultipleReferenced() {
+        return false;
+    }
+
 }

@@ -18,8 +18,20 @@ public abstract class AbstractOutputElement implements OutputElement {
      * @param instance the encapsulated instance
      */
     protected AbstractOutputElement(Class outputElementsBaseType, Object instance) {
+        this(outputElementsBaseType, instance,instance);
+
+    }
+
+    /**
+     * Constructor. Usee to provide unprocessed instance used for creation of identity hash code.
+     *
+     * @param outputElementsBaseType the output elements base type
+     * @param instance the encapsulated processed instance (f.e. by contextprovider)
+     * @param identityInstance the original instance
+     */
+    protected AbstractOutputElement(Class outputElementsBaseType, Object instance, Object identityInstance) {
         this.outputElementsBaseType = outputElementsBaseType;
-        identityHashCode = System.identityHashCode(instance);
+        identityHashCode = System.identityHashCode(identityInstance);
         encapsulatedInstance = instance;
     }
 
@@ -46,5 +58,10 @@ public abstract class AbstractOutputElement implements OutputElement {
     @Override
     public boolean getIsAsMarkedAsMultipleReferenced() {
         return this.isMarkedAsMultipleReferenced;
+    }
+
+    @Override
+    public boolean useReferencesIfMarkedAsMultipleReferenced() {
+        return true;
     }
 }

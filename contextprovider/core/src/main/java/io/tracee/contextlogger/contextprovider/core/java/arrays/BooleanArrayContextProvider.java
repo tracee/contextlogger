@@ -1,14 +1,13 @@
 package io.tracee.contextlogger.contextprovider.core.java.arrays;
 
 import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderPrimitiveType;
+import io.tracee.contextlogger.contextprovider.api.WrappedPrimitiveTypeContextData;
 
 @SuppressWarnings("unused")
-@TraceeContextProvider(displayName = "boolean[]")
+@TraceeContextProviderPrimitiveType
 @ProfileConfig(basic = true, enhanced = true, full = true)
-public class BooleanArrayContextProvider implements WrappedContextData<boolean[]> {
+public class BooleanArrayContextProvider implements WrappedPrimitiveTypeContextData<boolean[]> {
     private boolean[] array;
 
 
@@ -36,9 +35,7 @@ public class BooleanArrayContextProvider implements WrappedContextData<boolean[]
     }
 
     @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "value", order = 10)
-    @ProfileConfig(basic = true, enhanced = true, full = true)
-    public String getArrayStringRepresentation() {
+    public String getPrimitiveTypeValue() {
 
         if (array != null) {
 

@@ -1,14 +1,16 @@
 package io.tracee.contextlogger.contextprovider.core.java.arrays;
 
 import io.tracee.contextlogger.contextprovider.api.ProfileConfig;
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
-import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
-import io.tracee.contextlogger.contextprovider.api.WrappedContextData;
+import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderPrimitiveType;
+import io.tracee.contextlogger.contextprovider.api.WrappedPrimitiveTypeContextData;
 
 @SuppressWarnings("unused")
-@TraceeContextProvider(displayName = "char[]")
+@TraceeContextProviderPrimitiveType
 @ProfileConfig(basic = true, enhanced = true, full = true)
-public class CharArrayContextProvider implements WrappedContextData<char[]> {
+public class CharArrayContextProvider implements WrappedPrimitiveTypeContextData<char[]> {
+
+    protected final static boolean OUTPUT_AS_CONCATENATED_STRING = true;
+
     private char[] array;
 
 
@@ -36,33 +38,46 @@ public class CharArrayContextProvider implements WrappedContextData<char[]> {
     }
 
     @SuppressWarnings("unused")
-    @TraceeContextProviderMethod(displayName = "value", order = 10)
-    @ProfileConfig(basic = true, enhanced = true, full = true)
-    public String getArrayStringRepresentation() {
+    public String getPrimitiveTypeValue() {
 
         if (array != null) {
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("[");
+            return OUTPUT_AS_CONCATENATED_STRING ? createOutputAsConcatenatedString() : createOutputAsArray();
 
-            boolean first = true;
-
-            for (char element : array) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(ArrayContextProviderConstants.ELEMENT_SEPARATOR);
-                }
-                sb.append("'").append(element).append("'");
-            }
-
-            sb.append("]");
-
-            return sb.toString();
         } else {
             return null;
         }
 
+    }
+
+    private String createOutputAsArray() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        boolean first = true;
+
+        for (char element : array) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(ArrayContextProviderConstants.ELEMENT_SEPARATOR);
+            }
+            sb.append("'").append(element).append("'");
+        }
+
+        sb.append("]");
+
+        return sb.toString();
+    }
+
+    private String createOutputAsConcatenatedString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (char element : array) {
+            sb.append(element);
+        }
+
+        return sb.toString();
     }
 
 

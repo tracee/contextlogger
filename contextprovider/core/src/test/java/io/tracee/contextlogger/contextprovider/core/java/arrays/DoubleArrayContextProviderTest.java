@@ -21,7 +21,7 @@ public class DoubleArrayContextProviderTest {
 
         unit.setContextData(null);
 
-        MatcherAssert.assertThat(unit.getArrayStringRepresentation(), Matchers.nullValue());
+        MatcherAssert.assertThat(unit.getPrimitiveTypeValue(), Matchers.nullValue());
 
     }
 
@@ -30,7 +30,7 @@ public class DoubleArrayContextProviderTest {
 
         unit.setContextData(EMPTY_ARRAY);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[]"));
 
@@ -41,7 +41,7 @@ public class DoubleArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_SINGLE_ELEMENT);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[1.0]"));
 
@@ -52,7 +52,7 @@ public class DoubleArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_MULTIPLE_ELEMENTS);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[1.0" + ArrayContextProviderConstants.ELEMENT_SEPARATOR + "2.0]"));
 

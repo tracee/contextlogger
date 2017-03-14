@@ -21,7 +21,7 @@ public class CharArrayContextProviderTest {
 
         unit.setContextData(null);
 
-        MatcherAssert.assertThat(unit.getArrayStringRepresentation(), Matchers.nullValue());
+        MatcherAssert.assertThat(unit.getPrimitiveTypeValue(), Matchers.nullValue());
 
     }
 
@@ -30,9 +30,13 @@ public class CharArrayContextProviderTest {
 
         unit.setContextData(EMPTY_ARRAY);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
-        MatcherAssert.assertThat(result, Matchers.is("[]"));
+        if (CharArrayContextProvider.OUTPUT_AS_CONCATENATED_STRING) {
+            MatcherAssert.assertThat(result, Matchers.is(""));
+        } else {
+            MatcherAssert.assertThat(result, Matchers.is("[]"));
+        }
 
     }
 
@@ -41,9 +45,13 @@ public class CharArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_SINGLE_ELEMENT);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
-        MatcherAssert.assertThat(result, Matchers.is("['A']"));
+        if (CharArrayContextProvider.OUTPUT_AS_CONCATENATED_STRING) {
+            MatcherAssert.assertThat(result, Matchers.is("A"));
+        } else {
+            MatcherAssert.assertThat(result, Matchers.is("['A']"));
+        }
 
     }
 
@@ -52,9 +60,13 @@ public class CharArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_MULTIPLE_ELEMENTS);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
-        MatcherAssert.assertThat(result, Matchers.is("['A'" + ArrayContextProviderConstants.ELEMENT_SEPARATOR + "'B']"));
+        if (CharArrayContextProvider.OUTPUT_AS_CONCATENATED_STRING) {
+            MatcherAssert.assertThat(result, Matchers.is("AB"));
+        } else {
+            MatcherAssert.assertThat(result, Matchers.is("['A'" + ArrayContextProviderConstants.ELEMENT_SEPARATOR + "'B']"));
+        }
 
     }
 

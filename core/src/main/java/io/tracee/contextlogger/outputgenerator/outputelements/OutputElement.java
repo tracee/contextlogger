@@ -52,4 +52,12 @@ public interface OutputElement {
      */
     boolean getIsAsMarkedAsMultipleReferenced();
 
+
+    /**
+     * Returns if references should be used if instance is marked as multiple referenced
+     *
+     * @return true if references should be used if instance is marked as multiply referenced, otherwise false
+     */
+    boolean useReferencesIfMarkedAsMultipleReferenced();
+
 }

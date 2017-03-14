@@ -6,6 +6,7 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -13,6 +14,7 @@ import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,6 +87,13 @@ public abstract class TraceeContextLoggerAbstractProcessor extends AbstractProce
 		return fileObject;
 
 	}
+
+    protected <T extends Annotation> boolean isTypeAnnotatedWithAnnotation(TypeElement element, Class<T> annotation) {
+
+        T contextProviderAnnotation = (T) element.getAnnotation(annotation);
+        return contextProviderAnnotation != null;
+
+    }
 
 	protected static void clearCache() {
 		traceeProfileProperties.clear();

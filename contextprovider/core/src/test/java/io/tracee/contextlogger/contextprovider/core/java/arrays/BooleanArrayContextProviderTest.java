@@ -22,7 +22,7 @@ public class BooleanArrayContextProviderTest {
         BooleanArrayContextProvider givenContextProvider = new BooleanArrayContextProvider();
         givenContextProvider.setContextData(null);
 
-        MatcherAssert.assertThat(givenContextProvider.getArrayStringRepresentation(), Matchers.nullValue());
+        MatcherAssert.assertThat(givenContextProvider.getPrimitiveTypeValue(), Matchers.nullValue());
 
     }
 
@@ -31,7 +31,7 @@ public class BooleanArrayContextProviderTest {
 
         unit.setContextData(EMPTY_ARRAY);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[]"));
 
@@ -42,7 +42,7 @@ public class BooleanArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_SINGLE_ELEMENT);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[true]"));
 
@@ -53,7 +53,7 @@ public class BooleanArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY_WITH_MULTIPLE_ELEMENTS);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is("[true" + ArrayContextProviderConstants.ELEMENT_SEPARATOR + "false]"));
 

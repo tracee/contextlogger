@@ -21,10 +21,9 @@ public class ByteArrayContextProviderTest {
     @Test
     public void should_return_null_for_null_valued_contextdata() {
 
-        BooleanArrayContextProvider givenContextProvider = new BooleanArrayContextProvider();
-        givenContextProvider.setContextData(null);
+        unit.setContextData(null);
 
-        MatcherAssert.assertThat(givenContextProvider.getArrayStringRepresentation(), Matchers.nullValue());
+        MatcherAssert.assertThat(unit.getPrimitiveTypeValue(), Matchers.nullValue());
 
     }
 
@@ -33,7 +32,7 @@ public class ByteArrayContextProviderTest {
 
         unit.setContextData(EMPTY_ARRAY);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is(""));
 
@@ -45,7 +44,7 @@ public class ByteArrayContextProviderTest {
 
         unit.setContextData(FILLED_ARRAY);
 
-        String result = unit.getArrayStringRepresentation();
+        String result = unit.getPrimitiveTypeValue();
 
         MatcherAssert.assertThat(result, Matchers.is(DatatypeConverter.printBase64Binary(FILLED_ARRAY)));
 

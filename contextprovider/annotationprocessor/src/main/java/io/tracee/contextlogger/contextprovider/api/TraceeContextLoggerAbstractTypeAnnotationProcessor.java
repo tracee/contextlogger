@@ -2,6 +2,7 @@ package io.tracee.contextlogger.contextprovider.api;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
@@ -41,4 +42,32 @@ public abstract class TraceeContextLoggerAbstractTypeAnnotationProcessor extends
 		return typeUtils.isAssignable(typeElement.asType(), elementUtils.getTypeElement(type.getCanonicalName()).asType());
 
 	}
+
+    /**
+     * Checks if class has noargs constructor or default noargs constructor.
+     *
+     * @param typeElement the type element to check.
+     * @return true if element has noarg constructor or no constructor at all
+     */
+    protected boolean checkIfClassHasNoargsConstructor(TypeElement typeElement) {
+
+        // check if annotated class has noargs constructor
+        boolean foundConstructor = false;
+        boolean foundNoargsConstructor = false;
+
+        for (Element child : typeElement.getEnclosedElements()) {
+            if (ElementKind.CONSTRUCTOR.equals(child.getKind())) {
+                foundConstructor = true;
+                ExecutableElement constructor = (ExecutableElement) child;
+                if (constructor.getParameters().size() == 0) {
+                    foundNoargsConstructor = true;
+                    break;
+                }
+            }
+        }
+        return !(foundConstructor && !foundNoargsConstructor);
+
+    }
+
+
 }

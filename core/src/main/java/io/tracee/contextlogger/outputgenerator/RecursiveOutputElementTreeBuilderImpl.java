@@ -1,11 +1,6 @@
 package io.tracee.contextlogger.outputgenerator;
 
-import java.util.Collection;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.tracee.contextlogger.contextprovider.api.WrappedPrimitiveTypeContextData;
 import io.tracee.contextlogger.impl.ContextLoggerConfiguration;
 import io.tracee.contextlogger.outputgenerator.functions.ArrayToOutputElementTransformerFunction;
 import io.tracee.contextlogger.outputgenerator.functions.AtomicToOutputElementTransformerFunction;
@@ -20,7 +15,13 @@ import io.tracee.contextlogger.outputgenerator.predicates.IsBeanTypePredicate;
 import io.tracee.contextlogger.outputgenerator.predicates.IsCollectionTypePredicate;
 import io.tracee.contextlogger.outputgenerator.predicates.IsMapTypePredicate;
 import io.tracee.contextlogger.outputgenerator.predicates.IsTraceeContextProviderPredicate;
+import io.tracee.contextlogger.outputgenerator.predicates.IsTraceeContextProviderPrimitiveTypePredicate;
 import io.tracee.contextlogger.profile.ProfileSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Creates output element tree for the passed instance recursively. Acts as scheduler for ToOutputTransformerFunctions invocations.
@@ -46,12 +47,12 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
     /**
      * Constructor used by tests.
      *
-     * @param profileSettings the profile settings to use.
+     * @param profileSettings             the profile settings to use.
      * @param instanceToOutputElementPool the instance output element
-     * @param contextLoggerConfiguration The context logger configuration to use
+     * @param contextLoggerConfiguration  The context logger configuration to use
      */
     protected RecursiveOutputElementTreeBuilderImpl(final ProfileSettings profileSettings, final InstanceToOutputElementPool instanceToOutputElementPool,
-            final ContextLoggerConfiguration contextLoggerConfiguration) {
+                                                    final ContextLoggerConfiguration contextLoggerConfiguration) {
         this.profileSettings = profileSettings;
         this.instanceToOutputElementPool = instanceToOutputElementPool;
         this.contextLoggerConfiguration = contextLoggerConfiguration;
@@ -67,14 +68,12 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             // handle null value
             outputElement = NullValueOutputElement.INSTANCE;
 
-        }
-        else if (state.maxDepthReached()) {
+        } else if (state.maxDepthReached()) {
             // fallback deserialize instance as atomic value
             outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, state.next(),
                     TraceeContextProviderWrapperFunction.getInstance().apply(contextLoggerConfiguration, passedInstanceToDeserialize));
 
-        }
-        else {
+        } else {
 
             // wraps passed instance in tracee context provider if possible or otherwise returns the passed instance
             Object instanceToDeserialize = TraceeContextProviderWrapperFunction.getInstance()
@@ -89,30 +88,30 @@ public class RecursiveOutputElementTreeBuilderImpl implements RecursiveOutputEle
             if (IsCollectionTypePredicate.getInstance().apply(instanceToDeserialize)) {
                 // handle arrays and collections
 
-                if (instanceToDeserialize.getClass().isArray() ) {
-                    outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Object[])instanceToDeserialize);
+                if (instanceToDeserialize.getClass().isArray()) {
+                    outputElement = ArrayToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Object[]) instanceToDeserialize);
+                } else {
+                    outputElement = CollectionToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Collection) instanceToDeserialize);
                 }
-                else {
-                    outputElement = CollectionToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Collection)instanceToDeserialize);
-                }
 
-            }
-            else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
+            } else if (IsMapTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
-                outputElement = MapToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Map)instanceToDeserialize);
+                outputElement = MapToOutputElementTransformerFunction.getInstance().apply(this, state.next(), (Map) instanceToDeserialize);
 
-            }
-            else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
+            } else if (IsTraceeContextProviderPredicate.getInstance().apply(instanceToDeserialize)) {
 
                 outputElement = TraceeContextProviderToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
 
-            }
-            else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
+            } else if (IsTraceeContextProviderPrimitiveTypePredicate.getInstance().apply(instanceToDeserialize)) {
+
+                WrappedPrimitiveTypeContextData primitiveType = (WrappedPrimitiveTypeContextData) instanceToDeserialize;
+                outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, state.next(), primitiveType.getPrimitiveTypeValue(), primitiveType.getContextData(), primitiveType.getWrappedType());
+
+            } else if (IsBeanTypePredicate.getInstance().apply(instanceToDeserialize)) {
 
                 outputElement = BeanToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
 
-            }
-            else {
+            } else {
                 // fallback deserialize instance as atomic value
                 outputElement = AtomicToOutputElementTransformerFunction.getInstance().apply(this, state.next(), instanceToDeserialize);
             }

@@ -5,6 +5,7 @@ import io.tracee.contextlogger.contextprovider.api.TraceeContextProvider;
 import io.tracee.contextlogger.contextprovider.api.TraceeContextProviderMethod;
 import io.tracee.contextlogger.impl.MethodAnnotationPair;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -28,10 +29,21 @@ public final class TraceeContextLogAnnotationUtilities {
      * @return the {@link io.tracee.contextlogger.contextprovider.api.TraceeContextProvider} annotation if present, otherwise null
      */
     public static TraceeContextProvider getAnnotationFromType(final Object instance) {
-        if (instance == null) {
+        return getAnnotationFromType(instance, TraceeContextProvider.class);
+    }
+
+    /**
+     * Gets an annotation of passed instance.
+     *
+     * @param instance he instance to get the annotation from
+     * @param <T>      the annotations class to get
+     * @return the annotation if present, otherwise null
+     */
+    public static <T extends Annotation> T getAnnotationFromType(final Object instance, Class<T> annotation) {
+        if (instance == null || annotation == null) {
             return null;
         }
-        return instance.getClass().getAnnotation(TraceeContextProvider.class);
+        return instance.getClass().getAnnotation(annotation);
     }
 
 
@@ -54,7 +66,7 @@ public final class TraceeContextLogAnnotationUtilities {
 
                 // check if method has no parameters and is annotated
                 if (annotation != null) {
-                    result.add(new MethodAnnotationPair(instance.getClass(),method, annotation));
+                    result.add(new MethodAnnotationPair(instance.getClass(), method, annotation));
                 }
 
             }

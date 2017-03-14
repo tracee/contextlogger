@@ -19,12 +19,11 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
 
     @Override
     public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
-            final RecursiveOutputElementTreeBuilderState state, final Object instance) {
+                               final RecursiveOutputElementTreeBuilderState state, final Object instance) {
 
         if (instance == null) {
             return NullValueOutputElement.INSTANCE;
-        }
-        else {
+        } else {
 
             OutputElement outputElement = new AtomicOutputElement(instance.getClass(), instance);
 
@@ -35,5 +34,24 @@ public class AtomicToOutputElementTransformerFunction implements ToOutputElement
             recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
             return outputElement;
         }
+    }
+
+    public OutputElement apply(final RecursiveOutputElementTreeBuilder recursiveOutputElementTreeBuilder,
+                               final RecursiveOutputElementTreeBuilderState state, final Object instance, final Object originalInstance, final Class type) {
+
+        if (instance == null) {
+            return NullValueOutputElement.INSTANCE;
+        } else {
+
+            OutputElement outputElement = new AtomicOutputElement(type, instance, originalInstance);
+
+            if (recursiveOutputElementTreeBuilder.checkIfInstanceIsAlreadyRegistered(outputElement)) {
+                return recursiveOutputElementTreeBuilder.getRegisteredOutputElementAndMarkItAsMultipleRegistered(outputElement);
+            }
+
+            recursiveOutputElementTreeBuilder.registerOutputElement(outputElement);
+            return outputElement;
+        }
+
     }
 }
